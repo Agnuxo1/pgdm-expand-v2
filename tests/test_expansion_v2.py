@@ -1,0 +1,145 @@
+# SPDX-FileCopyrightText: 2026 Francisco Angulo de Lafuente
+# SPDX-License-Identifier: Apache-2.0
+# Research-Project: pgdm-expand-v2
+# Research-Date: 2026-11-04
+# Research-ORCID: https://orcid.org/0009-0001-1634-7063
+# Reuse: preserve applicable notices and cite the original author.
+
+import json
+import subprocess
+import unittest
+from pathlib import Path
+
+from services import expansion_engine as engine
+from services.postgres_service import PostgresAdminService
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+RECIPES = (
+    ("01_table3.sql", "public.table3"),
+    ("02_table4.sql", "public.table4"),
+    ("03_table1.sql", "public.table1"),
+    ("04_table5.sql", "public.table5"),
+    ("05_table6.sql", "public.table6"),
+    ("06_table2.sql", "public.table2"),
+)
+
+
+def prepared_official():
+    destinations = [
+        {
+            "table_name": table_name,
+            "version_title": "Synthetic expansion",
+            "sql": (PROJECT_ROOT / "SQL files" / file_name).read_text(encoding="utf-8"),
+        }
+        for file_name, table_name in RECIPES
+    ]
+    prepared = PostgresAdminService._prepare_cross_table_expansion("public.raw_data", ["group001"], destinations)
+    prepared["source_raw_id_unique"] = True
+    return prepared
+
+
+class ExpansionV2PlanTests(unittest.TestCase):
+    def test_official_workload_segments(self):
+        segments = engine.classify_destinations(PostgresAdminService, prepared_official())
+        self.assertEqual(
+            [(s["kind"], [i["destination"]["table_name"] for i in s["items"]]) for s in segments],
+            [
+                ("global", ["public.table3", "public.table4"]),
+                ("chunked", ["public.table1", "public.table5", "public.table6", "public.table2"]),
+            ],
+        )
+
+    def test_join_not_on_raw_id_is_not_chunked(self):
+        prepared = prepared_official()
+        destinations = [
+            {"table_name": d["table_name"], "version_title": "x",
+             "sql": (PROJECT_ROOT / "SQL files" / f).read_text(encoding="utf-8")}
+            for f, d in zip([r[0] for r in RECIPES[:3]], prepared["destinations"][:3])
+        ] + [{
+            "table_name": "public.table5", "version_title": "x",
+            "sql": "INSERT INTO public.table5 (numeric_column_1, id_column_2) SELECT 1, m.id_column_1 "
+                   "FROM {{source}} AS s JOIN public.table1 AS m ON m.id_column_2 = 5",
+        }]
+        custom = PostgresAdminService._prepare_cross_table_expansion("public.raw_data", ["group001"], destinations)
+        custom["source_raw_id_unique"] = True
+        segments = engine.classify_destinations(PostgresAdminService, custom)
+        self.assertEqual(segments[-1]["kind"], "global")
+        self.assertIn("without a raw_id join", segments[-1]["items"][0]["reasons"][0])
+
+    def test_non_unique_raw_id_forces_global_execution(self):
+        prepared = prepared_official()
+        prepared["source_raw_id_unique"] = False
+        segments = engine.classify_destinations(PostgresAdminService, prepared)
+        self.assertEqual({s["kind"] for s in segments}, {"global"})
+
+    def test_aggregates_force_global_execution(self):
+        destinations = [{
+            "table_name": "public.table4", "version_title": "x",
+            "sql": "INSERT INTO public.table4 (id_column_1, text_column_1, text_column_2) "
+                   "SELECT COUNT(*)::smallint, 'a', 'b' FROM {{source}} AS s",
+        }]
+        prepared = PostgresAdminService._prepare_cross_table_expansion("public.raw_data", ["group001"], destinations)
+        segments = engine.classify_destinations(PostgresAdminService, prepared)
+        self.assertEqual(segments[0]["kind"], "global")
+
+    def test_templates_keep_official_recipe_text(self):
+        prepared = prepared_official()
+        for destination, (file_name, _table) in zip(prepared["destinations"], RECIPES):
+            official = (PROJECT_ROOT / "SQL files" / file_name).read_text(encoding="utf-8").strip().rstrip(";").strip()
+            self.assertEqual(destination["statement_templates"], [official])
+            # The versioned recipe is still the full-source statement, unchanged.
+            self.assertNotIn("pgdm.chunk_lo", destination["sql_recipe"])
+
+    def test_split_insert_at_top_level_select(self):
+        statement = prepared_official()["destinations"][0]["statements"][0]
+        head, query = engine._split_insert(PostgresAdminService, statement)
+        self.assertTrue(head.strip().upper().startswith("INSERT INTO PUBLIC.TABLE3"))
+        self.assertTrue(query.strip().upper().startswith("SELECT DISTINCT"))
+        self.assertEqual(head + query, statement)
+
+    def test_gucs_are_whitelisted(self):
+        with self.assertRaises(RuntimeError):
+            engine.guc_sql({"session_replication_role": "replica"})
+        with self.assertRaises(RuntimeError):
+            engine.guc_sql({"work_mem": "1MB'; DROP TABLE x; --"})
+        self.assertIn("SET LOCAL work_mem = '64MB';", engine.guc_sql({"work_mem": "64MB"}))
+
+    def test_job_files_are_well_formed(self):
+        prepared = prepared_official()
+        segments = engine.classify_destinations(PostgresAdminService, prepared)
+        files = engine.build_job_files(
+            PostgresAdminService, prepared, segments, "00000000-0000-0000-0000-000000000001",
+            engine.merge_config({}), "kaggle_challenge", "pdm", '"public"."pgdm_table_row_counts"',
+            "-- registration", "postgres_data_manager",
+        )
+        self.assertIn("runner.sh", files)
+        chunk_sql = files["segment_2.sql"]
+        self.assertIn("FOR UPDATE SKIP LOCKED", chunk_sql)
+        self.assertIn("LOCK TABLE \"public\".\"raw_data\" IN SHARE MODE", chunk_sql)
+        self.assertEqual(chunk_sql.count("COMMIT;"), 1)
+        # Every chunk marks itself done in the same transaction that inserts its rows.
+        self.assertLess(chunk_sql.index("SET status = 'done'"), chunk_sql.index("COMMIT;"))
+        result = subprocess.run(["bash", "-n"], input=files["runner.sh"].encode("utf-8"), capture_output=True)
+        self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+
+    def test_spec_hash_is_stable_and_config_sensitive(self):
+        prepared = prepared_official()
+        a = engine.spec_hash(prepared, engine.merge_config({}))
+        self.assertEqual(a, engine.spec_hash(prepared, engine.merge_config({})))
+        self.assertNotEqual(a, engine.spec_hash(prepared, engine.merge_config({"chunk_rows": 1234})))
+
+    def test_registration_is_idempotent_by_job_id(self):
+        service = PostgresAdminService()
+        prepared = prepared_official()
+        sql = service._build_v2_registration_sql(
+            prepared, [{"raw_schema": "group001", "version_code": "0000"}], "tester", "host",
+            "kaggle_challenge", "00000000-0000-0000-0000-000000000001")
+        self.assertIn("expansion_job_registrations", sql)
+        self.assertIn("\\if :pgdm_registered", sql)
+        self.assertEqual(sql.count("INSERT INTO \"app_control\".\"table_versions\""), 6)
+        self.assertLess(sql.index("expansion_job_registrations (job_id"), sql.index("COMMIT;"))
+        json.dumps(sql)
+
+
+if __name__ == "__main__":
+    unittest.main()

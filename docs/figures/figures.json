@@ -1,0 +1,265 @@
+{
+  "title": "PGDM Expand v2",
+  "subtitle": "Parallel and recoverable PostgreSQL expansion",
+  "figures": [
+    {
+      "kind": "flow",
+      "id": "architecture",
+      "title": "Separate application control from data execution",
+      "subtitle": "The existing Windows manager stays in the control plane",
+      "nodes": [
+        [
+          0.12,
+          0.35,
+          "DB Manager"
+        ],
+        [
+          0.37,
+          0.35,
+          "Linux runner"
+        ],
+        [
+          0.63,
+          0.08,
+          "Chunk worker A",
+          "below"
+        ],
+        [
+          0.63,
+          0.57,
+          "Chunk worker B"
+        ],
+        [
+          0.87,
+          0.35,
+          "Version ledger"
+        ]
+      ],
+      "edges": [
+        [
+          0,
+          1,
+          "SSH"
+        ],
+        [
+          1,
+          2,
+          "chunks"
+        ],
+        [
+          1,
+          3,
+          "chunks"
+        ],
+        [
+          2,
+          4,
+          "commit"
+        ],
+        [
+          3,
+          4,
+          "commit"
+        ]
+      ],
+      "basis": "Technical schematic",
+      "source": "Source: code paths described in the README",
+      "alt": "Separate application control from data execution. DB Manager; Linux runner; Chunk worker A; Chunk worker B; Version ledger"
+    },
+    {
+      "kind": "bars",
+      "id": "runtime",
+      "title": "Measured processing time at one million rows",
+      "subtitle": "Local means ± sample SD; same row count, different repetition counts",
+      "labels": [
+        "Original (n = 3)",
+        "Expand v2 (n = 5)"
+      ],
+      "values": [
+        247.34,
+        83.49
+      ],
+      "lim": [
+        0,
+        290
+      ],
+      "xlabel": "Measured processing time (s)",
+      "source": "Source: EXPAND_V2.md, local benchmark table",
+      "basis": "Reported evidence",
+      "alt": "Measured processing time at one million rows. Original (n = 3): 247.34; Expand v2 (n = 5): 83.49",
+      "ticks": [
+        0,
+        50,
+        100,
+        150,
+        200,
+        250
+      ],
+      "intervals": [
+        [
+          241.75,
+          252.93
+        ],
+        [
+          78.25,
+          88.73
+        ]
+      ]
+    },
+    {
+      "kind": "flow",
+      "id": "recovery",
+      "title": "Recovery follows the last durable checkpoint",
+      "subtitle": "Validate the source before resuming an incomplete chunk",
+      "nodes": [
+        [
+          0.11,
+          0.25,
+          "Freeze source"
+        ],
+        [
+          0.35,
+          0.25,
+          "Commit chunk"
+        ],
+        [
+          0.6,
+          0.25,
+          "Persist ledger"
+        ],
+        [
+          0.6,
+          0.75,
+          "Interrupted worker",
+          "above"
+        ],
+        [
+          0.87,
+          0.25,
+          "Verify final state"
+        ]
+      ],
+      "edges": [
+        [
+          0,
+          1,
+          "fingerprint"
+        ],
+        [
+          1,
+          2,
+          "durable"
+        ],
+        [
+          3,
+          2,
+          "reconcile"
+        ],
+        [
+          2,
+          4,
+          "resume"
+        ]
+      ],
+      "basis": "Technical schematic",
+      "source": "Source: code paths described in the README",
+      "alt": "Recovery follows the last durable checkpoint. Freeze source; Commit chunk; Persist ledger; Interrupted worker; Verify final state"
+    },
+    {
+      "kind": "flow",
+      "id": "reproduce",
+      "title": "Reproduce on a fixed input",
+      "subtitle": "Match upstream revision and recorded environment",
+      "nodes": [
+        [
+          0.1,
+          0.51,
+          "Official generator"
+        ],
+        [
+          0.3666666666666667,
+          0.51,
+          "Fixed-seed data"
+        ],
+        [
+          0.6333333333333333,
+          0.51,
+          "Run protocol"
+        ],
+        [
+          0.9000000000000001,
+          0.51,
+          "Verify digests"
+        ]
+      ],
+      "edges": [
+        [
+          0,
+          1,
+          ""
+        ],
+        [
+          1,
+          2,
+          ""
+        ],
+        [
+          2,
+          3,
+          ""
+        ]
+      ],
+      "basis": "Technical schematic",
+      "source": "Source: code paths described in the README",
+      "alt": "Reproduce on a fixed input. Official generator; Fixed-seed data; Run protocol; Verify digests"
+    },
+    {
+      "kind": "flow",
+      "id": "rights",
+      "title": "Release provenance",
+      "subtitle": "Track upstream and original components separately",
+      "nodes": [
+        [
+          0.1,
+          0.51,
+          "Upstream Apache-2.0"
+        ],
+        [
+          0.3666666666666667,
+          0.51,
+          "Original modifications"
+        ],
+        [
+          0.6333333333333333,
+          0.51,
+          "Separate MIT renderer"
+        ],
+        [
+          0.9000000000000001,
+          0.51,
+          "CITATION.cff"
+        ]
+      ],
+      "edges": [
+        [
+          0,
+          1,
+          ""
+        ],
+        [
+          1,
+          2,
+          ""
+        ],
+        [
+          2,
+          3,
+          ""
+        ]
+      ],
+      "basis": "Technical schematic",
+      "source": "Source: code paths described in the README",
+      "alt": "Release provenance. Upstream Apache-2.0; Original modifications; Separate MIT renderer; CITATION.cff"
+    }
+  ]
+}

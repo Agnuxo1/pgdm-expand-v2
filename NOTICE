@@ -1,0 +1,6 @@
+PGDM Expand v2
+Original contributions and changes: Copyright 2026 Francisco Angulo de Lafuente, https://orcid.org/0009-0001-1634-7063
+Derived from Igor Moreira, kaggle_postgre_challenge, base revision 5dfde9d.
+Upstream: https://github.com/igorsiecz/kaggle_postgre_challenge/tree/5dfde9d
+This distribution preserves the upstream Apache-2.0 license. The generator and official recipes are upstream material. The MIT license for the new figure renderer is separate.
+Original source snapshot: 5a1028f999f482ef34b93f1ce25772e90ce80afa.
