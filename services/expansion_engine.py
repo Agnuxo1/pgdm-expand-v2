@@ -49,7 +49,7 @@ import tarfile
 import uuid
 
 ENGINE_SCHEMA = "pgdm_expansion"
-ENGINE_VERSION = 2
+ENGINE_VERSION = 3
 
 # Words that make a statement depend on rows other than the current source
 # row; such statements are executed once over the complete source.
@@ -144,11 +144,14 @@ def classify_destinations(service_cls, prepared: dict) -> list[dict]:
     A destination is chunkable when every statement:
       * reads the source exactly once and contains none of the set-level
         constructs in _SET_WORDS / _AGGREGATES (row-wise over the source);
+      * keeps the source as the first FROM item and uses no RIGHT, FULL or
+        NATURAL join, so each output row depends on one source row and
+        restricting the source partitions the result exactly;
       * does not read its own destination;
       * reads earlier destinations only if they were completed in an earlier
         segment, or if they are chunked in the same segment AND the statement
-        joins them through ``<relation>.<column> = <source alias>.raw_id``
-        where that column is filled from ``raw_id`` by that destination's
+        joins every occurrence through a bare ``AND`` term of its ON clause,
+        ``<relation>.<column> = <source alias>.raw_id``, where that column is filled from ``raw_id`` by that destination's
         recipe (so a chunk only ever matches rows produced from its own
         source rows).
     Everything else runs once, globally, in recipe order.
@@ -173,6 +176,7 @@ def classify_destinations(service_cls, prepared: dict) -> list[dict]:
             selects = sum(1 for kind, value, _depth in tokens if kind == "word" and value == "select")
             if selects != 1:
                 reasons.append("contains a subquery")
+            reasons.extend(_row_preservation_problems(masked, placeholder))
         if key in {tuple(r) for r in destination.get("read_relations") or []}:
             reasons.append("reads its own destination")
         columns = _raw_id_target_columns(service_cls, destination, placeholder)
@@ -215,6 +219,66 @@ def classify_destinations(service_cls, prepared: dict) -> list[dict]:
             segments.append(current)
         current["items"].append({"key": item["key"], "destination": destination, "reasons": reasons})
     return segments
+
+
+def _top_level_from_end(masked: str) -> int:
+    """Index just after the FROM keyword of the top-level SELECT, or -1."""
+    match = re.search(r"\bselect\b", masked, flags=re.I)
+    if not match:
+        return -1
+    depth = 0
+    for found in re.finditer(r"[()]|\bfrom\b", masked[match.end():], flags=re.I):
+        token = found.group(0)
+        if token == "(":
+            depth += 1
+        elif token == ")":
+            depth -= 1
+        elif depth == 0:
+            return match.end() + found.end()
+    return -1
+
+
+def _row_preservation_problems(masked: str, placeholder: str) -> list[str]:
+    """Reasons why restricting the source would not partition the statement's result."""
+    problems = []
+    start = _top_level_from_end(masked)
+    if start < 0 or not masked[start:].lstrip().startswith(placeholder):
+        problems.append("the source is not the first FROM item")
+    if re.search(r"\b(?:right|full)\s+(?:outer\s+)?join\b|\bnatural\b", masked, flags=re.I):
+        problems.append("join type does not preserve source rows")
+    return problems
+
+
+def _on_clause_terms(masked: str, start: int) -> list[str]:
+    """Top-level AND terms of the first ON clause at or after ``start``."""
+    depth = 0
+    term_start = -1
+    end = len(masked)
+    terms = []
+    for found in re.finditer(r"[();]|\b(?:on|and|join|where)\b", masked[start:], flags=re.I):
+        token = found.group(0).lower()
+        position = start + found.start()
+        if token == "(":
+            depth += 1
+        elif token == ")":
+            depth -= 1
+        elif depth != 0:
+            continue
+        elif term_start < 0:
+            if token == "on":
+                term_start = start + found.end()
+            elif token in {"join", "where", ";"}:
+                return []
+        elif token == "and":
+            terms.append(masked[term_start:position])
+            term_start = start + found.end()
+        elif token in {"join", "where", ";", "on"}:
+            end = position
+            break
+    if term_start < 0:
+        return []
+    terms.append(masked[term_start:end])
+    return [re.sub(r"\s+(?:inner|left|cross)(?:\s+outer)?\s*$", "", term, flags=re.I).strip() for term in terms]
 
 
 def _has_word(service_cls, destination, word: str) -> bool:
@@ -275,20 +339,23 @@ def _joins_on_raw_id(service_cls, destination, relation, target_columns, placeho
         masked = service_cls._mask_sql_literals_and_comments(template)
         source_alias = re.search(
             re.escape(placeholder) + r"\s+(?:as\s+)?([a-z_][a-z0-9_]*)", masked, flags=re.I)
-        rel_alias = re.search(
+        offset = _top_level_from_end(masked)
+        occurrences = list(re.finditer(
             r"(?:\b" + re.escape(schema_name) + r"\.)?\b" + re.escape(table_name)
-            + r"\s+(?:as\s+)?([a-z_][a-z0-9_]*)", masked, flags=re.I)
-        if not source_alias or not rel_alias:
+            + r"\s+(?:as\s+)?([a-z_][a-z0-9_]*)", masked[offset:], flags=re.I))
+        if not source_alias or not occurrences:
             return False
-        s_alias, r_alias = source_alias.group(1), rel_alias.group(1)
-        found = False
-        for column in target_columns:
-            pattern_a = rf"\b{r_alias}\.{column}\s*=\s*{s_alias}\.raw_id\b"
-            pattern_b = rf"\b{s_alias}\.raw_id\s*=\s*{r_alias}\.{column}\b"
-            if re.search(pattern_a, masked, flags=re.I) or re.search(pattern_b, masked, flags=re.I):
-                found = True
-        if not found:
-            return False
+        s_alias = source_alias.group(1)
+        for occurrence in occurrences:
+            r_alias = occurrence.group(1)
+            terms = _on_clause_terms(masked, offset + occurrence.end())
+            linked = any(
+                re.fullmatch(rf"{r_alias}\.{column}\s*=\s*{s_alias}\.raw_id", term, flags=re.I)
+                or re.fullmatch(rf"{s_alias}\.raw_id\s*=\s*{r_alias}\.{column}", term, flags=re.I)
+                for column in target_columns for term in terms
+            )
+            if not linked:
+                return False
     return True
 
 
@@ -314,6 +381,7 @@ _UPGRADE_COLUMNS = (
     ("jobs", "chunk_min", "bigint"),
     ("jobs", "chunk_width", "bigint"),
     ("jobs", "fingerprinted", "boolean NOT NULL DEFAULT false"),
+    ("jobs", "fp_all", "text"),
     ("job_segments", "attempt", "integer"),
     ("job_chunks", "attempt", "integer"),
     ("job_chunks", "fp0", "text"),
@@ -387,7 +455,8 @@ CREATE TABLE IF NOT EXISTS {s}.jobs (
     source_versions jsonb,
     chunk_min bigint,
     chunk_width bigint,
-    fingerprinted boolean NOT NULL DEFAULT false
+    fingerprinted boolean NOT NULL DEFAULT false,
+    fp_all text
 );
 CREATE TABLE IF NOT EXISTS {s}.job_attempts (
     job_id uuid NOT NULL REFERENCES {s}.jobs (job_id) ON DELETE CASCADE,
@@ -450,7 +519,8 @@ CREATE TABLE IF NOT EXISTS {control_schema_ident}.expansion_job_registrations (
 
 def _content_hash_sql(prepared: dict) -> str:
     """Per-row content checksum: jsonb_hash() of jsonb columns (binary, no text
-    serialisation) and hashtext() of every other column, summed per raw_id range."""
+    serialisation) and hashtext() of every other column, combined in column order with the
+    row's raw_id, so moving a value between rows or columns changes it.  Summed per range."""
     parts = []
     for name, data_type in prepared.get("source_columns") or []:
         column = "r." + sql_ident(name)
@@ -458,7 +528,9 @@ def _content_hash_sql(prepared: dict) -> str:
             parts.append(f"COALESCE(jsonb_hash({column})::bigint, 0)")
         else:
             parts.append(f"COALESCE(hashtext({column}::text)::bigint, 0)")
-    return " + ".join(parts) if parts else "0"
+    if not parts:
+        return "0"
+    return f"hashtextextended(concat_ws(':', r.{sql_ident('raw_id')}, {', '.join(parts)}), 0)"
 
 
 def _source_scan_sql(prepared: dict, job: str) -> str:
@@ -487,6 +559,9 @@ SET LOCAL enable_sort = on;
 CREATE TEMP TABLE pgdm_v2_fp ON COMMIT DROP AS
 SELECT chunk_no, sum(n)::text || ':' || sum(h1)::text || ':' || sum(s)::text || ':' || sum(h2)::text AS fp
 FROM pg_temp.pgdm_v2_scan GROUP BY chunk_no;""".strip()
+
+
+_FP_ALL_SQL = "(SELECT string_agg(chunk_no::text || '=' || fp, ',' ORDER BY chunk_no) FROM pg_temp.pgdm_v2_fp)"
 
 
 def _source_scope_sql(prepared: dict) -> tuple[str, str]:
@@ -618,7 +693,7 @@ $pgdm_v2_fp$;
 UPDATE {s}.job_chunks AS c
 SET fp0 = COALESCE((SELECT f.fp FROM pg_temp.pgdm_v2_fp AS f WHERE f.chunk_no = c.chunk_no), '0:0:0:0')
 WHERE c.job_id = {job};
-UPDATE {s}.jobs SET fingerprinted = true WHERE job_id = {job};"""
+UPDATE {s}.jobs SET fingerprinted = true, fp_all = {_FP_ALL_SQL} WHERE job_id = {job};"""
 
 
 def _counter_update_sql(counter_table: str, destinations: list[dict]) -> str:
@@ -769,6 +844,13 @@ ROLLBACK;
     files["finalize.sql"] = f"""
 \\set ON_ERROR_STOP 1
 BEGIN;
+-- Row lock: a cancel either lands before this check, or waits and finds the data committed.
+SELECT cancel_requested AS pgdm_cancel FROM {s}.jobs WHERE job_id = {job} FOR UPDATE \\gset
+\\if :pgdm_cancel
+ROLLBACK;
+\\echo PGDM_CANCELLED
+\\quit
+\\endif
 SELECT count(*) = 0 AS pgdm_ready FROM {s}.job_segments
  WHERE job_id = {job} AND status <> 'done' \\gset
 \\if :pgdm_ready
@@ -865,11 +947,8 @@ SELECT fingerprinted AS pgdm_have,
 FROM {s}.jobs WHERE job_id = {job} FOR UPDATE \\gset
 \\if :pgdm_have
 {_source_scan_sql(prepared, job)}
-SELECT count(*) AS pgdm_changed FROM (
-    SELECT DISTINCT c.chunk_no, c.fp0 FROM {s}.job_chunks c WHERE c.job_id = {job}
-) AS c
-FULL JOIN pg_temp.pgdm_v2_fp AS f USING (chunk_no)
-WHERE c.fp0 IS DISTINCT FROM COALESCE(f.fp, '0:0:0:0') OR c.chunk_no IS NULL \\gset
+SELECT (fp_all IS DISTINCT FROM {_FP_ALL_SQL})::integer AS pgdm_changed
+FROM {s}.jobs WHERE job_id = {job} \\gset
 COMMIT;
 \\echo PGDM_FP_CHANGED :pgdm_changed
 \\elif :pgdm_deferred
@@ -878,11 +957,12 @@ COMMIT;
 \\else
 {_source_scan_sql(prepared, job)}
 SELECT count(*) AS pgdm_outside FROM pg_temp.pgdm_v2_fp f
-WHERE NOT EXISTS (SELECT 1 FROM {s}.job_chunks c WHERE c.job_id = {job} AND c.chunk_no = f.chunk_no) \\gset
+WHERE EXISTS (SELECT 1 FROM {s}.job_chunks c WHERE c.job_id = {job})
+  AND NOT EXISTS (SELECT 1 FROM {s}.job_chunks c WHERE c.job_id = {job} AND c.chunk_no = f.chunk_no) \\gset
 UPDATE {s}.job_chunks AS c
 SET fp0 = COALESCE((SELECT f.fp FROM pg_temp.pgdm_v2_fp AS f WHERE f.chunk_no = c.chunk_no), '0:0:0:0')
 WHERE c.job_id = {job};
-UPDATE {s}.jobs SET fingerprinted = true WHERE job_id = {job};
+UPDATE {s}.jobs SET fingerprinted = true, fp_all = {_FP_ALL_SQL} WHERE job_id = {job};
 COMMIT;
 \\echo PGDM_FP_CHANGED :pgdm_outside
 \\endif
@@ -1017,6 +1097,7 @@ run_chunked() {{
 {chr(10).join(seg_lines)}
 cancelled && stop_cancelled "finalize"
 out=$($PSQL -d "$DB" -f finalize.sql 2>finalize.err) || fail "finalize: $(cat finalize.err) $out"
+case "$out" in *PGDM_CANCELLED*) stop_cancelled "finalize";; esac
 manifest=$(printf '%s\\n' "$out" | sed -n 's/^PGDM_MANIFEST //p' | tail -1)
 [ -n "$manifest" ] || fail "finalize returned no manifest: $out"
 # Release the source lock but keep the coordinator session (and its advisory lock) until the end.

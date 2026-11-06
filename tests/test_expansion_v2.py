@@ -67,6 +67,50 @@ class ExpansionV2PlanTests(unittest.TestCase):
         self.assertEqual(segments[-1]["kind"], "global")
         self.assertIn("without a raw_id join", segments[-1]["items"][0]["reasons"][0])
 
+    def classify_table5(self, sql):
+        prepared = prepared_official()
+        destinations = [
+            {"table_name": d["table_name"], "version_title": "x",
+             "sql": (PROJECT_ROOT / "SQL files" / f).read_text(encoding="utf-8")}
+            for f, d in zip([r[0] for r in RECIPES[:3]], prepared["destinations"][:3])
+        ] + [{"table_name": "public.table5", "version_title": "x", "sql": sql}]
+        custom = PostgresAdminService._prepare_cross_table_expansion("public.raw_data", ["group001"], destinations)
+        custom["source_raw_id_unique"] = True
+        return engine.classify_destinations(PostgresAdminService, custom)[-1]["kind"]
+
+    def test_join_forms_that_do_not_partition_run_globally(self):
+        head = "INSERT INTO public.table5 (numeric_column_1, id_column_2) SELECT 1, m.id_column_1 "
+        link = "m.id_column_3 = s.raw_id"
+        for tail in (
+            "FROM {{source}} AS s RIGHT JOIN public.table1 AS m ON " + link,
+            "FROM {{source}} AS s RIGHT OUTER JOIN public.table1 AS m ON " + link,
+            "FROM {{source}} AS s FULL JOIN public.table1 AS m ON " + link,
+            "FROM public.table1 AS m LEFT JOIN {{source}} AS s ON " + link,
+            "FROM {{source}} AS s JOIN public.table1 AS m ON TRUE WHERE m.id_column_3 = 5",
+            "FROM {{source}} AS s JOIN public.table1 AS m ON NOT (" + link + ")",
+            "FROM {{source}} AS s JOIN public.table1 AS m ON " + link + " JOIN public.table1 AS n ON TRUE",
+        ):
+            self.assertEqual(self.classify_table5(head + tail), "global", tail)
+
+    def test_equality_outside_the_on_clause_is_not_a_link(self):
+        sql = ("INSERT INTO public.table5 (numeric_column_1, id_column_2) "
+               "SELECT (m.id_column_3 = s.raw_id)::int, m.id_column_1 "
+               "FROM {{source}} AS s JOIN public.table1 AS m ON TRUE")
+        self.assertEqual(self.classify_table5(sql), "global")
+
+    def test_linked_inner_and_left_joins_stay_chunked(self):
+        head = "INSERT INTO public.table5 (numeric_column_1, id_column_2) SELECT 1, m.id_column_1 "
+        for tail in (
+            "FROM {{source}} AS s JOIN public.table1 AS m ON m.id_column_3 = s.raw_id",
+            "FROM {{source}} AS s LEFT JOIN public.table1 AS m ON s.raw_id = m.id_column_3 AND m.id_column_2 > 0",
+        ):
+            self.assertEqual(self.classify_table5(head + tail), "chunked", tail)
+
+    def test_content_hash_binds_values_to_their_row(self):
+        sql = engine._content_hash_sql({"source_columns": [("raw_id", "bigint"), ("raw", "jsonb")]})
+        self.assertIn("hashtextextended(concat_ws(':', r.", sql)
+        self.assertNotIn(" + ", sql)
+
     def test_non_unique_raw_id_forces_global_execution(self):
         prepared = prepared_official()
         prepared["source_raw_id_unique"] = False
