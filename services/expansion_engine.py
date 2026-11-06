@@ -293,9 +293,12 @@ def _raw_id_target_columns(service_cls, destination, placeholder) -> set:
     """Columns of the destination that every statement of its recipe fills with <source>.raw_id,
     using the alias of the source itself."""
     result = None
-    columns = list(destination.get("destination_columns") or [])
     for template in destination["statement_templates"]:
         masked = service_cls._mask_sql_literals_and_comments(template)
+        insert = re.match(r"\s*insert\s+into\s+[^\s(]+\s*\(([^()]*)\)", masked, flags=re.I)
+        if not insert:
+            return set()
+        columns = [part.strip().strip('"').lower() for part in insert.group(1).split(",")]
         source_alias = re.search(re.escape(placeholder) + r"\s+(?:as\s+)?([a-z_][a-z0-9_]*)", masked, flags=re.I)
         select_list = _top_level_select_list(service_cls, template)
         if not source_alias or not select_list or len(select_list) != len(columns):
