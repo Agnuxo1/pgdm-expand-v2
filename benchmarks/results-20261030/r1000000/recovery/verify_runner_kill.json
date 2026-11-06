@@ -1,0 +1,31 @@
+{
+ "natural": {
+  "table3": "4:0a43375d78b5ce3538bf226dcecf0c3d",
+  "table4": "27:1e21fca9b26d7ba1726beb42db63e2c7",
+  "table1": "1000000:623ae9e63b2f84a3ed6cb4d884bc8e34",
+  "table5": "1000000:ff205a757e660824ead1a9d345ca2014",
+  "table6": "1000000:5633c68afb428e51882b4230d7b4bb7c",
+  "table2": "2321522:3f2515139499201a013964588be70a6b"
+ },
+ "strict": {
+  "table3": "4:8dde88b71ea5198a280e726301413154",
+  "table4": "27:1e21fca9b26d7ba1726beb42db63e2c7",
+  "table1": "1000000:bced79c05c6ceffebbe054aaf6f07738",
+  "table5": "1000000:6b60945223f8ac6a67c79dc22a99f2c4",
+  "table6": "1000000:9b20a0a7c1b4e7d8e41e201a9e81c2d5",
+  "table2": "2321522:a5a8d82d5ac53d27c34f30ee4cffdfe8"
+ },
+ "counters_ok": {
+  "table3": true,
+  "table4": true,
+  "table1": true,
+  "table5": true,
+  "table6": true,
+  "table2": true
+ },
+ "versions": "[{\"t\" : \"table1\", \"code\" : \"0001\", \"kind\" : \"cross_table_expand_v1\", \"deps\" : 1}, {\"t\" : \"table2\", \"code\" : \"0001\", \"kind\" : \"cross_table_expand_v1\", \"deps\" : 1}, {\"t\" : \"table3\", \"code\" : \"0001\", \"kind\" : \"cross_table_expand_v1\", \"deps\" : 1}, {\"t\" : \"table4\", \"code\" : \"0001\", \"kind\" : \"cross_table_expand_v1\", \"deps\" : 1}, {\"t\" : \"table5\", \"code\" : \"0001\", \"kind\" : \"cross_table_expand_v1\", \"deps\" : 1}, {\"t\" : \"table6\", \"code\" : \"0001\", \"kind\" : \"cross_table_expand_v1\", \"deps\" : 1}]",
+ "versions_ok": true,
+ "natural_match": true,
+ "strict_match": false,
+ "ok": true
+}

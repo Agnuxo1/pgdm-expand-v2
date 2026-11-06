@@ -1,0 +1,119 @@
+prepare       0.024 * Ensure control database metadata
+prepare       0.001 * Ensure control database metadata - local Python CPU
+prepare       0.012 * Normalize, parse, and validate expansion recipes - local Python CPU
+preflight      0.018 * Verify source table existence
+preflight      0.000 * Verify source table existence - local Python CPU
+preflight      0.019 * Read and validate source column metadata
+preflight      0.001 * Read and validate source column metadata - local Python CPU
+preflight      0.024 * Load Raw version references for the selected scope
+preflight      0.017 * Load Raw version references for the selected scope - server command 2
+preflight      0.001 * Load Raw version references for the selected scope - local Python CPU
+preflight      0.019 * Validate SQL function safety
+preflight      0.001 * Validate SQL function safety - local Python CPU
+preflight      0.047 * Ensure data-database metadata and row counters
+preflight      0.001 * Ensure data-database metadata and row counters - local Python CPU
+preflight      0.018 * Verify destination public.table3
+preflight      0.000 * Verify destination public.table3 - local Python CPU
+preflight      0.015 * Read row counter for public.table3
+preflight      0.000 * Read row counter for public.table3 - local Python CPU
+preflight      0.022 * Validate managed dependencies for public.table3
+preflight      0.001 * Validate managed dependencies for public.table3 - local Python CPU
+preflight      0.017 * Verify destination public.table4
+preflight      0.001 * Verify destination public.table4 - local Python CPU
+preflight      0.015 * Read row counter for public.table4
+preflight      0.000 * Read row counter for public.table4 - local Python CPU
+preflight      0.022 * Validate managed dependencies for public.table4
+preflight      0.001 * Validate managed dependencies for public.table4 - local Python CPU
+preflight      0.017 * Verify destination public.table1
+preflight      0.000 * Verify destination public.table1 - local Python CPU
+preflight      0.015 * Read row counter for public.table1
+preflight      0.000 * Read row counter for public.table1 - local Python CPU
+preflight      0.022 * Validate managed dependencies for public.table1
+preflight      0.001 * Validate managed dependencies for public.table1 - local Python CPU
+preflight      0.018 * Verify destination public.table5
+preflight      0.000 * Verify destination public.table5 - local Python CPU
+preflight      0.015 * Read row counter for public.table5
+preflight      0.000 * Read row counter for public.table5 - local Python CPU
+preflight      0.022 * Validate managed dependencies for public.table5
+preflight      0.001 * Validate managed dependencies for public.table5 - local Python CPU
+preflight      0.017 * Verify destination public.table6
+preflight      0.000 * Verify destination public.table6 - local Python CPU
+preflight      0.015 * Read row counter for public.table6
+preflight      0.001 * Read row counter for public.table6 - local Python CPU
+preflight      0.022 * Validate managed dependencies for public.table6
+preflight      0.001 * Validate managed dependencies for public.table6 - local Python CPU
+preflight      0.018 * Verify destination public.table2
+preflight      0.000 * Verify destination public.table2 - local Python CPU
+preflight      0.015 * Read row counter for public.table2
+preflight      0.000 * Read row counter for public.table2 - local Python CPU
+preflight      0.022 * Validate managed dependencies for public.table2
+preflight      0.001 * Validate managed dependencies for public.table2 - local Python CPU
+prepare       0.018 * Plan parallel resumable expansion job
+prepare       0.012 * Plan parallel resumable expansion job - local Python CPU
+execute       0.028 * Create or resume expansion job
+execute       0.001 * Create or resume expansion job - local Python CPU
+prepare       0.004 * Build server-side job files - local Python CPU
+execute       0.044 * Upload job files and launch detached runner
+execute       0.001 * Upload job files and launch detached runner - local Python CPU
+execute       1.021   Wait for server-side job (envelope)
+execute       1.021   Wait for server-side job (envelope) - server command 2
+execute       1.022   Wait for server-side job (envelope) - server command 3
+execute       1.023   Wait for server-side job (envelope) - server command 4
+execute       1.022   Wait for server-side job (envelope) - server command 5
+execute       1.023   Wait for server-side job (envelope) - server command 6
+execute       1.077   Wait for server-side job (envelope) - server command 7
+execute       1.025   Wait for server-side job (envelope) - server command 8
+execute       1.025   Wait for server-side job (envelope) - server command 9
+execute       1.023   Wait for server-side job (envelope) - server command 10
+execute       1.023   Wait for server-side job (envelope) - server command 11
+execute       1.023   Wait for server-side job (envelope) - server command 12
+execute       1.021   Wait for server-side job (envelope) - server command 13
+execute       1.027   Wait for server-side job (envelope) - server command 14
+execute       1.022   Wait for server-side job (envelope) - server command 15
+execute       1.022   Wait for server-side job (envelope) - server command 16
+execute       1.025   Wait for server-side job (envelope) - server command 17
+execute       1.023   Wait for server-side job (envelope) - server command 18
+execute       1.024   Wait for server-side job (envelope) - server command 19
+execute       1.024   Wait for server-side job (envelope) - server command 20
+execute       1.024   Wait for server-side job (envelope) - server command 21
+execute       1.024   Wait for server-side job (envelope) - server command 22
+execute       1.025   Wait for server-side job (envelope) - server command 23
+execute       1.035   Wait for server-side job (envelope) - server command 24
+execute       1.023   Wait for server-side job (envelope) - server command 25
+execute       1.023   Wait for server-side job (envelope) - server command 26
+execute       1.023   Wait for server-side job (envelope) - server command 27
+execute       1.022   Wait for server-side job (envelope) - server command 28
+execute       1.022   Wait for server-side job (envelope) - server command 29
+execute       1.022   Wait for server-side job (envelope) - server command 30
+execute       1.032   Wait for server-side job (envelope) - server command 31
+execute       1.026   Wait for server-side job (envelope) - server command 32
+execute       1.022   Wait for server-side job (envelope) - server command 33
+execute       1.024   Wait for server-side job (envelope) - server command 34
+execute       1.033   Wait for server-side job (envelope) - server command 35
+execute       1.024   Wait for server-side job (envelope) - server command 36
+execute       1.023   Wait for server-side job (envelope) - server command 37
+execute       1.023   Wait for server-side job (envelope) - server command 38
+execute       1.023   Wait for server-side job (envelope) - server command 39
+execute       1.022   Wait for server-side job (envelope) - server command 40
+execute       1.024   Wait for server-side job (envelope) - server command 41
+execute       1.022   Wait for server-side job (envelope) - server command 42
+execute       1.022   Wait for server-side job (envelope) - server command 43
+execute       0.024 * Read job telemetry
+execute       0.001 * Read job telemetry - local Python CPU
+execute      46.842 * Earlier interrupted attempts of this job (1)
+execute      45.549 * Server-side expansion job: data phase (all segments, 4 worker(s))
+version       0.054 * Server-side version registration and job completion
+execute       5.368   Segment 1 (global, 0 chunk(s)): public.table3, public.table4
+execute      91.898   Segment 2 (chunked, 20 chunk(s)): public.table1, public.table5, public.table6, public.table2
+execute      88.125   Summed per-chunk statement time for public.table1
+execute     118.528   Summed per-chunk statement time for public.table2
+execute      38.469   Summed per-chunk statement time for public.table5
+execute      35.221   Summed per-chunk statement time for public.table6
+refresh       0.019 * Acknowledge completed expansion job
+refresh       0.001 * Acknowledge completed expansion job - local Python CPU
+refresh       0.000 * Invalidate destination filter caches - local Python CPU
+refresh       0.019 * Reload database table catalog
+refresh       0.001 * Reload database table catalog - local Python CPU
+refresh       0.000 * Rebuild table navigation controls - local Python CPU
+refresh       0.000 * Build completion summary - local Python CPU
+MEASURED PROCESSING TOTAL: 93.138 s

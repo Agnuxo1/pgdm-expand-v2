@@ -1,0 +1,980 @@
+{
+ "tag": "warmup",
+ "status": "ok",
+ "error": null,
+ "measured_processing_total_s": 243.714190959,
+ "client_wall_s": 245.37570815798244,
+ "peak_pg_pss_bytes": 278352896,
+ "peak_total_pss_bytes": 376701952,
+ "temp_bytes_written": 78233600,
+ "db_size_delta_bytes": 625573888,
+ "versions": "public.table3=0001, public.table4=0001, public.table1=0001, public.table5=0001, public.table6=0001, public.table2=0001",
+ "report": {
+  "report_version": 1,
+  "started_at": "2026-10-29T21:22:26+00:00",
+  "completed_at": "2026-10-29T21:26:31+00:00",
+  "database_name": "kaggle_challenge",
+  "source_table_name": "public.raw_data",
+  "raw_schemas": [
+   "group001"
+  ],
+  "destination_names": [
+   "public.table3",
+   "public.table4",
+   "public.table1",
+   "public.table5",
+   "public.table6",
+   "public.table2"
+  ],
+  "source_rows": 1000000,
+  "total_rows_inserted": 5321553,
+  "destination_rows": [
+   {
+    "table_name": "public.table3",
+    "rows": 4
+   },
+   {
+    "table_name": "public.table4",
+    "rows": 27
+   },
+   {
+    "table_name": "public.table1",
+    "rows": 1000000
+   },
+   {
+    "table_name": "public.table5",
+    "rows": 1000000
+   },
+   {
+    "table_name": "public.table6",
+    "rows": 1000000
+   },
+   {
+    "table_name": "public.table2",
+    "rows": 2321522
+   }
+  ],
+  "items": [
+   {
+    "stage": "prepare",
+    "name": "Ensure control database metadata",
+    "seconds": 0.023760499,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "prepare",
+    "name": "Ensure control database metadata - local Python CPU",
+    "seconds": 0.0007163920000000101,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "prepare",
+    "name": "Normalize, parse, and validate expansion recipes - local Python CPU",
+    "seconds": 0.01397546700000002,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Verify source table existence",
+    "seconds": 0.017924042,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Verify source table existence - local Python CPU",
+    "seconds": 0.0005781049999999954,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read and validate source column metadata",
+    "seconds": 0.018060558,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read and validate source column metadata - local Python CPU",
+    "seconds": 0.0006528029999999241,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Load Raw version references for the selected scope",
+    "seconds": 0.02538431,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Load Raw version references for the selected scope - server command 2",
+    "seconds": 0.018296472,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Load Raw version references for the selected scope - local Python CPU",
+    "seconds": 0.0012625969999999764,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Validate SQL function safety",
+    "seconds": 0.018429381,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Validate SQL function safety - local Python CPU",
+    "seconds": 0.0006101950000000356,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Ensure data-database metadata and row counters",
+    "seconds": 0.047386184,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Ensure data-database metadata and row counters - local Python CPU",
+    "seconds": 0.000582320000000025,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Verify destination public.table3",
+    "seconds": 0.017521034,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Verify destination public.table3 - local Python CPU",
+    "seconds": 0.0005390509999999571,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read row counter for public.table3",
+    "seconds": 0.015656301,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read row counter for public.table3 - server command 2",
+    "seconds": 0.02189825,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read row counter for public.table3 - local Python CPU",
+    "seconds": 0.0011309290000000027,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Validate managed dependencies for public.table3",
+    "seconds": 0.021937313,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Validate managed dependencies for public.table3 - local Python CPU",
+    "seconds": 0.000570349000000081,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Verify destination public.table4",
+    "seconds": 0.017191054,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Verify destination public.table4 - local Python CPU",
+    "seconds": 0.00047688499999998246,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read row counter for public.table4",
+    "seconds": 0.014756368,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read row counter for public.table4 - server command 2",
+    "seconds": 0.01978024,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read row counter for public.table4 - local Python CPU",
+    "seconds": 0.0009970899999999228,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Validate managed dependencies for public.table4",
+    "seconds": 0.02155818,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Validate managed dependencies for public.table4 - local Python CPU",
+    "seconds": 0.0005299029999999982,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Verify destination public.table1",
+    "seconds": 0.017954459,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Verify destination public.table1 - local Python CPU",
+    "seconds": 0.0005054289999999462,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read row counter for public.table1",
+    "seconds": 0.015243394,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read row counter for public.table1 - server command 2",
+    "seconds": 0.020169842,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read row counter for public.table1 - local Python CPU",
+    "seconds": 0.0010200420000000543,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Validate managed dependencies for public.table1",
+    "seconds": 0.02163758,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Validate managed dependencies for public.table1 - local Python CPU",
+    "seconds": 0.0005281500000000605,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Verify destination public.table5",
+    "seconds": 0.017292154,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Verify destination public.table5 - local Python CPU",
+    "seconds": 0.0004769629999999969,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read row counter for public.table5",
+    "seconds": 0.015152794,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read row counter for public.table5 - server command 2",
+    "seconds": 0.020179119,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read row counter for public.table5 - local Python CPU",
+    "seconds": 0.0010972489999999668,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Validate managed dependencies for public.table5",
+    "seconds": 0.021900463,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Validate managed dependencies for public.table5 - local Python CPU",
+    "seconds": 0.0005225100000000316,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Verify destination public.table6",
+    "seconds": 0.017711032,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Verify destination public.table6 - local Python CPU",
+    "seconds": 0.0004938669999999812,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read row counter for public.table6",
+    "seconds": 0.015332382,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read row counter for public.table6 - server command 2",
+    "seconds": 0.019985185,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read row counter for public.table6 - local Python CPU",
+    "seconds": 0.001012709000000056,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Validate managed dependencies for public.table6",
+    "seconds": 0.022475543,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Validate managed dependencies for public.table6 - local Python CPU",
+    "seconds": 0.000478418000000036,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Verify destination public.table2",
+    "seconds": 0.016973415,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Verify destination public.table2 - local Python CPU",
+    "seconds": 0.0004936549999999817,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read row counter for public.table2",
+    "seconds": 0.015416269,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read row counter for public.table2 - server command 2",
+    "seconds": 0.019990284,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Read row counter for public.table2 - local Python CPU",
+    "seconds": 0.0011289890000000247,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Validate managed dependencies for public.table2",
+    "seconds": 0.022238228,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "preflight",
+    "name": "Validate managed dependencies for public.table2 - local Python CPU",
+    "seconds": 0.0006822190000000949,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "prepare",
+    "name": "Build protected transactional SQL batch - local Python CPU",
+    "seconds": 0.00030006199999998984,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "execute",
+    "name": "Expansion database batch envelope",
+    "seconds": 243.015842937,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": false
+   },
+   {
+    "stage": "execute",
+    "name": "Initialize database transaction",
+    "seconds": 0.000666,
+    "measurement": "postgresql_backend_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "execute",
+    "name": "Acquire destination table locks",
+    "seconds": 0.00029,
+    "measurement": "postgresql_backend_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "execute",
+    "name": "Scan source and build dependency manifest",
+    "seconds": 0.302712,
+    "measurement": "postgresql_backend_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "execute",
+    "name": "Insert into public.table3 (statement 1)",
+    "seconds": 3.934252,
+    "measurement": "postgresql_backend_wall",
+    "rows": 4,
+    "destination": "public.table3",
+    "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "execute",
+    "name": "Insert into public.table4 (statement 1)",
+    "seconds": 3.238371,
+    "measurement": "postgresql_backend_wall",
+    "rows": 27,
+    "destination": "public.table4",
+    "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "execute",
+    "name": "Insert into public.table1 (statement 1)",
+    "seconds": 79.965186,
+    "measurement": "postgresql_backend_wall",
+    "rows": 1000000,
+    "destination": "public.table1",
+    "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "execute",
+    "name": "Insert into public.table5 (statement 1)",
+    "seconds": 22.110857,
+    "measurement": "postgresql_backend_wall",
+    "rows": 1000000,
+    "destination": "public.table5",
+    "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "execute",
+    "name": "Insert into public.table6 (statement 1)",
+    "seconds": 37.862769,
+    "measurement": "postgresql_backend_wall",
+    "rows": 1000000,
+    "destination": "public.table6",
+    "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "execute",
+    "name": "Insert into public.table2 (statement 1)",
+    "seconds": 95.519672,
+    "measurement": "postgresql_backend_wall",
+    "rows": 2321522,
+    "destination": "public.table2",
+    "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "execute",
+    "name": "Commit expansion transaction",
+    "seconds": 0.014784,
+    "measurement": "postgresql_backend_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "execute",
+    "name": "Parse database manifest and timing telemetry - local Python CPU",
+    "seconds": 0.00012078599999998385,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "version",
+    "name": "Ensure control metadata for version registration",
+    "seconds": 0.054117236,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "version",
+    "name": "Ensure control metadata for version registration - local Python CPU",
+    "seconds": 0.0007386139999999708,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "version",
+    "name": "Build atomic version registration SQL - local Python CPU",
+    "seconds": 0.00047432899999999556,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "version",
+    "name": "Version database batch envelope",
+    "seconds": 0.058788242,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": false
+   },
+   {
+    "stage": "version",
+    "name": "Acquire version lock for table1",
+    "seconds": 0.002946,
+    "measurement": "postgresql_backend_wall",
+    "rows": null,
+    "destination": "table1",
+    "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "version",
+    "name": "Acquire version lock for table2",
+    "seconds": 0.000157,
+    "measurement": "postgresql_backend_wall",
+    "rows": null,
+    "destination": "table2",
+    "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "version",
+    "name": "Acquire version lock for table3",
+    "seconds": 0.000127,
+    "measurement": "postgresql_backend_wall",
+    "rows": null,
+    "destination": "table3",
+    "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "version",
+    "name": "Acquire version lock for table4",
+    "seconds": 0.000114,
+    "measurement": "postgresql_backend_wall",
+    "rows": null,
+    "destination": "table4",
+    "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "version",
+    "name": "Acquire version lock for table5",
+    "seconds": 0.000114,
+    "measurement": "postgresql_backend_wall",
+    "rows": null,
+    "destination": "table5",
+    "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "version",
+    "name": "Acquire version lock for table6",
+    "seconds": 0.000113,
+    "measurement": "postgresql_backend_wall",
+    "rows": null,
+    "destination": "table6",
+    "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "version",
+    "name": "Register version and dependency for public.table3",
+    "seconds": 0.010061,
+    "measurement": "postgresql_backend_wall",
+    "rows": 1,
+    "destination": "public.table3",
+    "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "version",
+    "name": "Register version and dependency for public.table4",
+    "seconds": 0.001036,
+    "measurement": "postgresql_backend_wall",
+    "rows": 1,
+    "destination": "public.table4",
+    "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "version",
+    "name": "Register version and dependency for public.table1",
+    "seconds": 0.001213,
+    "measurement": "postgresql_backend_wall",
+    "rows": 1,
+    "destination": "public.table1",
+    "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "version",
+    "name": "Register version and dependency for public.table5",
+    "seconds": 0.001325,
+    "measurement": "postgresql_backend_wall",
+    "rows": 1,
+    "destination": "public.table5",
+    "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "version",
+    "name": "Register version and dependency for public.table6",
+    "seconds": 0.000904,
+    "measurement": "postgresql_backend_wall",
+    "rows": 1,
+    "destination": "public.table6",
+    "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "version",
+    "name": "Register version and dependency for public.table2",
+    "seconds": 0.00171,
+    "measurement": "postgresql_backend_wall",
+    "rows": 1,
+    "destination": "public.table2",
+    "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "version",
+    "name": "Commit atomic version batch",
+    "seconds": 0.003382,
+    "measurement": "postgresql_backend_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "version",
+    "name": "Parse version registration results and timing telemetry - local Python CPU",
+    "seconds": 9.338500000000138e-05,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "refresh",
+    "name": "Invalidate destination filter caches - local Python CPU",
+    "seconds": 1.573000000032465e-06,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "refresh",
+    "name": "Reload database table catalog",
+    "seconds": 0.034853526,
+    "measurement": "remote_server_wall",
+    "rows": null,
+    "destination": null,
+    "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "refresh",
+    "name": "Reload database table catalog - local Python CPU",
+    "seconds": 0.0004677780000000853,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "refresh",
+    "name": "Rebuild table navigation controls - local Python CPU",
+    "seconds": 1.2119999999171682e-06,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   },
+   {
+    "stage": "refresh",
+    "name": "Build completion summary - local Python CPU",
+    "seconds": 6.842999999978616e-06,
+    "measurement": "local_python_cpu",
+    "rows": null,
+    "destination": null,
+    "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+    "include_in_total": true
+   }
+  ]
+ }
+}

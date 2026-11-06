@@ -1,0 +1,93 @@
+prepare       0.024 * Ensure control database metadata
+prepare       0.001 * Ensure control database metadata - local Python CPU
+prepare       0.014 * Normalize, parse, and validate expansion recipes - local Python CPU
+preflight      0.018 * Verify source table existence
+preflight      0.001 * Verify source table existence - local Python CPU
+preflight      0.018 * Read and validate source column metadata
+preflight      0.001 * Read and validate source column metadata - local Python CPU
+preflight      0.025 * Load Raw version references for the selected scope
+preflight      0.018 * Load Raw version references for the selected scope - server command 2
+preflight      0.001 * Load Raw version references for the selected scope - local Python CPU
+preflight      0.018 * Validate SQL function safety
+preflight      0.001 * Validate SQL function safety - local Python CPU
+preflight      0.047 * Ensure data-database metadata and row counters
+preflight      0.001 * Ensure data-database metadata and row counters - local Python CPU
+preflight      0.018 * Verify destination public.table3
+preflight      0.001 * Verify destination public.table3 - local Python CPU
+preflight      0.016 * Read row counter for public.table3
+preflight      0.022 * Read row counter for public.table3 - server command 2
+preflight      0.001 * Read row counter for public.table3 - local Python CPU
+preflight      0.022 * Validate managed dependencies for public.table3
+preflight      0.001 * Validate managed dependencies for public.table3 - local Python CPU
+preflight      0.017 * Verify destination public.table4
+preflight      0.000 * Verify destination public.table4 - local Python CPU
+preflight      0.015 * Read row counter for public.table4
+preflight      0.020 * Read row counter for public.table4 - server command 2
+preflight      0.001 * Read row counter for public.table4 - local Python CPU
+preflight      0.022 * Validate managed dependencies for public.table4
+preflight      0.001 * Validate managed dependencies for public.table4 - local Python CPU
+preflight      0.018 * Verify destination public.table1
+preflight      0.001 * Verify destination public.table1 - local Python CPU
+preflight      0.015 * Read row counter for public.table1
+preflight      0.020 * Read row counter for public.table1 - server command 2
+preflight      0.001 * Read row counter for public.table1 - local Python CPU
+preflight      0.022 * Validate managed dependencies for public.table1
+preflight      0.001 * Validate managed dependencies for public.table1 - local Python CPU
+preflight      0.017 * Verify destination public.table5
+preflight      0.000 * Verify destination public.table5 - local Python CPU
+preflight      0.015 * Read row counter for public.table5
+preflight      0.020 * Read row counter for public.table5 - server command 2
+preflight      0.001 * Read row counter for public.table5 - local Python CPU
+preflight      0.022 * Validate managed dependencies for public.table5
+preflight      0.001 * Validate managed dependencies for public.table5 - local Python CPU
+preflight      0.018 * Verify destination public.table6
+preflight      0.000 * Verify destination public.table6 - local Python CPU
+preflight      0.015 * Read row counter for public.table6
+preflight      0.020 * Read row counter for public.table6 - server command 2
+preflight      0.001 * Read row counter for public.table6 - local Python CPU
+preflight      0.022 * Validate managed dependencies for public.table6
+preflight      0.000 * Validate managed dependencies for public.table6 - local Python CPU
+preflight      0.017 * Verify destination public.table2
+preflight      0.000 * Verify destination public.table2 - local Python CPU
+preflight      0.015 * Read row counter for public.table2
+preflight      0.020 * Read row counter for public.table2 - server command 2
+preflight      0.001 * Read row counter for public.table2 - local Python CPU
+preflight      0.022 * Validate managed dependencies for public.table2
+preflight      0.001 * Validate managed dependencies for public.table2 - local Python CPU
+prepare       0.000 * Build protected transactional SQL batch - local Python CPU
+execute     243.016   Expansion database batch envelope
+execute       0.001 * Initialize database transaction
+execute       0.000 * Acquire destination table locks
+execute       0.303 * Scan source and build dependency manifest
+execute       3.934 * Insert into public.table3 (statement 1)
+execute       3.238 * Insert into public.table4 (statement 1)
+execute      79.965 * Insert into public.table1 (statement 1)
+execute      22.111 * Insert into public.table5 (statement 1)
+execute      37.863 * Insert into public.table6 (statement 1)
+execute      95.520 * Insert into public.table2 (statement 1)
+execute       0.015 * Commit expansion transaction
+execute       0.000 * Parse database manifest and timing telemetry - local Python CPU
+version       0.054 * Ensure control metadata for version registration
+version       0.001 * Ensure control metadata for version registration - local Python CPU
+version       0.000 * Build atomic version registration SQL - local Python CPU
+version       0.059   Version database batch envelope
+version       0.003 * Acquire version lock for table1
+version       0.000 * Acquire version lock for table2
+version       0.000 * Acquire version lock for table3
+version       0.000 * Acquire version lock for table4
+version       0.000 * Acquire version lock for table5
+version       0.000 * Acquire version lock for table6
+version       0.010 * Register version and dependency for public.table3
+version       0.001 * Register version and dependency for public.table4
+version       0.001 * Register version and dependency for public.table1
+version       0.001 * Register version and dependency for public.table5
+version       0.001 * Register version and dependency for public.table6
+version       0.002 * Register version and dependency for public.table2
+version       0.003 * Commit atomic version batch
+version       0.000 * Parse version registration results and timing telemetry - local Python CPU
+refresh       0.000 * Invalidate destination filter caches - local Python CPU
+refresh       0.035 * Reload database table catalog
+refresh       0.000 * Reload database table catalog - local Python CPU
+refresh       0.000 * Rebuild table navigation controls - local Python CPU
+refresh       0.000 * Build completion summary - local Python CPU
+MEASURED PROCESSING TOTAL: 243.714 s
