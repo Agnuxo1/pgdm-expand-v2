@@ -20,7 +20,7 @@ An engineering implementation for the [November Python & PostgreSQL Data Pipelin
 
 *Measured processing time at one million rows.* [Static figure](docs/figures/runtime.png).
 
-On one million source rows, the original path recorded 247.34 ± 5.59 s (three runs) and v2 recorded 83.49 ± 5.24 s (five). The three-million-row v2 series recorded 258.90 ± 5.70 s (two runs). These are means and sample standard deviations from the local protocol, not official scores. Output digests matched in the reported runs. See [experiment details](EXPAND_V2.md#results).
+On one million source rows, the original path recorded 247.34 ± 5.59 s (three runs) and v2 recorded 83.49 ± 5.24 s (five). The three-million-row v2 series recorded 258.90 ± 5.70 s (two runs). These are means and sample standard deviations from the local protocol on engine `86ca8a9`, not official scores. On a second machine the submitted engine recorded 77.57 ± 4.18 s against 139.31 ± 10.71 s for the original (three runs each); the two machines are not comparable. Output digests matched in the reported runs. See [experiment details](EXPAND_V2.md#results).
 
 ## Recovery and integrity
 

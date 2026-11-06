@@ -290,17 +290,21 @@ def _has_word(service_cls, destination, word: str) -> bool:
 
 
 def _raw_id_target_columns(service_cls, destination, placeholder) -> set:
-    """Columns of the destination that its recipe fills with <source>.raw_id."""
-    result = set()
+    """Columns of the destination that every statement of its recipe fills with <source>.raw_id,
+    using the alias of the source itself."""
+    result = None
     columns = list(destination.get("destination_columns") or [])
     for template in destination["statement_templates"]:
+        masked = service_cls._mask_sql_literals_and_comments(template)
+        source_alias = re.search(re.escape(placeholder) + r"\s+(?:as\s+)?([a-z_][a-z0-9_]*)", masked, flags=re.I)
         select_list = _top_level_select_list(service_cls, template)
-        if not select_list or len(select_list) != len(columns):
-            continue
-        for column, expression in zip(columns, select_list):
-            if re.fullmatch(r"\s*[a-z_][a-z0-9_]*\.raw_id\s*", expression, flags=re.I):
-                result.add(column)
-    return result
+        if not source_alias or not select_list or len(select_list) != len(columns):
+            return set()
+        pattern = re.escape(source_alias.group(1)) + r"\.raw_id"
+        filled = {column for column, expression in zip(columns, select_list)
+                  if re.fullmatch(pattern, expression.strip(), flags=re.I)}
+        result = filled if result is None else result & filled
+    return result or set()
 
 
 def _top_level_select_list(service_cls, template: str) -> list[str]:

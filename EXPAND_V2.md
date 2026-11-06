@@ -2,7 +2,7 @@
 **Author:** Francisco Angulo de Lafuente · **ORCID:** https://orcid.org/0009-0001-1634-7063 · **Attribution record:** 2026-11-06.
 
 Project write-up for the Kaggle Python & PostgreSQL Data Pipeline Optimization Challenge.
-NOTICE declares a derivation from [Igor Moreira’s Apache-2.0 project](https://github.com/igorsiecz/kaggle_postgre_challenge/tree/5dfde9d967425982229b92d6ffe98efcd74612e9). A Git-blob comparison against that base confirms that `generate_database.py`, all six official SQL recipes, and `GENERATE_DATABASE_README.md` are identical. The research snapshot adds 46 paths and modifies `README.md`, `main.py`, and `services/postgres_service.py`; the two Python file notices limit Francisco’s copyright to his modifications. The separately declared source snapshot `5a1028f999f482ef34b93f1ce25772e90ce80afa` was not retrievable from the upstream remote and is not treated as the comparison base.
+NOTICE declares a derivation from [Igor Moreira’s Apache-2.0 project](https://github.com/igorsiecz/kaggle_postgre_challenge/tree/5dfde9d967425982229b92d6ffe98efcd74612e9). A Git-blob comparison against that base confirms that `generate_database.py`, all six official SQL recipes, and `GENERATE_DATABASE_README.md` are identical. The research snapshot adds new paths and modifies `README.md`, `main.py`, and `services/postgres_service.py`; the two Python file notices limit Francisco’s copyright to his modifications. The separately declared source snapshot `5a1028f999f482ef34b93f1ce25772e90ce80afa` was not retrievable from the upstream remote and is not treated as the comparison base.
 All reported numbers are local results, not official competition scores. No official Kaggle submission or score is claimed.
 
 All numbers below are **local** results on the hardware described in [Results](#results); they are not official
@@ -62,8 +62,8 @@ A destination is *chunkable* only if every statement reads `{{source}}` once and
 `RIGHT`, `FULL` or `NATURAL` join, contains no subquery or set-level construct (`DISTINCT`, `GROUP BY`, aggregates,
 window functions, `LIMIT`, set operations …), does not read its own destination, and reads earlier destinations
 either after they are complete or, for every occurrence, through a bare `AND` term `rel.col = source.raw_id` of that
-join's `ON` clause, where `col` is filled from `raw_id` by that destination's own recipe (so a chunk only matches rows
-produced from its own source rows). Everything else runs once over the whole source, in recipe order. For the official workload this yields
+join's `ON` clause, where every statement of that destination fills `col` directly from the source's own `raw_id`
+(so a chunk only matches rows produced from its own source rows). Everything else runs once over the whole source, in recipe order. For the official workload this yields
 `[table3, table4]` global and `[table1, table5, table6, table2]` chunked; a recipe that joins on anything else is
 executed globally (covered by `tests/test_expansion_v2.py`).
 
@@ -146,7 +146,7 @@ At 1M (`v2_rep3`): global 10.7 s, chunked 75.2 s for ≈279 s of summed statemen
 
 Design note measured on the way: allowing PostgreSQL to sort in the global segment made it faster at 1M (5.6 s,
 total 78.3 ± 1.1 s, commit `fc86fb1`) but its parallel DISTINCT then spilled 224 MiB at 3M (30.9 s); hash
-aggregation (final commit) costs a few seconds at 1M, grows linearly, is faster at 3M and never writes temporary
+aggregation (final commit) costs a few seconds at 1M, is faster at 3M and never writes temporary
 files at the sizes measured. Nothing above 3M rows was measured.
 Memory: v2 runs 4 backends, so peak memory is reported as PSS (shared buffers split between processes); the
 original was sampled as the RSS sum of its backends (a single active backend, comparable order of magnitude).
