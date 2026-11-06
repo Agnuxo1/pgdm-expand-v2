@@ -1,9 +1,11 @@
-# Modified in pgdm-expand-v2; modifications © 2026 Francisco Angulo de Lafuente.
+# -*- coding: utf-8 -*-
+# Copyright © 2026 Francisco Angulo de Lafuente for PGDM Expand v2 modifications only.
+# Research-Project: pgdm-expand-v2
 # Research-ORCID: https://orcid.org/0009-0001-1634-7063
 # Research-Date: 2026-11-04
+# Attribution-Recorded-On: 2026-11-06
 # SPDX-License-Identifier: Apache-2.0
 
-# -*- coding: latin-1 -*-
 import csv
 import hashlib
 import io

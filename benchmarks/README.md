@@ -1,4 +1,5 @@
 # Benchmarks
+**Author:** Francisco Angulo de Lafuente · **ORCID:** https://orcid.org/0009-0001-1634-7063 · **Attribution record:** 2026-11-06.
 
 Reproducible local benchmark of the cross-table Expand, original engine vs PGDM Expand v2.
 

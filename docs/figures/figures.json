@@ -261,5 +261,15 @@
       "source": "Source: code paths described in the README",
       "alt": "Release provenance. Upstream Apache-2.0; Original modifications; Separate MIT renderer; CITATION.cff"
     }
-  ]
+  ],
+  "provenance": {
+    "project": "pgdm-expand-v2",
+    "creator": "Francisco Angulo de Lafuente",
+    "orcid": "https://orcid.org/0009-0001-1634-7063",
+    "original_figure_record_date": "2026-11-04",
+    "attribution_recorded_on": "2026-11-06",
+    "renderer_license": "MIT applies to tools/render_lab_figures.py only; see LICENSE_SCOPE.md",
+    "cover_source_status": "Unresolved; no source recorded",
+    "generated_image_and_value_license_status": "No new license claim; see LICENSE_SCOPE.md"
+  }
 }

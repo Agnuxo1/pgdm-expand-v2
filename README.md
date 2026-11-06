@@ -2,7 +2,9 @@
 
 ![PGDM Expand v2 editorial cover. Illustrative, no experimental data.](docs/figures/cover.gif)
 
-**Research author:** [Francisco Angulo de Lafuente](https://orcid.org/0009-0001-1634-7063) · [Citation](CITATION.cff).
+**Copyright © 2026 Francisco Angulo de Lafuente for original contributions and modifications only. Attribution record: 2026-11-06.**
+
+**Research author:** [Francisco Angulo de Lafuente](https://orcid.org/0009-0001-1634-7063) for the original PGDM Expand v2 contributions · [Citation](CITATION.cff).
 
 ## Research scope
 
@@ -10,7 +12,7 @@
 
 *Separate application control from data execution.* [Static figure](docs/figures/architecture.png).
 
-An engineering implementation for the [November Python & PostgreSQL Data Pipeline Optimization Challenge](https://www.kaggle.com/competitions/python-postgre-sql-data-pipeline-optimization-challenge). It is distinct from the earlier QueryFoundry writeup. This snapshot contains original work over the organizer's Apache-2.0 project; see [NOTICE](NOTICE) for the exact source lineage. No official Kaggle submission or score is claimed for this repository.
+An engineering implementation for the [November Python & PostgreSQL Data Pipeline Optimization Challenge](https://www.kaggle.com/competitions/python-postgre-sql-data-pipeline-optimization-challenge). This project focuses on redesigning execution of the cross-table Expand operation and is distinct from the earlier QueryFoundry write-up. It builds on [Igor Moreira’s Apache-2.0 project](https://github.com/igorsiecz/kaggle_postgre_challenge/tree/5dfde9d967425982229b92d6ffe98efcd74612e9). A Git-blob comparison confirms that the database generator, six official SQL recipes, and their setup guide match that upstream revision. The research implementation adds new files and modifies three upstream files; see [NOTICE](NOTICE) and [LICENSE_SCOPE.md](LICENSE_SCOPE.md) for the exact boundaries. No official Kaggle submission or score is claimed for this repository.
 
 ## Measured evidence
 
@@ -42,13 +44,17 @@ Run the unit tests with Python and the project dependencies. For the historical 
 
 *Release provenance.* [Static figure](docs/figures/rights.png).
 
-The code derived from the organizer and its modifications retain [Apache-2.0](LICENSE). The new figure renderer is [MIT](LICENSE.figures). Cite Francisco Angulo de Lafuente and the upstream project; preserve both sets of notices.
+The derivative software remains under the existing Apache-2.0 terms and retains upstream notices. The independent figure renderer at tools/render_lab_figures.py is separately designated MIT under LICENSE.figures. See LICENSE_SCOPE.md for verified and unresolved file boundaries; no new license claim is made for benchmark results, figure outputs, or the cover.
 
 ## Bibliography and proposed checks
 
 - [PostgreSQL, Parallel Plans](https://www.postgresql.org/docs/current/parallel-plans.html). Recheck the plan on each major PostgreSQL version.
 - [PostgreSQL, Transaction Isolation](https://www.postgresql.org/docs/current/transaction-iso.html). Retest recovery at transaction boundaries and under competing locks.
 
-**Attribution.** Cite [Francisco Angulo de Lafuente](https://orcid.org/0009-0001-1634-7063) using [CITATION.cff](CITATION.cff). The upstream and derivative software is Apache-2.0. The independent figure renderer is MIT-licensed. Preserve applicable copyright and permission notices and do not present this work as your own. [License](LICENSE) · [Figure methods and provenance](docs/figures/README.md).
+**Attribution.** Cite [Francisco Angulo de Lafuente](https://orcid.org/0009-0001-1634-7063) using [CITATION.cff](CITATION.cff). Preserve upstream notices and consult LICENSE_SCOPE.md before reusing files outside the explicitly attributed code. The MIT notice below applies only to tools/render_lab_figures.py.
 
-<!-- research-provenance: project=pgdm-expand-v2; edition=2026-11-04; creator=Francisco Angulo de Lafuente; orcid=https://orcid.org/0009-0001-1634-7063; figure-renderer-license=MIT -->
+**Reuse notice for the original figure renderer file tools/render_lab_figures.py only:**
+
+This project contains open-source material under the MIT License. When redistributing copies or substantial portions, retain the copyright and permission notices. If you build on this work, please cite the project and credit Francisco Angulo de Lafuente (ORCID: 0009-0001-1634-7063). Help advance scientific knowledge: we welcome reproducible results, corrections, and contributions.
+
+<!-- research-provenance: project=pgdm-expand-v2; original-record=2026-11-04; creator=Francisco Angulo de Lafuente; orcid=https://orcid.org/0009-0001-1634-7063; attribution-recorded-on=2026-11-06; license-scope=LICENSE_SCOPE.md; upstream-comparison=git-blobs; upstream-base=5dfde9d967425982229b92d6ffe98efcd74612e9 -->

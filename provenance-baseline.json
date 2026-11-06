@@ -1,0 +1,236 @@
+{
+  "schema_version": "1.0",
+  "project": "pgdm-expand-v2",
+  "author": {
+    "name": "Francisco Angulo de Lafuente",
+    "orcid": "https://orcid.org/0009-0001-1634-7063"
+  },
+  "canonical_url": "https://github.com/Agnuxo1/pgdm-expand-v2",
+  "captured_on": "2026-11-06",
+  "attribution_recorded_on": "2026-11-06",
+  "baseline_commit": "3b81aedc45bcff28500f99fdbcd4d024cbe44f86",
+  "baseline_commit_author": "Francisco Angulo de Lafuente <166046035+Agnuxo1@users.noreply.github.com>",
+  "upstream_comparison": {
+    "repository": "https://github.com/igorsiecz/kaggle_postgre_challenge",
+    "base_commit": "5dfde9d967425982229b92d6ffe98efcd74612e9",
+    "added_paths": 46,
+    "modified_paths": [
+      "README.md",
+      "main.py",
+      "services/postgres_service.py"
+    ],
+    "deleted_paths": 0,
+    "git_blob_identical_paths": [
+      "generate_database.py",
+      "GENERATE_DATABASE_README.md",
+      "SQL files/01_table3.sql",
+      "SQL files/02_table4.sql",
+      "SQL files/03_table1.sql",
+      "SQL files/04_table5.sql",
+      "SQL files/05_table6.sql",
+      "SQL files/06_table2.sql"
+    ]
+  },
+  "method": "SHA-256 over exact Git blob bytes from the research snapshot commit; passage fingerprints use Unicode NFC, casefold, and collapse whitespace. Selected original project source, documentation, and evidence records only; excludes inherited/unchanged upstream files, the mixed README full-file hash, license boilerplate, generated images, and other third-party material.",
+  "file_hashes": [
+    {
+      "path": "CITATION.cff",
+      "sha256": "7d4594726c906444be6b87ae1c7e0d4c003d708fb97ab9fcdc1e97ac5f21ac0f",
+      "bytes": 333
+    },
+    {
+      "path": "EXPAND_V2.md",
+      "sha256": "8635435c73c0628b138dc992e60737d2859615ae60db6bf34263d99d6ff81210",
+      "bytes": 16327
+    },
+    {
+      "path": "NOTICE",
+      "sha256": "3c0e754ef64eaeaff3152612022cf2e3ba7a1fb782de89c4ccfcc431c9b4d372",
+      "bytes": 531
+    },
+    {
+      "path": "benchmarks/Dockerfile",
+      "sha256": "486a7743c1a3b4735c4e3cfd1c2834f4907f2e829a89f245d1362dfa71601ea9",
+      "bytes": 759
+    },
+    {
+      "path": "benchmarks/README.md",
+      "sha256": "5d9599fc22067831d3eae42a15b738ea4d2e03af2fed80e40aa5bfbe42c9614a",
+      "bytes": 2231
+    },
+    {
+      "path": "benchmarks/diag_scan.sh",
+      "sha256": "2576672249970c06e1aafa19e0447de85ca73c27e97475a6742fdf52aa2156d7",
+      "bytes": 1657
+    },
+    {
+      "path": "benchmarks/ensure_data.sh",
+      "sha256": "d7caa71194271f32db6adb7ba054056c19ee226c2cf67e001e6d571ec802f0c6",
+      "bytes": 1176
+    },
+    {
+      "path": "benchmarks/entry.sh",
+      "sha256": "3a0c442a55dee55cedbf45eea7f2d8ce9b390f7b17c79c57b0e9bca2fb6a9a73",
+      "bytes": 2165
+    },
+    {
+      "path": "benchmarks/eval_config.sh",
+      "sha256": "bcd7948427cea4a011be08061b89b37d1c4b819f28dfbd47b7814ef442d095d8",
+      "bytes": 1353
+    },
+    {
+      "path": "benchmarks/eval_config_seq.sh",
+      "sha256": "6b8966c619dc487bee90549ec4982d35dbfd875d4268eefb2064210250b85c1f",
+      "bytes": 226
+    },
+    {
+      "path": "benchmarks/harness.py",
+      "sha256": "05749e9bef51efd977fb19131e37749b6f6b1db4ce48cf201a8c700fc5fd5d48",
+      "bytes": 8440
+    },
+    {
+      "path": "benchmarks/inside.sh",
+      "sha256": "643fdd5a9a6ad9abb01a90170fc3acfefdfa251d6484408e7096dcccc26fb24f",
+      "bytes": 1560
+    },
+    {
+      "path": "benchmarks/inside_micro.sh",
+      "sha256": "2a404bfd481d140f486dccb0276bc860c1778b503b382a759c152461c61a83cd",
+      "bytes": 908
+    },
+    {
+      "path": "benchmarks/inside_tune.sh",
+      "sha256": "d10d0fccf897dbd59223134d4cf9e84f9565627619554e5d578cadcefdb2d744",
+      "bytes": 772
+    },
+    {
+      "path": "benchmarks/interrupt_test.sh",
+      "sha256": "617031eea8bd761a4a7d5edbd1b06e3e948c0ad367dedbd459a68160adba6a10",
+      "bytes": 4522
+    },
+    {
+      "path": "benchmarks/micro.py",
+      "sha256": "1b8fe7d0a39696ebd6585a67569cbf5b8f79ffdf0b8e70d4e9fbaca0fd46b861",
+      "bytes": 5111
+    },
+    {
+      "path": "benchmarks/pg_base.conf",
+      "sha256": "a040fe6814410afeb04665bfe35cad1ce12402daa3f7bbb2391ae716520c06f6",
+      "bytes": 195
+    },
+    {
+      "path": "benchmarks/prepare_workspace.sh",
+      "sha256": "88468326b058cd2d29ee6ce1bb8aa23deeacc0d36913178b432487f712c2330b",
+      "bytes": 755
+    },
+    {
+      "path": "benchmarks/profiles/tuned.conf",
+      "sha256": "87cb76d6e5166bd26d9fb98ad5f73ad74172ee831c752a62fad9728123437941",
+      "bytes": 148
+    },
+    {
+      "path": "benchmarks/reset.sh",
+      "sha256": "3389813458eefb7cdc06436898cb625cc414f244520f29dc7cc543a01af16e10",
+      "bytes": 1686
+    },
+    {
+      "path": "benchmarks/results_table.py",
+      "sha256": "2648f3e14a837b3856c2f88afe576d9e93164b7c82a7f2c21007e9ec244153eb",
+      "bytes": 2729
+    },
+    {
+      "path": "benchmarks/run_bench.sh",
+      "sha256": "3d1d5ed0c892a13033f21bc16b1ad6edfa6b37602dd9461a16531da8aa9d87db",
+      "bytes": 1428
+    },
+    {
+      "path": "benchmarks/verify.py",
+      "sha256": "c398764b8730ea52cd0a3ca349dce5c091e379b5aa46ebaf6a1bb001a0734614",
+      "bytes": 5262
+    },
+    {
+      "path": "codemeta.json",
+      "sha256": "eadbabdc6fe8a5f655a2237f3828c95d5483c87e3e9ca7717595fcd141642faa",
+      "bytes": 435
+    },
+    {
+      "path": "docs/figures/README.md",
+      "sha256": "778a4a6d7b92b3a9cf9cb3a484ae0df739b9a5672d8a907c79bcbe8e9847f84c",
+      "bytes": 691
+    },
+    {
+      "path": "docs/figures/figures.json",
+      "sha256": "64cdc0281c9a22376d597a0d79347456b20e1f4f8c8a3fa6e7a1b3bd3f47fa61",
+      "bytes": 5403
+    },
+    {
+      "path": "docs/figures/provenance.json",
+      "sha256": "59227360169f933a53bd2ef1b85a569bb19600a5838e44969074a4a59a565055",
+      "bytes": 271
+    },
+    {
+      "path": "services/expansion_engine.py",
+      "sha256": "769456e4be19775d8afd0762fc0c83560330af1e70f81582cc990719cbcf03d9",
+      "bytes": 47804
+    },
+    {
+      "path": "services/expansion_v2.py",
+      "sha256": "780a7c1fe34e7e075ca9b408c8320a64285b9ec2aefc308b8d03909b3c363811",
+      "bytes": 29404
+    },
+    {
+      "path": "tests/test_expansion_v2.py",
+      "sha256": "c45e644c705c073993a3e7a65566596a5565a2023f87d7c8e53052a23ddcca41",
+      "bytes": 7178
+    },
+    {
+      "path": "tools/darwin_cage_tuner.py",
+      "sha256": "661a55455f73897e527b58dad6c483759fa01caefec3e5ab5ae94257fadc44fc",
+      "bytes": 7443
+    },
+    {
+      "path": "tools/render_lab_figures.py",
+      "sha256": "12f25ba1f0dc6c6ab685f0f5cf85a28f65a729128fa45c2faf56e1b12843bb7d",
+      "bytes": 10229
+    }
+  ],
+  "passage_fingerprints": [
+    {
+      "path": "README.md",
+      "passage": "An engineering implementation for the [November Python & PostgreSQL Data Pipeline Optimization Challenge](https://www.kaggle.com/competitions/python-postgre-sql-data-pipeline-optimization-challenge).",
+      "normalization": "Unicode NFC, casefold, and collapse all whitespace runs to one space",
+      "sha256": "650f70923b7dd9b85ba74e53a10651f7ead140b36a8e4e033c599598559f05c6"
+    },
+    {
+      "path": "EXPAND_V2.md",
+      "passage": "Segmentation is derived from the recipes, not hard-coded",
+      "normalization": "Unicode NFC, casefold, and collapse all whitespace runs to one space",
+      "sha256": "0e315a6b8fa943eca351ba0410935a4a09f867278e5a79d3a603d48b61fa1862"
+    },
+    {
+      "path": "services/expansion_engine.py",
+      "passage": "PGDM Expand v2: resumable, parallel, server-side cross-table expansion.",
+      "normalization": "Unicode NFC, casefold, and collapse all whitespace runs to one space",
+      "sha256": "123c0530598613ed1d3e996a41f3b2070a72bd777578412020f4f6ef72179e98"
+    },
+    {
+      "path": "benchmarks/harness.py",
+      "passage": "Headless driver for the DB Manager cross-table Expand operation.",
+      "normalization": "Unicode NFC, casefold, and collapse all whitespace runs to one space",
+      "sha256": "67639cf94f47b457c0e851733cc3a98863ed6f56b36bab30561fe582a9f67e03"
+    },
+    {
+      "path": "tests/test_expansion_v2.py",
+      "passage": "def test_official_workload_segments(self):",
+      "normalization": "Unicode NFC, casefold, and collapse all whitespace runs to one space",
+      "sha256": "f383dc66a6c5d3408e1c36c4e38bf05c08a064e6b1dbeb6558e20115b7bfafc7"
+    },
+    {
+      "path": "tools/darwin_cage_tuner.py",
+      "passage": "Darwin-Cage autotuner for the PGDM Expand v2 configuration.",
+      "normalization": "Unicode NFC, casefold, and collapse all whitespace runs to one space",
+      "sha256": "27760312ae4d186dc78d48e0c9e9ea345e100232a5fa7dedde0e64f9a6f603bb"
+    }
+  ],
+  "scope_limit": "This manifest fingerprints selected added project files and distinctive passages from the mixed README as they existed in the reviewed root snapshot. The upstream tree comparison establishes path-level differences and Git-blob equality for the listed inherited files; it does not alone establish the provenance or licensing of every figure output, benchmark value, or cover asset."
+}

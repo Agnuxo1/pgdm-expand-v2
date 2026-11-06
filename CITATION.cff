@@ -2,6 +2,7 @@ cff-version: 1.2.0
 message: "Please cite the research software using this metadata."
 type: software
 title: "PGDM Expand v2"
+abstract: "Attribution record updated 2026-11-06. Derivative Apache-2.0 research software with a separate MIT-licensed figure renderer; see LICENSE_SCOPE.md for upstream and file-level provenance."
 authors:
   - family-names: "Angulo de Lafuente"
     given-names: "Francisco"

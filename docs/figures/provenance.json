@@ -5,7 +5,11 @@
     "name": "Francisco Angulo de Lafuente",
     "orcid": "https://orcid.org/0009-0001-1634-7063"
   },
-  "figureRendererLicense": "MIT",
+  "figureRendererLicense": "MIT applies to tools/render_lab_figures.py only; see root LICENSE_SCOPE.md",
   "projectLicense": "Apache-2.0",
-  "licenseFile": "LICENSE"
+  "licenseFile": "LICENSE",
+  "attribution_recorded_on": "2026-11-06",
+  "figureOutputLicense": "Unresolved; no new license claim inferred from renderer license",
+  "coverSourceStatus": "Unresolved; source not recorded",
+  "scopeFile": "../../LICENSE_SCOPE.md"
 }

@@ -1,6 +1,12 @@
 PGDM Expand v2
-Original contributions and changes: Copyright 2026 Francisco Angulo de Lafuente, https://orcid.org/0009-0001-1634-7063
+Original contributions and changes: Copyright © 2026 Francisco Angulo de Lafuente, https://orcid.org/0009-0001-1634-7063
 Derived from Igor Moreira, kaggle_postgre_challenge, base revision 5dfde9d.
-Upstream: https://github.com/igorsiecz/kaggle_postgre_challenge/tree/5dfde9d
-This distribution preserves the upstream Apache-2.0 license. The generator and official recipes are upstream material. The MIT license for the new figure renderer is separate.
-Original source snapshot: 5a1028f999f482ef34b93f1ce25772e90ce80afa.
+Upstream: https://github.com/igorsiecz/kaggle_postgre_challenge/tree/5dfde9d967425982229b92d6ffe98efcd74612e9
+This distribution preserves the upstream Apache-2.0 license. The MIT license for the new figure renderer applies only to tools/render_lab_figures.py.
+Original source snapshot declared in the project records: 5a1028f999f482ef34b93f1ce25772e90ce80afa.
+
+Attribution record: 2026-11-06. The Francisco Angulo de Lafuente credit applies to original PGDM Expand v2 contributions and modifications; it does not claim authorship of upstream material.
+
+Upstream comparison (2026-11-06): the valid kaggle_postgre_challenge remote resolved to base commit 5dfde9d967425982229b92d6ffe98efcd74612e9. Against the research snapshot, 46 paths are additions and three upstream paths are modified: README.md, main.py, and services/postgres_service.py. The generator, six official SQL recipes, and GENERATE_DATABASE_README.md have Git blobs identical to the base. The separately declared source snapshot 5a1028f999f482ef34b93f1ce25772e90ce80afa was not found among the upstream remote's advertised refs; no equivalence to that hash is asserted.
+
+The alternate URL spelling kaggle_postgresql_challenge returned Repository not found. See LICENSE_SCOPE.md for the file-level attribution boundaries and unresolved figure/output rights.

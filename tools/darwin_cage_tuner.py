@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Research-Project: pgdm-expand-v2
 # Research-Date: 2026-11-04
+# Attribution-Recorded-On: 2026-11-06
 # Research-ORCID: https://orcid.org/0009-0001-1634-7063
 # Reuse: preserve applicable notices and cite the original author.
 

@@ -1,0 +1,109 @@
+{
+  "schema_version": "1.0",
+  "project": "pgdm-expand-v2",
+  "author": {
+    "name": "Francisco Angulo de Lafuente",
+    "orcid": "https://orcid.org/0009-0001-1634-7063"
+  },
+  "recorded_on": "2026-11-06",
+  "canonical_url": "https://github.com/Agnuxo1/pgdm-expand-v2",
+  "repository": {
+    "github_id": 1445442775,
+    "visibility": "public",
+    "default_branch": "main",
+    "baseline_commit": "3b81aedc45bcff28500f99fdbcd4d024cbe44f86",
+    "baseline_commit_author_date": "2026-11-04T10:51:03+01:00",
+    "baseline_commit_author": "Francisco Angulo de Lafuente <166046035+Agnuxo1@users.noreply.github.com>",
+    "observed_branches": [
+      "main"
+    ],
+    "tags": [],
+    "releases": 0,
+    "actions_runs": [
+      {
+        "id": 41810356152,
+        "conclusion": "success",
+        "jobs": 4,
+        "head_sha": "3b81aedc45bcff28500f99fdbcd4d024cbe44f86"
+      }
+    ]
+  },
+  "authorship_basis": [
+    "Single root snapshot commit by the user-confirmed Agnuxo1 account.",
+    "Existing SPDX headers attribute original PGDM Expand v2 engine, benchmark, tuner, test, and renderer contributions to Francisco.",
+    "Existing banners in main.py and services/postgres_service.py attribute modifications only to Francisco.",
+    "NOTICE declares the project is derived from upstream Igor Moreira Apache-2.0 material; this audit does not attribute those upstream lines to Francisco."
+  ],
+  "license_scopes": {
+    "Apache-2.0": {
+      "files": [
+        "services/expansion_engine.py",
+        "services/expansion_v2.py",
+        "benchmarks/*",
+        "tests/test_expansion_v2.py",
+        "tools/darwin_cage_tuner.py",
+        "main.py (modifications only)",
+        "services/postgres_service.py (modifications only)"
+      ],
+      "basis": "Existing root Apache-2.0 license and existing per-file notices; see LICENSE_SCOPE.md."
+    },
+    "MIT": {
+      "files": [
+        "tools/render_lab_figures.py"
+      ],
+      "basis": "Existing LICENSE.figures; no new MIT scope is asserted for other repository material."
+    },
+    "upstream_or_unresolved": [
+      "The declared source snapshot 5a1028f999f482ef34b93f1ce25772e90ce80afa was not found among the upstream remote refs; the exact comparison uses base commit 5dfde9d967425982229b92d6ffe98efcd74612e9.",
+      "Benchmark result values and reports",
+      "Figure specification and generated PNG/GIF assets",
+      "Cover artwork source and license"
+    ]
+  },
+  "upstream": {
+    "declared_author": "Igor Moreira",
+    "declared_license": "Apache-2.0",
+    "declared_base_revision": "5dfde9d",
+    "declared_source_snapshot": "5a1028f999f482ef34b93f1ce25772e90ce80afa",
+    "urls": [
+      "https://github.com/igorsiecz/kaggle_postgre_challenge",
+      "https://github.com/igorsiecz/kaggle_postgresql_challenge"
+    ],
+    "retrieval_status": "On 2026-11-06, the valid upstream remote resolved to commit 5dfde9d967425982229b92d6ffe98efcd74612e9. The alternate kaggle_postgresql_challenge URL returned Repository not found. The separately declared source snapshot 5a1028f999f482ef34b93f1ce25772e90ce80afa was not found among the remote advertised refs.",
+    "comparison": {
+      "base_commit": "5dfde9d967425982229b92d6ffe98efcd74612e9",
+      "snapshot_commit": "3b81aedc45bcff28500f99fdbcd4d024cbe44f86",
+      "added_paths": 46,
+      "modified_paths": [
+        "README.md",
+        "main.py",
+        "services/postgres_service.py"
+      ],
+      "deleted_paths": 0,
+      "git_blob_identical_paths": [
+        "generate_database.py",
+        "GENERATE_DATABASE_README.md",
+        "SQL files/01_table3.sql",
+        "SQL files/02_table4.sql",
+        "SQL files/03_table1.sql",
+        "SQL files/04_table5.sql",
+        "SQL files/05_table6.sql",
+        "SQL files/06_table2.sql"
+      ]
+    }
+  },
+  "competition": {
+    "name": "Python & PostgreSQL Data Pipeline Optimization Challenge",
+    "official_page": "https://www.kaggle.com/competitions/python-postgre-sql-data-pipeline-optimization-challenge",
+    "rules_page": "https://www.kaggle.com/competitions/python-postgre-sql-data-pipeline-optimization-challenge/rules",
+    "rules_access": "Direct opens of the official overview and rules pages returned zero readable lines. The official Kaggle overview search index exposes the requirements for an unchanged generator/fixed seed, a public Git repository, an exact commit before the deadline, no committed secrets, and independent reproducibility. The full rules-page text and deadline status remain unconfirmed; no eligibility, submission, or score claim is made.",
+    "verified_requirements": [
+      "Final solution must be in a public GitHub repository with an exact submission commit before the deadline.",
+      "Do not commit credentials or secrets.",
+      "Do not modify the official database generator or its fixed seed."
+    ],
+    "repo_relation": "Repository was already public; README says no official Kaggle submission or score is claimed. Upstream comparison confirms the generator, setup guide, and six SQL recipes are Git-blob-identical to base commit 5dfde9d967425982229b92d6ffe98efcd74612e9; this audit did not modify them or change repository visibility."
+  },
+  "publication_state": "already public; no visibility change",
+  "baseline_file": "provenance-baseline.json"
+}

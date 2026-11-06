@@ -1,4 +1,11 @@
 #!/bin/bash
+# SPDX-FileCopyrightText: 2026 Francisco Angulo de Lafuente
+# SPDX-License-Identifier: Apache-2.0
+# Research-Project: pgdm-expand-v2
+# Research-Date: 2026-11-04
+# Research-ORCID: https://orcid.org/0009-0001-1634-7063
+# Attribution-Recorded-On: 2026-11-06
+# Reuse: preserve upstream Apache-2.0 notices and cite the author of original changes.
 # Benchmark job entry point (server-ia queue, cpu lane).
 # Usage: run_bench.sh ROWS "VARIANTS" REPS [PROFILE]; env INSIDE=<script> selects the in-container driver.
 # Safety: one container per data volume at a time (flock), and the container is stopped

@@ -1,9 +1,9 @@
 # PGDM Expand v2 — parallel, resumable, server-side expansion
+**Author:** Francisco Angulo de Lafuente · **ORCID:** https://orcid.org/0009-0001-1634-7063 · **Attribution record:** 2026-11-06.
 
-Submission for the Kaggle *Python & PostgreSQL Data Pipeline Optimization Challenge*.
-This repository is a fork of [igorsiecz/kaggle_postgre_challenge](https://github.com/igorsiecz/kaggle_postgre_challenge)
-(base commit `5dfde9d`). The DB Manager, its GUI, the official generator and the six official SQL recipes are
-unchanged; only the execution of the cross-table **Expand** operation was redesigned.
+Project write-up for the Kaggle Python & PostgreSQL Data Pipeline Optimization Challenge.
+NOTICE declares a derivation from [Igor Moreira’s Apache-2.0 project](https://github.com/igorsiecz/kaggle_postgre_challenge/tree/5dfde9d967425982229b92d6ffe98efcd74612e9). A Git-blob comparison against that base confirms that `generate_database.py`, all six official SQL recipes, and `GENERATE_DATABASE_README.md` are identical. The research snapshot adds 46 paths and modifies `README.md`, `main.py`, and `services/postgres_service.py`; the two Python file notices limit Francisco’s copyright to his modifications. The separately declared source snapshot `5a1028f999f482ef34b93f1ce25772e90ce80afa` was not retrievable from the upstream remote and is not treated as the comparison base.
+All reported numbers are local results, not official competition scores. No official Kaggle submission or score is claimed.
 
 All numbers below are **local** results on the hardware described in [Results](#results); they are not official
 competition scores.
@@ -218,3 +218,4 @@ The PostgreSQL role needs `max_connections` headroom for K + 3 sessions (K worke
 * Bulk FK validation (drop, load, re-add) would roughly halve the per-row cost (§1) but leaves the tables without
   those constraints between chunk commits and after a crash until resume; we chose to keep every constraint enabled
   and not to trade integrity guarantees for speed.
+<!-- research-provenance: project=pgdm-expand-v2; creator=Francisco Angulo de Lafuente; orcid=https://orcid.org/0009-0001-1634-7063; attribution-recorded-on=2026-11-06; upstream-comparison=git-blobs; upstream-base=5dfde9d967425982229b92d6ffe98efcd74612e9 -->
