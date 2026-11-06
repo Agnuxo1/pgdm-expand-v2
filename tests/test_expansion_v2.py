@@ -129,6 +129,15 @@ class ExpansionV2PlanTests(unittest.TestCase):
         self.assertEqual(engine._raw_id_target_columns(
             PostgresAdminService, dict(destination, statement_templates=changed), "{{source}}"), set())
 
+    def test_each_statement_is_read_with_its_own_column_order(self):
+        destination = {"statement_templates": [
+            "INSERT INTO public.t (a, b) SELECT s.raw_id, 1 FROM {{source}} AS s",
+            "INSERT INTO public.t (b, a) SELECT s.raw_id, 1 FROM {{source}} AS s",
+        ]}
+        self.assertEqual(engine._raw_id_target_columns(PostgresAdminService, destination, "{{source}}"), set())
+        destination["statement_templates"][1] = "INSERT INTO public.t (b, a) SELECT 1, s.raw_id FROM {{source}} AS s"
+        self.assertEqual(engine._raw_id_target_columns(PostgresAdminService, destination, "{{source}}"), {"a"})
+
     def test_content_hash_binds_values_to_their_row(self):
         sql = engine._content_hash_sql({"source_columns": [("raw_id", "bigint"), ("raw", "jsonb")]})
         self.assertIn("hashtextextended(concat_ws(':', r.", sql)

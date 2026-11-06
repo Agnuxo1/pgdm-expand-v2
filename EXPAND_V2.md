@@ -127,13 +127,13 @@ runs the same engine with one worker.
 Local results (not official scores). Bench A, engine `86ca8a9`, 29–30 Oct 2026: AMD Ryzen 7 3700X host, Debian 13, SATA SSD; benchmark container limited to
 **4 vCPU and 6 GiB**; PostgreSQL 16.15 (Alpine image) with its **default configuration**; DB Manager service layer
 driven headlessly over SSH to `127.0.0.1`; data from the unmodified official generator. Commit of the engine:
-see the submission commit. Correctness of every run: `benchmarks/verify.py` (natural-key digests identical to the
+`86ca8a9` (the submitted engine is covered by bench B below). Correctness of every run: `benchmarks/verify.py` (natural-key digests identical to the
 original engine's output, exact row counters, one version + one dependency per destination).
 
 | rows | engine | runs | MEASURED PROCESSING TOTAL (s) | peak PostgreSQL memory | temp files | verified |
 |---|---|---|---|---|---|---|
-| 100,000 | original | 1 | 22.52 | 166 MiB (PSS) | 0 | 1/1 |
-| 100,000 | v2 | 1 | 13.09 | 353 MiB (PSS) | 0 | 1/1 |
+| 100,000 | original | 1 (log only) | 22.52 | 166 MiB (PSS) | 0 | 1/1 |
+| 100,000 | v2 | 1 (log only) | 13.09 | 353 MiB (PSS) | 0 | 1/1 |
 | 1,000,000 | original | 3 | 247.34 ± 5.59 | 563 MiB (RSS sum) | 75 MiB | 3/3 |
 | 1,000,000 | **v2** | 5 | **83.49 ± 5.24** (75.71–88.50) | 557 MiB (PSS) | **0** | 5/5 |
 | 3,000,000 | original | 1 | 711.45 | 319 MiB (PSS) | 224 MiB | 1/1 |
@@ -193,7 +193,7 @@ from the reference is rejected.
 control". With 4 generations × 6 individuals (21 distinct evaluations, 1M rows, seed 7) the best configuration found
 was the control itself (75.7 s); the closest alternatives scored 76.7, 77.0 and 77.3 s, within run-to-run noise.
 **H1 is rejected at this budget**: the tuner did not make the engine faster. What it did contribute is a
-verified sensitivity map that confirms the shipped defaults sit at a local optimum and explains why they are
+verified sensitivity map: no evaluated alternative beat the shipped defaults beyond noise, and it shows why they are
 expressed per core:
 
 | Factor (1M rows, 4 vCPU) | Effect on MEASURED PROCESSING TOTAL |
@@ -233,6 +233,8 @@ The PostgreSQL role needs `max_connections` headroom for K + 3 sessions (K worke
   (constraints still apply), unlike the original `SHARE ROW EXCLUSIVE` lock which parallel workers cannot share.
 * Identity values are assigned in a different order than the single-backend original (see §3).
 * Speed-up was measured with 4 cores only; other core counts were not measured.
+* Chunking eligibility is a syntactic analysis, tested on the official recipes and on adversarial variants; it is
+  not a formal proof for arbitrary SQL. For a custom recipe set, compare one run against `PDM_EXPAND_ENGINE=legacy`.
 * The source checksum detects changes with high probability; it is a hash, not a proof of identity.
 * Jobs started by an earlier engine version are not resumed: the engine version is part of the job key.
 * Bulk FK validation (drop, load, re-add) would roughly halve the per-row cost (§1) but leaves the tables without
