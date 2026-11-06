@@ -132,14 +132,12 @@ original engine's output, exact row counters, one version + one dependency per d
 
 | rows | engine | runs | MEASURED PROCESSING TOTAL (s) | peak PostgreSQL memory | temp files | verified |
 |---|---|---|---|---|---|---|
-| 100,000 | original | 1 (log only) | 22.52 | 166 MiB (PSS) | 0 | 1/1 |
-| 100,000 | v2 | 1 (log only) | 13.09 | 353 MiB (PSS) | 0 | 1/1 |
 | 1,000,000 | original | 3 | 247.34 ± 5.59 | 563 MiB (RSS sum) | 75 MiB | 3/3 |
 | 1,000,000 | **v2** | 5 | **83.49 ± 5.24** (75.71–88.50) | 557 MiB (PSS) | **0** | 5/5 |
 | 3,000,000 | original | 1 | 711.45 | 319 MiB (PSS) | 224 MiB | 1/1 |
 | 3,000,000 | **v2** | 2 | **258.90 ± 5.70** (254.87–262.93) | 558 MiB (PSS) | **0** | 2/2 |
 
-Speed-up with 4 cores: **2.96× at 1M** and **2.75× at 3M**; no temporary files at the three measured sizes. Breakdown of a v2
+Speed-up with 4 cores: **2.96× at 1M** and **2.75× at 3M**; no temporary files at either size. Breakdown of a v2
 run at 3M (`v2_rep2`): global segment (table3, table4, manifest and source fingerprint in one transaction) 28.5 s;
 chunked segment (60 chunks) 225.3 s; version registration < 0.1 s; Manager-side preflight ≈0.6 s (unchanged).
 At 1M (`v2_rep3`): global 10.7 s, chunked 75.2 s for ≈279 s of summed statement time over 4 workers.
