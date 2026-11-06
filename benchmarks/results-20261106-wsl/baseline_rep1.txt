@@ -1,0 +1,87 @@
+prepare       0.051 * Ensure control database metadata
+prepare       0.002 * Ensure control database metadata - local Python CPU
+prepare       0.020 * Normalize, parse, and validate expansion recipes - local Python CPU
+preflight      0.041 * Verify source table existence
+preflight      0.001 * Verify source table existence - local Python CPU
+preflight      0.041 * Read and validate source column metadata
+preflight      0.001 * Read and validate source column metadata - local Python CPU
+preflight      0.048 * Load Raw version references for the selected scope
+preflight      0.040 * Load Raw version references for the selected scope - server command 2
+preflight      0.003 * Load Raw version references for the selected scope - local Python CPU
+preflight      0.041 * Validate SQL function safety
+preflight      0.002 * Validate SQL function safety - local Python CPU
+preflight      0.045 * Ensure data-database metadata and row counters
+preflight      0.001 * Ensure data-database metadata and row counters - local Python CPU
+preflight      0.041 * Verify destination public.table3
+preflight      0.001 * Verify destination public.table3 - local Python CPU
+preflight      0.040 * Read row counter for public.table3
+preflight      0.001 * Read row counter for public.table3 - local Python CPU
+preflight      0.042 * Validate managed dependencies for public.table3
+preflight      0.001 * Validate managed dependencies for public.table3 - local Python CPU
+preflight      0.041 * Verify destination public.table4
+preflight      0.001 * Verify destination public.table4 - local Python CPU
+preflight      0.041 * Read row counter for public.table4
+preflight      0.001 * Read row counter for public.table4 - local Python CPU
+preflight      0.045 * Validate managed dependencies for public.table4
+preflight      0.001 * Validate managed dependencies for public.table4 - local Python CPU
+preflight      0.041 * Verify destination public.table1
+preflight      0.001 * Verify destination public.table1 - local Python CPU
+preflight      0.041 * Read row counter for public.table1
+preflight      0.001 * Read row counter for public.table1 - local Python CPU
+preflight      0.042 * Validate managed dependencies for public.table1
+preflight      0.001 * Validate managed dependencies for public.table1 - local Python CPU
+preflight      0.040 * Verify destination public.table5
+preflight      0.001 * Verify destination public.table5 - local Python CPU
+preflight      0.041 * Read row counter for public.table5
+preflight      0.001 * Read row counter for public.table5 - local Python CPU
+preflight      0.044 * Validate managed dependencies for public.table5
+preflight      0.001 * Validate managed dependencies for public.table5 - local Python CPU
+preflight      0.040 * Verify destination public.table6
+preflight      0.001 * Verify destination public.table6 - local Python CPU
+preflight      0.041 * Read row counter for public.table6
+preflight      0.001 * Read row counter for public.table6 - local Python CPU
+preflight      0.044 * Validate managed dependencies for public.table6
+preflight      0.002 * Validate managed dependencies for public.table6 - local Python CPU
+preflight      0.046 * Verify destination public.table2
+preflight      0.001 * Verify destination public.table2 - local Python CPU
+preflight      0.042 * Read row counter for public.table2
+preflight      0.001 * Read row counter for public.table2 - local Python CPU
+preflight      0.044 * Validate managed dependencies for public.table2
+preflight      0.001 * Validate managed dependencies for public.table2 - local Python CPU
+prepare       0.000 * Build protected transactional SQL batch - local Python CPU
+execute     149.848   Expansion database batch envelope
+execute       0.001 * Initialize database transaction
+execute       0.000 * Acquire destination table locks
+execute       0.339 * Scan source and build dependency manifest
+execute       3.631 * Insert into public.table3 (statement 1)
+execute       3.135 * Insert into public.table4 (statement 1)
+execute      46.577 * Insert into public.table1 (statement 1)
+execute      12.184 * Insert into public.table5 (statement 1)
+execute      24.754 * Insert into public.table6 (statement 1)
+execute      59.165 * Insert into public.table2 (statement 1)
+execute       0.006 * Commit expansion transaction
+execute       0.000 * Parse database manifest and timing telemetry - local Python CPU
+version       0.048 * Ensure control metadata for version registration
+version       0.001 * Ensure control metadata for version registration - local Python CPU
+version       0.000 * Build atomic version registration SQL - local Python CPU
+version       0.076   Version database batch envelope
+version       0.001 * Acquire version lock for table1
+version       0.000 * Acquire version lock for table2
+version       0.000 * Acquire version lock for table3
+version       0.000 * Acquire version lock for table4
+version       0.000 * Acquire version lock for table5
+version       0.000 * Acquire version lock for table6
+version       0.003 * Register version and dependency for public.table3
+version       0.001 * Register version and dependency for public.table4
+version       0.001 * Register version and dependency for public.table1
+version       0.001 * Register version and dependency for public.table5
+version       0.001 * Register version and dependency for public.table6
+version       0.002 * Register version and dependency for public.table2
+version       0.005 * Commit atomic version batch
+version       0.000 * Parse version registration results and timing telemetry - local Python CPU
+refresh       0.000 * Invalidate destination filter caches - local Python CPU
+refresh       0.042 * Reload database table catalog
+refresh       0.001 * Reload database table catalog - local Python CPU
+refresh       0.000 * Rebuild table navigation controls - local Python CPU
+refresh       0.000 * Build completion summary - local Python CPU
+MEASURED PROCESSING TOTAL: 151.013 s

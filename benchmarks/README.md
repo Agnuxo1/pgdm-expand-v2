@@ -15,6 +15,7 @@ Reproducible local benchmark of the cross-table Expand, original engine vs PGDM 
   destination. `ok` fails the run otherwise.
 * `reset.sh` — returns `kaggle_challenge` to its freshly generated state between runs.
 * `interrupt_test.sh` — three interruption scenarios with strict pass criteria.
+* `edge_test.sh` — resume of a job with global segments only, refusal after a source change, cancel at finalize.
 * `micro.py` — single-backend SQL micro-experiments used for the bottleneck analysis.
 * `eval_config.sh`, `inside_tune.sh` — fitness function and driver of `tools/darwin_cage_tuner.py`.
 
@@ -23,6 +24,7 @@ benchmarks/prepare_workspace.sh /data/pgpipe-ws          # bench + upstream@5dfd
 cd /data/pgpipe-ws
 bash bench/run_bench.sh 1000000 "baseline:upstream v2:solution" 3            # timing, 3 repetitions
 INSIDE=interrupt_test.sh bash bench/run_bench.sh 1000000 30 1                 # recovery scenarios
+INSIDE=edge_test.sh bash bench/run_bench.sh 100000 0 1                        # resume edge cases
 INSIDE=inside_tune.sh bash bench/run_bench.sh 1000000 4 6                     # Darwin-Cage (4 generations x 6)
 ```
 

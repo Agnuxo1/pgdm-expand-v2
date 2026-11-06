@@ -1,0 +1,319 @@
+prepare       0.025 * Ensure control database metadata
+prepare       0.001 * Ensure control database metadata - local Python CPU
+prepare       0.013 * Normalize, parse, and validate expansion recipes - local Python CPU
+preflight      0.036 * Verify source table existence
+preflight      0.001 * Verify source table existence - local Python CPU
+preflight      0.021 * Read and validate source column metadata
+preflight      0.001 * Read and validate source column metadata - local Python CPU
+preflight      0.026 * Load Raw version references for the selected scope
+preflight      0.019 * Load Raw version references for the selected scope - server command 2
+preflight      0.001 * Load Raw version references for the selected scope - local Python CPU
+preflight      0.028 * Validate SQL function safety
+preflight      0.001 * Validate SQL function safety - local Python CPU
+preflight      0.044 * Ensure data-database metadata and row counters
+preflight      0.001 * Ensure data-database metadata and row counters - local Python CPU
+preflight      0.020 * Verify destination public.table3
+preflight      0.001 * Verify destination public.table3 - local Python CPU
+preflight      0.016 * Read row counter for public.table3
+preflight      0.001 * Read row counter for public.table3 - local Python CPU
+preflight      0.027 * Validate managed dependencies for public.table3
+preflight      0.001 * Validate managed dependencies for public.table3 - local Python CPU
+preflight      0.018 * Verify destination public.table4
+preflight      0.001 * Verify destination public.table4 - local Python CPU
+preflight      0.019 * Read row counter for public.table4
+preflight      0.001 * Read row counter for public.table4 - local Python CPU
+preflight      0.023 * Validate managed dependencies for public.table4
+preflight      0.001 * Validate managed dependencies for public.table4 - local Python CPU
+preflight      0.018 * Verify destination public.table1
+preflight      0.001 * Verify destination public.table1 - local Python CPU
+preflight      0.016 * Read row counter for public.table1
+preflight      0.001 * Read row counter for public.table1 - local Python CPU
+preflight      0.023 * Validate managed dependencies for public.table1
+preflight      0.001 * Validate managed dependencies for public.table1 - local Python CPU
+preflight      0.018 * Verify destination public.table5
+preflight      0.001 * Verify destination public.table5 - local Python CPU
+preflight      0.018 * Read row counter for public.table5
+preflight      0.001 * Read row counter for public.table5 - local Python CPU
+preflight      0.023 * Validate managed dependencies for public.table5
+preflight      0.001 * Validate managed dependencies for public.table5 - local Python CPU
+preflight      0.018 * Verify destination public.table6
+preflight      0.001 * Verify destination public.table6 - local Python CPU
+preflight      0.017 * Read row counter for public.table6
+preflight      0.001 * Read row counter for public.table6 - local Python CPU
+preflight      0.024 * Validate managed dependencies for public.table6
+preflight      0.001 * Validate managed dependencies for public.table6 - local Python CPU
+preflight      0.021 * Verify destination public.table2
+preflight      0.001 * Verify destination public.table2 - local Python CPU
+preflight      0.015 * Read row counter for public.table2
+preflight      0.001 * Read row counter for public.table2 - local Python CPU
+preflight      0.022 * Validate managed dependencies for public.table2
+preflight      0.001 * Validate managed dependencies for public.table2 - local Python CPU
+prepare       0.020 * Plan parallel resumable expansion job
+prepare       0.012 * Plan parallel resumable expansion job - local Python CPU
+execute       0.151 * Create or resume expansion job
+execute       0.001 * Create or resume expansion job - local Python CPU
+prepare       0.004 * Build server-side job files - local Python CPU
+execute       0.042 * Upload job files and launch detached runner
+execute       0.001 * Upload job files and launch detached runner - local Python CPU
+execute       1.027   Wait for server-side job (envelope)
+execute       1.023   Wait for server-side job (envelope) - server command 2
+execute       1.025   Wait for server-side job (envelope) - server command 3
+execute       1.024   Wait for server-side job (envelope) - server command 4
+execute       1.023   Wait for server-side job (envelope) - server command 5
+execute       1.022   Wait for server-side job (envelope) - server command 6
+execute       1.026   Wait for server-side job (envelope) - server command 7
+execute       1.024   Wait for server-side job (envelope) - server command 8
+execute       1.024   Wait for server-side job (envelope) - server command 9
+execute       1.026   Wait for server-side job (envelope) - server command 10
+execute       1.024   Wait for server-side job (envelope) - server command 11
+execute       1.023   Wait for server-side job (envelope) - server command 12
+execute       1.023   Wait for server-side job (envelope) - server command 13
+execute       1.025   Wait for server-side job (envelope) - server command 14
+execute       1.026   Wait for server-side job (envelope) - server command 15
+execute       1.023   Wait for server-side job (envelope) - server command 16
+execute       1.024   Wait for server-side job (envelope) - server command 17
+execute       1.024   Wait for server-side job (envelope) - server command 18
+execute       1.024   Wait for server-side job (envelope) - server command 19
+execute       1.022   Wait for server-side job (envelope) - server command 20
+execute       1.023   Wait for server-side job (envelope) - server command 21
+execute       1.023   Wait for server-side job (envelope) - server command 22
+execute       1.023   Wait for server-side job (envelope) - server command 23
+execute       1.022   Wait for server-side job (envelope) - server command 24
+execute       1.022   Wait for server-side job (envelope) - server command 25
+execute       1.022   Wait for server-side job (envelope) - server command 26
+execute       1.026   Wait for server-side job (envelope) - server command 27
+execute       1.038   Wait for server-side job (envelope) - server command 28
+execute       1.030   Wait for server-side job (envelope) - server command 29
+execute       1.028   Wait for server-side job (envelope) - server command 30
+execute       1.034   Wait for server-side job (envelope) - server command 31
+execute       1.039   Wait for server-side job (envelope) - server command 32
+execute       1.087   Wait for server-side job (envelope) - server command 33
+execute       1.025   Wait for server-side job (envelope) - server command 34
+execute       1.027   Wait for server-side job (envelope) - server command 35
+execute       1.027   Wait for server-side job (envelope) - server command 36
+execute       1.024   Wait for server-side job (envelope) - server command 37
+execute       1.026   Wait for server-side job (envelope) - server command 38
+execute       1.027   Wait for server-side job (envelope) - server command 39
+execute       1.028   Wait for server-side job (envelope) - server command 40
+execute       1.030   Wait for server-side job (envelope) - server command 41
+execute       1.026   Wait for server-side job (envelope) - server command 42
+execute       1.030   Wait for server-side job (envelope) - server command 43
+execute       1.028   Wait for server-side job (envelope) - server command 44
+execute       1.276   Wait for server-side job (envelope) - server command 45
+execute       1.026   Wait for server-side job (envelope) - server command 46
+execute       1.029   Wait for server-side job (envelope) - server command 47
+execute       1.025   Wait for server-side job (envelope) - server command 48
+execute       1.036   Wait for server-side job (envelope) - server command 49
+execute       1.023   Wait for server-side job (envelope) - server command 50
+execute       1.026   Wait for server-side job (envelope) - server command 51
+execute       1.024   Wait for server-side job (envelope) - server command 52
+execute       1.037   Wait for server-side job (envelope) - server command 53
+execute       1.026   Wait for server-side job (envelope) - server command 54
+execute       1.025   Wait for server-side job (envelope) - server command 55
+execute       1.024   Wait for server-side job (envelope) - server command 56
+execute       1.056   Wait for server-side job (envelope) - server command 57
+execute       1.025   Wait for server-side job (envelope) - server command 58
+execute       1.031   Wait for server-side job (envelope) - server command 59
+execute       1.028   Wait for server-side job (envelope) - server command 60
+execute       1.029   Wait for server-side job (envelope) - server command 61
+execute       1.026   Wait for server-side job (envelope) - server command 62
+execute       1.024   Wait for server-side job (envelope) - server command 63
+execute       1.026   Wait for server-side job (envelope) - server command 64
+execute       1.029   Wait for server-side job (envelope) - server command 65
+execute       1.035   Wait for server-side job (envelope) - server command 66
+execute       1.024   Wait for server-side job (envelope) - server command 67
+execute       1.029   Wait for server-side job (envelope) - server command 68
+execute       1.027   Wait for server-side job (envelope) - server command 69
+execute       1.025   Wait for server-side job (envelope) - server command 70
+execute       1.027   Wait for server-side job (envelope) - server command 71
+execute       1.030   Wait for server-side job (envelope) - server command 72
+execute       1.026   Wait for server-side job (envelope) - server command 73
+execute       1.029   Wait for server-side job (envelope) - server command 74
+execute       1.027   Wait for server-side job (envelope) - server command 75
+execute       1.027   Wait for server-side job (envelope) - server command 76
+execute       1.024   Wait for server-side job (envelope) - server command 77
+execute       1.034   Wait for server-side job (envelope) - server command 78
+execute       1.024   Wait for server-side job (envelope) - server command 79
+execute       1.024   Wait for server-side job (envelope) - server command 80
+execute       1.037   Wait for server-side job (envelope) - server command 81
+execute       1.026   Wait for server-side job (envelope) - server command 82
+execute       1.027   Wait for server-side job (envelope) - server command 83
+execute       1.028   Wait for server-side job (envelope) - server command 84
+execute       1.024   Wait for server-side job (envelope) - server command 85
+execute       1.027   Wait for server-side job (envelope) - server command 86
+execute       1.026   Wait for server-side job (envelope) - server command 87
+execute       1.026   Wait for server-side job (envelope) - server command 88
+execute       1.028   Wait for server-side job (envelope) - server command 89
+execute       1.031   Wait for server-side job (envelope) - server command 90
+execute       1.027   Wait for server-side job (envelope) - server command 91
+execute       1.025   Wait for server-side job (envelope) - server command 92
+execute       1.025   Wait for server-side job (envelope) - server command 93
+execute       1.027   Wait for server-side job (envelope) - server command 94
+execute       1.027   Wait for server-side job (envelope) - server command 95
+execute       1.025   Wait for server-side job (envelope) - server command 96
+execute       1.026   Wait for server-side job (envelope) - server command 97
+execute       1.035   Wait for server-side job (envelope) - server command 98
+execute       1.029   Wait for server-side job (envelope) - server command 99
+execute       1.026   Wait for server-side job (envelope) - server command 100
+execute       1.025   Wait for server-side job (envelope) - server command 101
+execute       1.025   Wait for server-side job (envelope) - server command 102
+execute       1.028   Wait for server-side job (envelope) - server command 103
+execute       1.027   Wait for server-side job (envelope) - server command 104
+execute       1.023   Wait for server-side job (envelope) - server command 105
+execute       1.027   Wait for server-side job (envelope) - server command 106
+execute       1.027   Wait for server-side job (envelope) - server command 107
+execute       1.028   Wait for server-side job (envelope) - server command 108
+execute       1.027   Wait for server-side job (envelope) - server command 109
+execute       1.027   Wait for server-side job (envelope) - server command 110
+execute       1.034   Wait for server-side job (envelope) - server command 111
+execute       1.027   Wait for server-side job (envelope) - server command 112
+execute       1.028   Wait for server-side job (envelope) - server command 113
+execute       1.028   Wait for server-side job (envelope) - server command 114
+execute       1.026   Wait for server-side job (envelope) - server command 115
+execute       1.024   Wait for server-side job (envelope) - server command 116
+execute       1.026   Wait for server-side job (envelope) - server command 117
+execute       1.024   Wait for server-side job (envelope) - server command 118
+execute       1.027   Wait for server-side job (envelope) - server command 119
+execute       1.025   Wait for server-side job (envelope) - server command 120
+execute       1.024   Wait for server-side job (envelope) - server command 121
+execute       1.026   Wait for server-side job (envelope) - server command 122
+execute       1.024   Wait for server-side job (envelope) - server command 123
+execute       1.025   Wait for server-side job (envelope) - server command 124
+execute       1.023   Wait for server-side job (envelope) - server command 125
+execute       1.031   Wait for server-side job (envelope) - server command 126
+execute       1.027   Wait for server-side job (envelope) - server command 127
+execute       1.027   Wait for server-side job (envelope) - server command 128
+execute       1.028   Wait for server-side job (envelope) - server command 129
+execute       1.027   Wait for server-side job (envelope) - server command 130
+execute       1.034   Wait for server-side job (envelope) - server command 131
+execute       1.028   Wait for server-side job (envelope) - server command 132
+execute       1.028   Wait for server-side job (envelope) - server command 133
+execute       1.048   Wait for server-side job (envelope) - server command 134
+execute       1.031   Wait for server-side job (envelope) - server command 135
+execute       1.047   Wait for server-side job (envelope) - server command 136
+execute       1.030   Wait for server-side job (envelope) - server command 137
+execute       1.027   Wait for server-side job (envelope) - server command 138
+execute       1.028   Wait for server-side job (envelope) - server command 139
+execute       1.027   Wait for server-side job (envelope) - server command 140
+execute       1.045   Wait for server-side job (envelope) - server command 141
+execute       1.030   Wait for server-side job (envelope) - server command 142
+execute       1.028   Wait for server-side job (envelope) - server command 143
+execute       1.029   Wait for server-side job (envelope) - server command 144
+execute       1.028   Wait for server-side job (envelope) - server command 145
+execute       1.026   Wait for server-side job (envelope) - server command 146
+execute       1.159   Wait for server-side job (envelope) - server command 147
+execute       1.027   Wait for server-side job (envelope) - server command 148
+execute       1.026   Wait for server-side job (envelope) - server command 149
+execute       1.026   Wait for server-side job (envelope) - server command 150
+execute       1.028   Wait for server-side job (envelope) - server command 151
+execute       1.024   Wait for server-side job (envelope) - server command 152
+execute       1.028   Wait for server-side job (envelope) - server command 153
+execute       1.027   Wait for server-side job (envelope) - server command 154
+execute       1.029   Wait for server-side job (envelope) - server command 155
+execute       1.024   Wait for server-side job (envelope) - server command 156
+execute       1.029   Wait for server-side job (envelope) - server command 157
+execute       1.027   Wait for server-side job (envelope) - server command 158
+execute       1.062   Wait for server-side job (envelope) - server command 159
+execute       1.028   Wait for server-side job (envelope) - server command 160
+execute       1.026   Wait for server-side job (envelope) - server command 161
+execute       1.026   Wait for server-side job (envelope) - server command 162
+execute       1.026   Wait for server-side job (envelope) - server command 163
+execute       1.025   Wait for server-side job (envelope) - server command 164
+execute       1.025   Wait for server-side job (envelope) - server command 165
+execute       1.030   Wait for server-side job (envelope) - server command 166
+execute       1.025   Wait for server-side job (envelope) - server command 167
+execute       1.034   Wait for server-side job (envelope) - server command 168
+execute       1.136   Wait for server-side job (envelope) - server command 169
+execute       1.028   Wait for server-side job (envelope) - server command 170
+execute       1.027   Wait for server-side job (envelope) - server command 171
+execute       1.025   Wait for server-side job (envelope) - server command 172
+execute       1.028   Wait for server-side job (envelope) - server command 173
+execute       1.027   Wait for server-side job (envelope) - server command 174
+execute       1.025   Wait for server-side job (envelope) - server command 175
+execute       1.030   Wait for server-side job (envelope) - server command 176
+execute       1.026   Wait for server-side job (envelope) - server command 177
+execute       1.023   Wait for server-side job (envelope) - server command 178
+execute       1.027   Wait for server-side job (envelope) - server command 179
+execute       1.030   Wait for server-side job (envelope) - server command 180
+execute       1.025   Wait for server-side job (envelope) - server command 181
+execute       1.022   Wait for server-side job (envelope) - server command 182
+execute       1.023   Wait for server-side job (envelope) - server command 183
+execute       1.023   Wait for server-side job (envelope) - server command 184
+execute       1.024   Wait for server-side job (envelope) - server command 185
+execute       1.024   Wait for server-side job (envelope) - server command 186
+execute       1.034   Wait for server-side job (envelope) - server command 187
+execute       1.026   Wait for server-side job (envelope) - server command 188
+execute       1.025   Wait for server-side job (envelope) - server command 189
+execute       1.026   Wait for server-side job (envelope) - server command 190
+execute       1.038   Wait for server-side job (envelope) - server command 191
+execute       1.026   Wait for server-side job (envelope) - server command 192
+execute       1.025   Wait for server-side job (envelope) - server command 193
+execute       1.033   Wait for server-side job (envelope) - server command 194
+execute       1.024   Wait for server-side job (envelope) - server command 195
+execute       1.029   Wait for server-side job (envelope) - server command 196
+execute       1.023   Wait for server-side job (envelope) - server command 197
+execute       1.022   Wait for server-side job (envelope) - server command 198
+execute       1.026   Wait for server-side job (envelope) - server command 199
+execute       1.023   Wait for server-side job (envelope) - server command 200
+execute       1.022   Wait for server-side job (envelope) - server command 201
+execute       1.023   Wait for server-side job (envelope) - server command 202
+execute       1.023   Wait for server-side job (envelope) - server command 203
+execute       1.024   Wait for server-side job (envelope) - server command 204
+execute       1.025   Wait for server-side job (envelope) - server command 205
+execute       1.046   Wait for server-side job (envelope) - server command 206
+execute       1.026   Wait for server-side job (envelope) - server command 207
+execute       1.025   Wait for server-side job (envelope) - server command 208
+execute       1.026   Wait for server-side job (envelope) - server command 209
+execute       1.028   Wait for server-side job (envelope) - server command 210
+execute       1.031   Wait for server-side job (envelope) - server command 211
+execute       1.026   Wait for server-side job (envelope) - server command 212
+execute       1.023   Wait for server-side job (envelope) - server command 213
+execute       1.023   Wait for server-side job (envelope) - server command 214
+execute       1.022   Wait for server-side job (envelope) - server command 215
+execute       1.023   Wait for server-side job (envelope) - server command 216
+execute       1.023   Wait for server-side job (envelope) - server command 217
+execute       1.025   Wait for server-side job (envelope) - server command 218
+execute       1.023   Wait for server-side job (envelope) - server command 219
+execute       1.024   Wait for server-side job (envelope) - server command 220
+execute       1.023   Wait for server-side job (envelope) - server command 221
+execute       1.077   Wait for server-side job (envelope) - server command 222
+execute       1.025   Wait for server-side job (envelope) - server command 223
+execute       1.024   Wait for server-side job (envelope) - server command 224
+execute       1.023   Wait for server-side job (envelope) - server command 225
+execute       1.023   Wait for server-side job (envelope) - server command 226
+execute       1.023   Wait for server-side job (envelope) - server command 227
+execute       1.024   Wait for server-side job (envelope) - server command 228
+execute       1.023   Wait for server-side job (envelope) - server command 229
+execute       1.030   Wait for server-side job (envelope) - server command 230
+execute       1.023   Wait for server-side job (envelope) - server command 231
+execute       1.021   Wait for server-side job (envelope) - server command 232
+execute       1.048   Wait for server-side job (envelope) - server command 233
+execute       1.024   Wait for server-side job (envelope) - server command 234
+execute       1.025   Wait for server-side job (envelope) - server command 235
+execute       1.022   Wait for server-side job (envelope) - server command 236
+execute       1.023   Wait for server-side job (envelope) - server command 237
+execute       1.022   Wait for server-side job (envelope) - server command 238
+execute       1.022   Wait for server-side job (envelope) - server command 239
+execute       1.022   Wait for server-side job (envelope) - server command 240
+execute       1.023   Wait for server-side job (envelope) - server command 241
+execute       1.023   Wait for server-side job (envelope) - server command 242
+execute       1.021   Wait for server-side job (envelope) - server command 243
+execute       1.033   Wait for server-side job (envelope) - server command 244
+execute       0.025 * Read job telemetry
+execute       0.001 * Read job telemetry - local Python CPU
+execute     261.973 * Server-side expansion job: data phase (all segments, 4 worker(s))
+version       0.073 * Server-side version registration and job completion
+execute      28.704   Segment 1 (global, 0 chunk(s)): public.table3, public.table4
+execute     233.001   Segment 2 (chunked, 60 chunk(s)): public.table1, public.table5, public.table6, public.table2
+execute     290.451   Summed per-chunk statement time for public.table1
+execute     374.462   Summed per-chunk statement time for public.table2
+execute     126.344   Summed per-chunk statement time for public.table5
+execute     116.873   Summed per-chunk statement time for public.table6
+refresh       0.021 * Acknowledge completed expansion job
+refresh       0.001 * Acknowledge completed expansion job - local Python CPU
+refresh       0.000 * Invalidate destination filter caches - local Python CPU
+refresh       0.020 * Reload database table catalog
+refresh       0.001 * Reload database table catalog - local Python CPU
+refresh       0.000 * Rebuild table navigation controls - local Python CPU
+refresh       0.000 * Build completion summary - local Python CPU
+MEASURED PROCESSING TOTAL: 262.930 s

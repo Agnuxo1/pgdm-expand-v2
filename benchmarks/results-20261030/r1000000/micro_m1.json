@@ -1,0 +1,632 @@
+[
+ {
+  "mode": "m_base",
+  "rep": 1,
+  "wall_s": 214.33876085601514,
+  "steps": [
+   [
+    "STMT table3",
+    0.000149
+   ],
+   [
+    "STMT table3",
+    3.981938
+   ],
+   [
+    "STMT table3",
+    0.000934
+   ],
+   [
+    "STMT table4",
+    4.9000000000000005e-05
+   ],
+   [
+    "STMT table4",
+    3.282503
+   ],
+   [
+    "STMT table4",
+    0.00032900000000000003
+   ],
+   [
+    "STMT table1",
+    4.6e-05
+   ],
+   [
+    "STMT table1",
+    66.12154799999999
+   ],
+   [
+    "STMT table1",
+    0.055494
+   ],
+   [
+    "STMT table5",
+    9.1e-05
+   ],
+   [
+    "STMT table5",
+    22.986042
+   ],
+   [
+    "STMT table5",
+    0.04016599999999999
+   ],
+   [
+    "STMT table6",
+    6.6e-05
+   ],
+   [
+    "STMT table6",
+    27.666278
+   ],
+   [
+    "STMT table6",
+    0.039334
+   ],
+   [
+    "STMT table2",
+    0.000115
+   ],
+   [
+    "STMT table2",
+    90.05099
+   ],
+   [
+    "STMT table2",
+    0.101357
+   ],
+   [
+    "COMMIT",
+    9.3e-05
+   ],
+   [
+    "COMMIT",
+    0.0053890000000000006
+   ]
+  ],
+  "natural_match": true,
+  "strict_match": true
+ },
+ {
+  "mode": "m_detoast",
+  "rep": 1,
+  "wall_s": 217.86490327698993,
+  "steps": [
+   [
+    "STMT table3",
+    0.00013800000000000002
+   ],
+   [
+    "STMT table3",
+    3.502735
+   ],
+   [
+    "STMT table3",
+    0.000971
+   ],
+   [
+    "STMT table4",
+    5.2e-05
+   ],
+   [
+    "STMT table4",
+    2.948156
+   ],
+   [
+    "STMT table4",
+    0.00028199999999999997
+   ],
+   [
+    "STMT table1",
+    4.7e-05
+   ],
+   [
+    "STMT table1",
+    65.55165
+   ],
+   [
+    "STMT table1",
+    0.053876
+   ],
+   [
+    "STMT table5",
+    0.000102
+   ],
+   [
+    "STMT table5",
+    26.019256000000002
+   ],
+   [
+    "STMT table5",
+    0.042025
+   ],
+   [
+    "STMT table6",
+    9.800000000000001e-05
+   ],
+   [
+    "STMT table6",
+    28.122477
+   ],
+   [
+    "STMT table6",
+    0.037957
+   ],
+   [
+    "STMT table2",
+    9.4e-05
+   ],
+   [
+    "STMT table2",
+    91.466206
+   ],
+   [
+    "STMT table2",
+    0.110696
+   ],
+   [
+    "COMMIT",
+    9.7e-05
+   ],
+   [
+    "COMMIT",
+    0.001986
+   ]
+  ],
+  "natural_match": true,
+  "strict_match": false
+ },
+ {
+  "mode": "m_fkbulk",
+  "rep": 1,
+  "wall_s": 101.77190481399884,
+  "steps": [
+   [
+    "STMT table3",
+    0.000118
+   ],
+   [
+    "STMT table3",
+    3.950593
+   ],
+   [
+    "STMT table3",
+    0.0009
+   ],
+   [
+    "STMT table4",
+    4.8e-05
+   ],
+   [
+    "STMT table4",
+    3.2918649999999996
+   ],
+   [
+    "STMT table4",
+    0.000339
+   ],
+   [
+    "STMT table1",
+    4.7e-05
+   ],
+   [
+    "STMT table1",
+    31.897938999999997
+   ],
+   [
+    "STMT table1",
+    0.041866999999999994
+   ],
+   [
+    "STMT table5",
+    8.9e-05
+   ],
+   [
+    "STMT table5",
+    5.635403
+   ],
+   [
+    "STMT table5",
+    0.058929
+   ],
+   [
+    "STMT table6",
+    9.6e-05
+   ],
+   [
+    "STMT table6",
+    6.067748
+   ],
+   [
+    "STMT table6",
+    0.038738999999999996
+   ],
+   [
+    "STMT table2",
+    8.5e-05
+   ],
+   [
+    "STMT table2",
+    48.749511
+   ],
+   [
+    "STMT table2",
+    0.107477
+   ],
+   [
+    "FK table1.table1_id_column_3_fkey",
+    8.5e-05
+   ],
+   [
+    "FK table1.table1_id_column_3_fkey",
+    0.39779899999999996
+   ],
+   [
+    "FK table1.table1_id_column_4_fkey",
+    0.000108
+   ],
+   [
+    "FK table1.table1_id_column_4_fkey",
+    0.14185599999999998
+   ],
+   [
+    "FK table2.table2_id_column_2_fkey",
+    0.00011300000000000001
+   ],
+   [
+    "FK table2.table2_id_column_2_fkey",
+    0.531343
+   ],
+   [
+    "FK table5.table5_id_column_2_fkey",
+    0.00010899999999999999
+   ],
+   [
+    "FK table5.table5_id_column_2_fkey",
+    0.375204
+   ],
+   [
+    "FK table6.table6_id_column_2_fkey",
+    0.000116
+   ],
+   [
+    "FK table6.table6_id_column_2_fkey",
+    0.356741
+   ],
+   [
+    "FK table6.table6_id_column_3_fkey",
+    9.6e-05
+   ],
+   [
+    "FK table6.table6_id_column_3_fkey",
+    0.109531
+   ],
+   [
+    "COMMIT",
+    9.4e-05
+   ],
+   [
+    "COMMIT",
+    0.003965
+   ]
+  ],
+  "natural_match": true,
+  "strict_match": true
+ },
+ {
+  "mode": "m_workmem",
+  "rep": 1,
+  "wall_s": 225.98035010200692,
+  "steps": [
+   [
+    "STMT table3",
+    0.000152
+   ],
+   [
+    "STMT table3",
+    3.2062779999999997
+   ],
+   [
+    "STMT table3",
+    0.00094
+   ],
+   [
+    "STMT table4",
+    5.3e-05
+   ],
+   [
+    "STMT table4",
+    2.892419
+   ],
+   [
+    "STMT table4",
+    0.00028399999999999996
+   ],
+   [
+    "STMT table1",
+    4.6e-05
+   ],
+   [
+    "STMT table1",
+    65.291658
+   ],
+   [
+    "STMT table1",
+    0.482763
+   ],
+   [
+    "STMT table5",
+    8.9e-05
+   ],
+   [
+    "STMT table5",
+    33.490778
+   ],
+   [
+    "STMT table5",
+    0.055557
+   ],
+   [
+    "STMT table6",
+    8.5e-05
+   ],
+   [
+    "STMT table6",
+    29.409262
+   ],
+   [
+    "STMT table6",
+    0.041343000000000005
+   ],
+   [
+    "STMT table2",
+    0.000107
+   ],
+   [
+    "STMT table2",
+    90.993021
+   ],
+   [
+    "STMT table2",
+    0.103409
+   ],
+   [
+    "COMMIT",
+    8.2e-05
+   ],
+   [
+    "COMMIT",
+    0.0040149999999999995
+   ]
+  ],
+  "natural_match": true,
+  "strict_match": false
+ },
+ {
+  "mode": "m_nojit",
+  "rep": 1,
+  "wall_s": 215.94601313801832,
+  "steps": [
+   [
+    "STMT table3",
+    0.000146
+   ],
+   [
+    "STMT table3",
+    4.335533000000001
+   ],
+   [
+    "STMT table3",
+    0.000984
+   ],
+   [
+    "STMT table4",
+    5.1e-05
+   ],
+   [
+    "STMT table4",
+    3.402492
+   ],
+   [
+    "STMT table4",
+    0.00032700000000000003
+   ],
+   [
+    "STMT table1",
+    4.4999999999999996e-05
+   ],
+   [
+    "STMT table1",
+    69.60658500000001
+   ],
+   [
+    "STMT table1",
+    0.219129
+   ],
+   [
+    "STMT table5",
+    8.999999999999999e-05
+   ],
+   [
+    "STMT table5",
+    23.777631
+   ],
+   [
+    "STMT table5",
+    0.040288
+   ],
+   [
+    "STMT table6",
+    0.000107
+   ],
+   [
+    "STMT table6",
+    27.644882000000003
+   ],
+   [
+    "STMT table6",
+    0.039979999999999995
+   ],
+   [
+    "STMT table2",
+    8.5e-05
+   ],
+   [
+    "STMT table2",
+    86.767515
+   ],
+   [
+    "STMT table2",
+    0.099953
+   ],
+   [
+    "COMMIT",
+    9.3e-05
+   ],
+   [
+    "COMMIT",
+    0.004216
+   ]
+  ],
+  "natural_match": true,
+  "strict_match": true
+ },
+ {
+  "mode": "m_all",
+  "rep": 1,
+  "wall_s": 93.65466887899674,
+  "steps": [
+   [
+    "STMT table3",
+    0.000188
+   ],
+   [
+    "STMT table3",
+    3.325858
+   ],
+   [
+    "STMT table3",
+    0.000833
+   ],
+   [
+    "STMT table4",
+    4.6e-05
+   ],
+   [
+    "STMT table4",
+    3.0743780000000003
+   ],
+   [
+    "STMT table4",
+    0.00028599999999999996
+   ],
+   [
+    "STMT table1",
+    4.2000000000000004e-05
+   ],
+   [
+    "STMT table1",
+    20.70673
+   ],
+   [
+    "STMT table1",
+    0.043317999999999995
+   ],
+   [
+    "STMT table5",
+    0.000102
+   ],
+   [
+    "STMT table5",
+    6.347004
+   ],
+   [
+    "STMT table5",
+    0.036577
+   ],
+   [
+    "STMT table6",
+    9.2e-05
+   ],
+   [
+    "STMT table6",
+    7.082167
+   ],
+   [
+    "STMT table6",
+    0.040514
+   ],
+   [
+    "STMT table2",
+    8.5e-05
+   ],
+   [
+    "STMT table2",
+    50.735983999999995
+   ],
+   [
+    "STMT table2",
+    0.101857
+   ],
+   [
+    "FK table1.table1_id_column_3_fkey",
+    8.599999999999999e-05
+   ],
+   [
+    "FK table1.table1_id_column_3_fkey",
+    0.481197
+   ],
+   [
+    "FK table1.table1_id_column_4_fkey",
+    0.0001
+   ],
+   [
+    "FK table1.table1_id_column_4_fkey",
+    0.14311600000000002
+   ],
+   [
+    "FK table2.table2_id_column_2_fkey",
+    0.000107
+   ],
+   [
+    "FK table2.table2_id_column_2_fkey",
+    0.570984
+   ],
+   [
+    "FK table5.table5_id_column_2_fkey",
+    8.9e-05
+   ],
+   [
+    "FK table5.table5_id_column_2_fkey",
+    0.425151
+   ],
+   [
+    "FK table6.table6_id_column_2_fkey",
+    0.000101
+   ],
+   [
+    "FK table6.table6_id_column_2_fkey",
+    0.408006
+   ],
+   [
+    "FK table6.table6_id_column_3_fkey",
+    9.800000000000001e-05
+   ],
+   [
+    "FK table6.table6_id_column_3_fkey",
+    0.10964
+   ],
+   [
+    "COMMIT",
+    9.3e-05
+   ],
+   [
+    "COMMIT",
+    0.004006
+   ]
+  ],
+  "natural_match": true,
+  "strict_match": false
+ }
+]

@@ -1,0 +1,17 @@
+prepare       0.024 * Ensure control database metadata
+prepare       0.001 * Ensure control database metadata - local Python CPU
+prepare       0.013 * Normalize, parse, and validate expansion recipes - local Python CPU
+preflight      0.018 * Verify source table existence
+preflight      0.001 * Verify source table existence - local Python CPU
+preflight      0.018 * Read and validate source column metadata
+preflight      0.001 * Read and validate source column metadata - local Python CPU
+preflight      0.025 * Load Raw version references for the selected scope
+preflight      0.017 * Load Raw version references for the selected scope - server command 2
+preflight      0.001 * Load Raw version references for the selected scope - local Python CPU
+preflight      0.021 * Validate SQL function safety
+preflight      0.001 * Validate SQL function safety - local Python CPU
+preflight      0.047 * Ensure data-database metadata and row counters
+preflight      0.001 * Ensure data-database metadata and row counters - local Python CPU
+preflight      0.018 * Verify destination public.table3
+preflight      0.001 * Verify destination public.table3 - local Python CPU
+MEASURED PROCESSING TOTAL: 0.207 s

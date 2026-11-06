@@ -1,0 +1,20 @@
+NOTICE:  relation "pgdm_table_row_counts" already exists, skipping
+NOTICE:  drop cascades to 4 other objects
+DETAIL:  drop cascades to table pgdm_expansion.jobs
+drop cascades to table pgdm_expansion.job_attempts
+drop cascades to table pgdm_expansion.job_segments
+drop cascades to table pgdm_expansion.job_chunks
+[edge] global_only_plan: PASS
+[edge] A_global_only_resume: PASS
+[edge] B_changed_source_refused: PASS
+[edge] refusal: RuntimeError: Expansion job 7ec7aeb7-0df4-4209-bb8a-2ad297465abe ended with status failed: source rows changed since this job started (1 raw_id range(s) differ); the job cannot be resumed safely
+
+Comm
+[edge] C_finalize_cancel: PASS
+NOTICE:  relation "pgdm_table_row_counts" already exists, skipping
+NOTICE:  drop cascades to 4 other objects
+DETAIL:  drop cascades to table pgdm_expansion.jobs
+drop cascades to table pgdm_expansion.job_attempts
+drop cascades to table pgdm_expansion.job_segments
+drop cascades to table pgdm_expansion.job_chunks
+[edge] FAILED=0

@@ -58,11 +58,12 @@ Windows DB Manager ── SSH ──► Linux server
 ```
 
 **Segmentation is derived from the recipes, not hard-coded** (`services/expansion_engine.py::classify_destinations`).
-A destination is *chunkable* only if every statement reads `{{source}}` once, contains no set-level construct
-(`DISTINCT`, `GROUP BY`, aggregates, window functions, `LIMIT`, set operations …), does not read its own destination,
-and reads earlier destinations either after they are complete or through a join `rel.col = source.raw_id` where `col`
-is filled from `raw_id` by that destination's own recipe (so a chunk only matches rows produced from its own source
-rows). Everything else runs once over the whole source, in recipe order. For the official workload this yields
+A destination is *chunkable* only if every statement reads `{{source}}` once and as its first `FROM` item, uses no
+`RIGHT`, `FULL` or `NATURAL` join, contains no subquery or set-level construct (`DISTINCT`, `GROUP BY`, aggregates,
+window functions, `LIMIT`, set operations …), does not read its own destination, and reads earlier destinations
+either after they are complete or, for every occurrence, through a bare `AND` term `rel.col = source.raw_id` of that
+join's `ON` clause, where `col` is filled from `raw_id` by that destination's own recipe (so a chunk only matches rows
+produced from its own source rows). Everything else runs once over the whole source, in recipe order. For the official workload this yields
 `[table3, table4]` global and `[table1, table5, table6, table2]` chunked; a recipe that joins on anything else is
 executed globally (covered by `tests/test_expansion_v2.py`).
 
@@ -92,7 +93,7 @@ are listed as diagnostics so that the CPU actually spent is visible too.
 | Version registration | same rows in `app_control.table_versions` and `table_version_dependencies` (same `sql_recipe`, same manifest keys), written in one transaction together with `app_control.expansion_job_registrations(job_id)` → exactly once |
 | Dump/version handling | unchanged (“No additional dump was created”, as in the original Expand) |
 | Traceability | versions + dependency manifest as before, plus job/segment/chunk records (rows, timings, manifests, attempts) |
-| Source consistency | coordinator holds `SHARE` on `raw_data` during the job; a fingerprint per `raw_id` range (row count, ctid hash, raw_id sum, content checksum with `jsonb_hash`) is taken before any work and re-checked before a resumed attempt continues; stored Raw version references must match; per-chunk raw_hash manifests must equal the global one before versions are registered |
+| Source consistency | coordinator holds `SHARE` on `raw_data` during the job; a fingerprint per `raw_id` range (row count, ctid hash, raw_id sum, and a checksum that binds each row's column hashes to its `raw_id`) is taken before any work and re-checked before a resumed attempt continues; stored Raw version references must match; per-chunk raw_hash manifests must equal the global one before versions are registered |
 
 Correctness is checked by `benchmarks/verify.py`: per-table digests with surrogate keys mapped to natural keys
 (`table1` → `raw_id`, `table3` → its value tuple), exact row counters and one version per destination.
@@ -123,7 +124,7 @@ runs the same engine with one worker.
 
 ## Results
 
-Local results (not official scores). Hardware: server-ia, Debian 12 x86-64; benchmark container limited to
+Local results (not official scores). Bench A, engine `86ca8a9`, 29–30 Oct 2026: AMD Ryzen 7 3700X host, Debian 13, SATA SSD; benchmark container limited to
 **4 vCPU and 6 GiB**; PostgreSQL 16.15 (Alpine image) with its **default configuration**; DB Manager service layer
 driven headlessly over SSH to `127.0.0.1`; data from the unmodified official generator. Commit of the engine:
 see the submission commit. Correctness of every run: `benchmarks/verify.py` (natural-key digests identical to the
@@ -138,7 +139,7 @@ original engine's output, exact row counters, one version + one dependency per d
 | 3,000,000 | original | 1 | 711.45 | 319 MiB (PSS) | 224 MiB | 1/1 |
 | 3,000,000 | **v2** | 2 | **258.90 ± 5.70** (254.87–262.93) | 558 MiB (PSS) | **0** | 2/2 |
 
-Speed-up with 4 cores: **2.96× at 1M** and **2.75× at 3M**; no temporary files at any size. Breakdown of a v2
+Speed-up with 4 cores: **2.96× at 1M** and **2.75× at 3M**; no temporary files at the three measured sizes. Breakdown of a v2
 run at 3M (`v2_rep2`): global segment (table3, table4, manifest and source fingerprint in one transaction) 28.5 s;
 chunked segment (60 chunks) 225.3 s; version registration < 0.1 s; Manager-side preflight ≈0.6 s (unchanged).
 At 1M (`v2_rep3`): global 10.7 s, chunked 75.2 s for ≈279 s of summed statement time over 4 workers.
@@ -146,7 +147,7 @@ At 1M (`v2_rep3`): global 10.7 s, chunked 75.2 s for ≈279 s of summed statemen
 Design note measured on the way: allowing PostgreSQL to sort in the global segment made it faster at 1M (5.6 s,
 total 78.3 ± 1.1 s, commit `fc86fb1`) but its parallel DISTINCT then spilled 224 MiB at 3M (30.9 s); hash
 aggregation (final commit) costs a few seconds at 1M, grows linearly, is faster at 3M and never writes temporary
-files — the right trade-off for the 300M-row target.
+files at the sizes measured. Nothing above 3M rows was measured.
 Memory: v2 runs 4 backends, so peak memory is reported as PSS (shared buffers split between processes); the
 original was sampled as the RSS sum of its backends (a single active backend, comparable order of magnitude).
 
@@ -161,6 +162,23 @@ original was sampled as the RSS sum of its backends (a single active backend, co
 In every scenario the final tables matched the reference digests, the row counters were exact and each destination
 had exactly one version. The reported total after a resume (78–93 s) includes the elapsed time of the interrupted
 attempt (counted up to its last heartbeat).
+
+**Submitted engine (bench B, 6 Nov 2026).** After audit round 3 the engine changed: stricter chunking rules, a
+row-bound checksum, a cancel check at finalization and resume of jobs with global segments only. Bench A was not
+available for this revision, so the original and the submitted engine were measured in alternation on a second
+machine: Intel Core i9-7900X, WSL2 (Ubuntu 22.04), PostgreSQL 16.15 defaults, 4 cores by `taskset`, a workstation
+that also ran other work. The memory limit of bench A did not apply here.
+
+| rows | engine | runs | MEASURED PROCESSING TOTAL (s) | peak PostgreSQL memory | temp files | verified |
+|---|---|---|---|---|---|---|
+| 1,000,000 | original | 3 | 139.31 ± 10.71 (130.00–151.01) | 249–264 MiB (PSS) | 75 MiB | 3/3 |
+| 1,000,000 | **v2** | 3 | **77.57 ± 4.18** (72.83–80.75) | 517–518 MiB (PSS) | **0** | 3/3 |
+
+Speed-up on bench B: **1.80×**. The two benches are not comparable with each other: the original runs much faster on
+bench B, so the ratio depends on the machine. Recovery on bench B (1M, interruption after 50 s): 3/3 PASS, with 8–9
+of 20 chunks committed at the interruption and totals of 80.62–96.31 s after resuming. `benchmarks/edge_test.sh`
+(100k): 4/4 PASS. Raw files: `benchmarks/results-20261030/` (bench A) and `benchmarks/results-20261106-wsl/` (bench B).
+The 3M series was not repeated for the submitted engine.
 
 ## 5. Own technology: Darwin-Cage autotuner
 
@@ -214,7 +232,9 @@ The PostgreSQL role needs `max_connections` headroom for K + 3 sessions (K worke
 * While a job runs, the source is write-locked (`SHARE`); destinations accept concurrent writes from other sessions
   (constraints still apply), unlike the original `SHARE ROW EXCLUSIVE` lock which parallel workers cannot share.
 * Identity values are assigned in a different order than the single-backend original (see §3).
-* Speed-up scales with server cores; on one core the engine performs like the original plus small job overhead.
+* Speed-up was measured with 4 cores only; other core counts were not measured.
+* The source checksum detects changes with high probability; it is a hash, not a proof of identity.
+* Jobs started by an earlier engine version are not resumed: the engine version is part of the job key.
 * Bulk FK validation (drop, load, re-add) would roughly halve the per-row cost (§1) but leaves the tables without
   those constraints between chunk commits and after a crash until resume; we chose to keep every constraint enabled
   and not to trade integrity guarantees for speed.
