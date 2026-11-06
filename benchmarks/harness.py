@@ -62,11 +62,11 @@ class PeakSampler(threading.Thread):
         self.interval = interval
         self.peak_pg_rss = 0
         self.peak_total_rss = 0
-        self._stop = threading.Event()
+        self._halt = threading.Event()
 
     def run(self):
         me = os.getpid()
-        while not self._stop.is_set():
+        while not self._halt.is_set():
             pg = 0
             total = 0
             for proc in psutil.process_iter(["name", "pid"]):
@@ -83,10 +83,10 @@ class PeakSampler(threading.Thread):
                     total += rss
             self.peak_pg_rss = max(self.peak_pg_rss, pg)
             self.peak_total_rss = max(self.peak_total_rss, total)
-            self._stop.wait(self.interval)
+            self._halt.wait(self.interval)
 
     def stop(self):
-        self._stop.set()
+        self._halt.set()
 
 
 def main():
@@ -97,6 +97,7 @@ def main():
     ap.add_argument("--out", default="/results")
     ap.add_argument("--recipes", default=None, help="Directory with the six official SQL files")
     ap.add_argument("--env", action="append", default=[], help="KEY=VALUE passed to the app (tuning)")
+    ap.add_argument("--only", type=int, default=0, help="Use only the first N recipes (edge tests)")
     args = ap.parse_args()
 
     for item in args.env:
@@ -114,7 +115,7 @@ def main():
             "version_title": "Benchmark expansion",
             "sql": (recipe_dir / file_name).read_text(encoding="utf-8"),
         }
-        for file_name, table_name in RECIPES
+        for file_name, table_name in (RECIPES[:args.only] if args.only else RECIPES)
     ]
 
     service = PostgresAdminService()
