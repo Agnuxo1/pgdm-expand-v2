@@ -106,6 +106,29 @@ class ExpansionV2PlanTests(unittest.TestCase):
         ):
             self.assertEqual(self.classify_table5(head + tail), "chunked", tail)
 
+    def test_raw_id_of_another_alias_is_not_a_source_link(self):
+        prepared = prepared_official()
+        table1 = (PROJECT_ROOT / "SQL files" / "03_table1.sql").read_text(encoding="utf-8")
+        self.assertIn("source_row.raw_id", table1)
+        altered = table1.replace("source_row.raw_id", "alt.raw_id", 1).replace(
+            "JOIN public.table3 AS dimension_row",
+            "CROSS JOIN LATERAL (VALUES (source_row.raw_id + 1)) AS alt(raw_id) JOIN public.table3 AS dimension_row", 1)
+        destination = [d for d in prepared["destinations"] if d["table_name"] == "public.table1"][0]
+        columns = engine._raw_id_target_columns(
+            PostgresAdminService, dict(destination, statement_templates=[
+                t.replace("source_row.raw_id", "alt.raw_id", 1) for t in destination["statement_templates"]]), "{{source}}")
+        self.assertEqual(columns, set())
+        self.assertNotEqual(altered, table1)
+
+    def test_every_statement_must_fill_the_link_column(self):
+        prepared = prepared_official()
+        destination = [d for d in prepared["destinations"] if d["table_name"] == "public.table1"][0]
+        original = destination["statement_templates"]
+        self.assertEqual(engine._raw_id_target_columns(PostgresAdminService, destination, "{{source}}"), {"id_column_3"})
+        changed = original + [original[0].replace("source_row.raw_id", "source_row.raw_id + 1", 1)]
+        self.assertEqual(engine._raw_id_target_columns(
+            PostgresAdminService, dict(destination, statement_templates=changed), "{{source}}"), set())
+
     def test_content_hash_binds_values_to_their_row(self):
         sql = engine._content_hash_sql({"source_columns": [("raw_id", "bigint"), ("raw", "jsonb")]})
         self.assertIn("hashtextextended(concat_ws(':', r.", sql)
