@@ -54,6 +54,9 @@ metadata={'Creator':'Francisco Angulo de Lafuente; ORCID 0009-0001-1634-7063',
           'Description':'Measured local benchmarks; bars show retained observations, not an official competition score.'}
 fig.savefig(args.out/'validation-20261108.png',dpi=200,metadata=metadata)
 fig.savefig(args.out/'validation-20261108.svg',metadata=metadata)
+# Matplotlib emits trailing spaces inside multiline SVG path attributes.
+svg=args.out/'validation-20261108.svg'
+svg.write_text('\n'.join(line.rstrip() for line in svg.read_text(encoding='utf-8').splitlines())+'\n',encoding='utf-8')
 (args.out/'validation-20261108.plot.json').write_text(json.dumps({
     'input_sha256':hashlib.sha256(args.evaluation.read_bytes()).hexdigest(),
     'matplotlib':matplotlib.__version__,'source':'tools/plot_final_validation.py',
