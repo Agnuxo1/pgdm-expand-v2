@@ -77,7 +77,8 @@ DEFAULT_CONFIG = {
     "global_parallel": 2,
     "chunk_rows": 50000,
     "source_mode": "plain",
-    "bound_chunk_joins": True,
+    # Kept opt-in: the 1M ablation regressed through a slower table6 plan.
+    "bound_chunk_joins": False,
     "fuse_json_paths": True,
     "session_gucs": {
         "jit": "off",
