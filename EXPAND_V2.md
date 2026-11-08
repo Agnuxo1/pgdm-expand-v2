@@ -8,6 +8,14 @@ All reported numbers are local results, not official competition scores. No offi
 All numbers below are **local** results on the hardware described in [Results](#results); they are not official
 competition scores.
 
+## Final compiler update — 8 November 2026
+
+Engine protocol 5 adds two guarded execution transformations: constant nonnumeric JSON object paths are fused into `#>>`, and homogeneous `CROSS JOIN LATERAL (VALUES ...)` constructors are compiled into `UNION ALL SELECT` branches. The latter exposes predicates before projecting fields of discarded positions. This is an execution compiler: the original six SQL recipe files and versioned recipe text remain unchanged. It requires a chunked row-wise segment, actual JSONB source metadata, typed smallint position constants, plain JSON text field expressions and a complete matching alias list; unsupported forms retain their original SQL. Escaped/concatenated/numeric keys and key postfix casts/COLLATE/AT are excluded from path fusion.
+
+The selected default is JSON fusion plus VALUES compilation, with range-bounded joins disabled after two negative screens. All rewrite switches are boolean-validated and included in job identity. The conservative CASE/BETWEEN fallback closes ambiguous join classification. Finish an interrupted job with its original code and settings before changing protocol versions.
+
+The [final report](VALIDATION_20261108.md) supersedes historical performance claims for the current code. It contains three counterbalanced control/candidate pairs at each of 1M and 3M rows, exact output verification, resource checks and separate recovery evidence. Every paired observation is retained; the local prospective protocol and negative hypotheses are included in the result archive. The historical sections below describe their stated revisions and environments.
+
 ## 1. Bottlenecks found in the original implementation
 
 Measured with the application's own Expansion Performance Report (`MEASURED PROCESSING TOTAL`) on databases built by
@@ -127,7 +135,7 @@ runs the same engine with one worker.
 Local results (not official scores). Bench A, engine `86ca8a9`, 29–30 Oct 2026: AMD Ryzen 7 3700X host, Debian 13, SATA SSD; benchmark container limited to
 **4 vCPU and 6 GiB**; PostgreSQL 16.15 (Alpine image) with its **default configuration**; DB Manager service layer
 driven headlessly over SSH to `127.0.0.1`; data from the unmodified official generator. Commit of the engine:
-`86ca8a9` (the submitted engine is covered by bench B below). Correctness of every run: `benchmarks/verify.py` (natural-key digests identical to the
+`86ca8a9` (the previously approved engine is covered by bench B below). Correctness of every run: `benchmarks/verify.py` (natural-key digests identical to the
 original engine's output, exact row counters, one version + one dependency per destination).
 
 | rows | engine | runs | MEASURED PROCESSING TOTAL (s) | peak PostgreSQL memory | temp files | verified |
@@ -163,7 +171,7 @@ attempt (counted up to its last heartbeat).
 
 **Submitted engine (bench B, 6 Nov 2026).** After audit round 3 the engine changed: stricter chunking rules, a
 row-bound checksum, a cancel check at finalization and resume of jobs with global segments only. Bench A was not
-available for this revision, so the original and the submitted engine were measured in alternation on a second
+available for this revision, so the original and the previously approved engine were measured in alternation on a second
 machine: Intel Core i9-7900X, WSL2 (Ubuntu 22.04), PostgreSQL 16.15 defaults, 4 cores by `taskset`, a workstation
 that also ran other work. The memory limit of bench A did not apply here.
 
@@ -176,7 +184,7 @@ Speed-up on bench B: **1.80×**. The two benches are not comparable with each ot
 bench B, so the ratio depends on the machine. Recovery on bench B (1M, interruption after 50 s): 3/3 PASS, with 8–9
 of 20 chunks committed at the interruption and totals of 80.62–96.31 s after resuming. `benchmarks/edge_test.sh`
 (100k): 4/4 PASS. Raw files: `benchmarks/results-20261030/` (bench A) and `benchmarks/results-20261106-wsl/` (bench B).
-The 3M series was not repeated for the submitted engine.
+This historical bench B did not include 3M; the current engine has a separate 1M/3M paired confirmation in the final report.
 
 ## 5. Own technology: Darwin-Cage autotuner
 
@@ -209,7 +217,8 @@ Defaults need no configuration. Optional `PDM_EXPAND_V2_CONFIG` (JSON or `@file.
 
 ```json
 {"workers": "auto", "workers_per_core": 1.0, "chunk_rows": 50000, "global_parallel": 2,
- "source_mode": "plain", "session_gucs": {"work_mem": "64MB", "jit": "off", "synchronous_commit": "off"}}
+ "source_mode": "plain", "fuse_json_paths": true, "unroll_lateral_values": true,
+ "bound_chunk_joins": false, "session_gucs": {"work_mem": "64MB", "jit": "off", "synchronous_commit": "off"}}
 ```
 
 `workers: "auto"` uses the server's usable cores (cgroup quota aware). `synchronous_commit=off` only applies to chunk

@@ -1,0 +1,7 @@
+{
+  "input_sha256": "e5f336279785789691eff13f28bfba9170d57129b77f9479133fddd211c26da0",
+  "matplotlib": "3.10.0",
+  "source": "tools/plot_final_validation.py",
+  "author": "Francisco Angulo de Lafuente",
+  "orcid": "https://orcid.org/0009-0001-1634-7063"
+}

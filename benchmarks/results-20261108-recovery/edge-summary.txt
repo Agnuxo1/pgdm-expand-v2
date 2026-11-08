@@ -1,0 +1,5 @@
+[edge] global_only_plan: PASS
+[edge] A_global_only_resume: PASS
+[edge] B_changed_source_refused: PASS
+[edge] C_finalize_cancel: PASS
+[edge] FAILED=0

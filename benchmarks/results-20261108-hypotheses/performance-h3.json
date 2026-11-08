@@ -1,0 +1,96 @@
+{
+  "accepted_per_preregistered_performance_criteria": false,
+  "sizes": [
+    {
+      "rows": 1000000,
+      "arms": {
+        "control": {
+          "n": 3,
+          "times_s": [
+            82.063790019,
+            83.403042663,
+            82.295112655
+          ],
+          "mean_s": 82.58731511233333,
+          "sd_s": 0.7158464347672444,
+          "max_pg_pss_bytes": 585378816,
+          "max_total_pss_bytes": 692675584,
+          "max_temp_bytes": 0
+        },
+        "candidate": {
+          "n": 3,
+          "times_s": [
+            77.631941982,
+            79.73781377899999,
+            77.04541926399999
+          ],
+          "mean_s": 78.138391675,
+          "sd_s": 1.41584445641298,
+          "max_pg_pss_bytes": 587510784,
+          "max_total_pss_bytes": 694354944,
+          "max_temp_bytes": 0
+        }
+      },
+      "paired_speedups": [
+        1.0570879450372062,
+        1.0459660067199545,
+        1.0681376445368111
+      ],
+      "geometric_speedup": 1.0570251092989413,
+      "geometric_speedup_t95_ci": [
+        1.0298414177144566,
+        1.0849263415410937
+      ],
+      "resource_criterion": true,
+      "improvement_criterion": false,
+      "no_regression_criterion": true
+    },
+    {
+      "rows": 3000000,
+      "arms": {
+        "control": {
+          "n": 3,
+          "times_s": [
+            246.395945948,
+            258.733637112,
+            240.39022347
+          ],
+          "mean_s": 248.50660217666666,
+          "sd_s": 9.352077752942659,
+          "max_pg_pss_bytes": 589539328,
+          "max_total_pss_bytes": 696988672,
+          "max_temp_bytes": 0
+        },
+        "candidate": {
+          "n": 3,
+          "times_s": [
+            251.780228109,
+            245.72351967999998,
+            241.086168993
+          ],
+          "mean_s": 246.19663892733334,
+          "sd_s": 5.3627051439337645,
+          "max_pg_pss_bytes": 589228032,
+          "max_total_pss_bytes": 694503424,
+          "max_temp_bytes": 0
+        }
+      },
+      "paired_speedups": [
+        0.9786151509932342,
+        1.0529461626178185,
+        0.9971132913766604
+      ],
+      "geometric_speedup": 1.0090690108892644,
+      "geometric_speedup_t95_ci": [
+        0.9181003169405051,
+        1.10905121145168
+      ],
+      "resource_criterion": true,
+      "improvement_criterion": false,
+      "no_regression_criterion": true
+    }
+  ],
+  "archived_original_3m_reference_match": true,
+  "reference_sha256": "3583e1a01060cb84daf5db47b93c5fa3ab5147a11ec18ed0eaf16149416efe40",
+  "uncertainty": "n=3 pairs per size; t intervals assume approximately normal log ratios. Local results only."
+}

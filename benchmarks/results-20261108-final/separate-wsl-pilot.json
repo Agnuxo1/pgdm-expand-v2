@@ -1,0 +1,10 @@
+{
+  "core_commit": "c95d7a1e0851f31773f61c2fc2e94147d99c27c2",
+  "environment": "WSL CPU pilot, separate from server confirmation",
+  "h3_seconds": 65.35106629100001,
+  "h5_seconds": 64.32102519799997,
+  "speedup": 1.0160140652271827,
+  "full_output_verified": true,
+  "h5_faster_than_h3": true,
+  "temp_bytes": 0
+}

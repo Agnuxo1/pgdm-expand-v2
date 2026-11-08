@@ -1,0 +1,36 @@
+{
+  "postgres": "16.15",
+  "python": "3.14.10",
+  "paramiko": "4.0.0",
+  "pandas": "3.0.3",
+  "psutil": "7.2.2",
+  "limits": {
+    "cpu_equivalents": 4,
+    "memory_gib": 6
+  },
+  "constraints": {
+    "foreign_keys": 6,
+    "all_validated": true,
+    "all_triggers_origin_enabled": true
+  },
+  "app_role": {
+    "superuser": false,
+    "createdb": true
+  },
+  "wal": {
+    "fsync": "on",
+    "full_page_writes": "on",
+    "wal_level": "replica"
+  },
+  "host": {
+    "cpu": "AMD Ryzen 7 3700X",
+    "os": "Debian 13",
+    "logical_cpus": 16
+  },
+  "docker_benchmark_image": {
+    "tag": "pgpipe-bench:pg16",
+    "local_image_id": "sha256:25610e9fdc56c37c4710b521cc6c69c42cc51608a81ebe43b976a26128a5e379",
+    "created": "2026-10-29T21:20:47.817574954Z",
+    "note": "Observed local image ID; no registry RepoDigest was available for the base tag."
+  }
+}

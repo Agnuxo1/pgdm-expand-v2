@@ -2,7 +2,7 @@
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "name": "PGDM Expand v2",
-  "dateModified": "2026-11-06",
+  "dateModified": "2026-11-08",
   "codeRepository": "https://github.com/Agnuxo1/pgdm-expand-v2",
   "author": [
     {

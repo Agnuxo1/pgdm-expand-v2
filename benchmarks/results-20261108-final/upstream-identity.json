@@ -1,0 +1,47 @@
+{
+  "official_commit": "5dfde9d967425982229b92d6ffe98efcd74612e9",
+  "candidate_code_commit": "c95d7a1e0851f31773f61c2fc2e94147d99c27c2",
+  "all_identical": true,
+  "files": [
+    {
+      "path": "generate_database.py",
+      "official_blob": "20852bb16663c6c79b001c70778547ff2b0efae4",
+      "candidate_blob": "20852bb16663c6c79b001c70778547ff2b0efae4"
+    },
+    {
+      "path": "GENERATE_DATABASE_README.md",
+      "official_blob": "4a3d0e8e6d8cce01cbb088c2fff234a8b77b58fe",
+      "candidate_blob": "4a3d0e8e6d8cce01cbb088c2fff234a8b77b58fe"
+    },
+    {
+      "path": "SQL files/01_table3.sql",
+      "official_blob": "9d1be78715a6bfddd128f00215271bdbcc44e11b",
+      "candidate_blob": "9d1be78715a6bfddd128f00215271bdbcc44e11b"
+    },
+    {
+      "path": "SQL files/02_table4.sql",
+      "official_blob": "0401973f08a6b67dd92ef47943c3981cbfbf6a99",
+      "candidate_blob": "0401973f08a6b67dd92ef47943c3981cbfbf6a99"
+    },
+    {
+      "path": "SQL files/03_table1.sql",
+      "official_blob": "63eccd4875dd2622c75c679c14017355d60aee5c",
+      "candidate_blob": "63eccd4875dd2622c75c679c14017355d60aee5c"
+    },
+    {
+      "path": "SQL files/04_table5.sql",
+      "official_blob": "08c040baf0003af16b4d250b2b5eaba8ad9e1b2b",
+      "candidate_blob": "08c040baf0003af16b4d250b2b5eaba8ad9e1b2b"
+    },
+    {
+      "path": "SQL files/05_table6.sql",
+      "official_blob": "5ff46bfadd263085d8bd144b87f8efb3a8275264",
+      "candidate_blob": "5ff46bfadd263085d8bd144b87f8efb3a8275264"
+    },
+    {
+      "path": "SQL files/06_table2.sql",
+      "official_blob": "7cc213b08df8f132b40f2c869fb97e70c91964b3",
+      "candidate_blob": "7cc213b08df8f132b40f2c869fb97e70c91964b3"
+    }
+  ]
+}

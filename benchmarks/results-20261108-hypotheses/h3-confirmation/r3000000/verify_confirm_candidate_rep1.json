@@ -1,0 +1,31 @@
+{
+ "natural": {
+  "table3": "4:0a43375d78b5ce3538bf226dcecf0c3d",
+  "table4": "27:1e21fca9b26d7ba1726beb42db63e2c7",
+  "table1": "3000000:494489c5195cf0576bc0c4ef7dc190d4",
+  "table5": "3000000:ed636cc1d21a512eb3b7444bfed6f009",
+  "table6": "3000000:c804f635bed95d9e7b6186b8360ca01a",
+  "table2": "6969359:e0e22e2b0113e7b5d76e265e26910f76"
+ },
+ "strict": {
+  "table3": "4:f500cdc9b97760563d85b7154bb9264f",
+  "table4": "27:1e21fca9b26d7ba1726beb42db63e2c7",
+  "table1": "3000000:39791821ba5462d45e6e28f063f2d89a",
+  "table5": "3000000:e6c9109d98e8473a39c83316b2987604",
+  "table6": "3000000:ce2fc8a0e97ba0ef4f645eab3f7aa60b",
+  "table2": "6969359:d0456ad578e54235c61333c1e113e872"
+ },
+ "counters_ok": {
+  "table3": true,
+  "table4": true,
+  "table1": true,
+  "table5": true,
+  "table6": true,
+  "table2": true
+ },
+ "versions": "[{\"t\" : \"table1\", \"code\" : \"0001\", \"kind\" : \"cross_table_expand_v1\", \"deps\" : 1}, {\"t\" : \"table2\", \"code\" : \"0001\", \"kind\" : \"cross_table_expand_v1\", \"deps\" : 1}, {\"t\" : \"table3\", \"code\" : \"0001\", \"kind\" : \"cross_table_expand_v1\", \"deps\" : 1}, {\"t\" : \"table4\", \"code\" : \"0001\", \"kind\" : \"cross_table_expand_v1\", \"deps\" : 1}, {\"t\" : \"table5\", \"code\" : \"0001\", \"kind\" : \"cross_table_expand_v1\", \"deps\" : 1}, {\"t\" : \"table6\", \"code\" : \"0001\", \"kind\" : \"cross_table_expand_v1\", \"deps\" : 1}]",
+ "versions_ok": true,
+ "natural_match": true,
+ "strict_match": false,
+ "ok": true
+}

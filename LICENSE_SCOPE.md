@@ -15,7 +15,7 @@ The following have Git blobs identical to the verified base: `generate_database.
 
 ## Current per-file attribution
 
-- Apache-2.0 original project software: `services/expansion_engine.py`, `services/expansion_v2.py`, `benchmarks/*`, `tests/test_expansion_v2.py`, and `tools/darwin_cage_tuner.py`. The benchmark directory contains newly added project code, scripts, configuration, and documentation.
+- Apache-2.0 original project software: `services/expansion_engine.py`, `services/expansion_v2.py`, `benchmarks/*`, `tests/test_expansion_v2.py`, `tools/darwin_cage_tuner.py`, `tools/plot_final_validation.py`, and `tools/write_validation_report.py`. The benchmark directory contains newly added project code, scripts, configuration, and documentation.
 - Apache-2.0 modifications only: `main.py` and `services/postgres_service.py`. Their headers limit Francisco’s copyright to PGDM Expand v2 modifications and preserve the upstream file authorship and license.
 - MIT: `tools/render_lab_figures.py` only, under `LICENSE.figures`. The reuse notice in `README.md` and `docs/figures/README.md` is limited to this renderer.
 - Upstream, not attributed to Francisco: `generate_database.py`, `GENERATE_DATABASE_README.md`, the six official SQL recipes, and other unchanged upstream files. No Francisco copyright or SPDX header is applied to these files.
@@ -27,4 +27,10 @@ The root Apache-2.0 license, root `CITATION.cff`, CodeMeta record, and some proj
 
 No new license claim is made here for benchmark result values, reports, figure specifications, cover artwork, generated PNG/GIF files, or other material whose rights are not established. The cover source is not recorded. The renderer’s MIT license does not automatically license its output. See the figure provenance records for the original figure date and the 2026-11-06 attribution record.
 
-Direct opens of the Kaggle overview and rules pages returned no readable lines. The official overview search index exposes the requirements for an unchanged generator/fixed seed, a public Git repository, an exact commit before the deadline, no committed secrets, and independent reproducibility; the full rules text and deadline status remain unconfirmed. The repository was already public, and its README makes no official submission or score claim. This audit did not change repository visibility or modify the generator, setup guide, or SQL recipes.
+Historical 2026-11-06 check: direct opens of the Kaggle overview and rules pages returned no readable lines. The official overview search index exposes the requirements for an unchanged generator/fixed seed, a public Git repository, an exact commit before the deadline, no committed secrets, and independent reproducibility; the full rules text and deadline status remain unconfirmed. The repository was already public, and its README makes no official submission or score claim. This audit did not change repository visibility or modify the generator, setup guide, or SQL recipes.
+
+## Validation update — 2026-11-08
+
+The new compiler contributions and benchmark/report scripts are Apache-2.0 and retain the original notices. The eight official generator/guide/recipe Git blobs were checked again against the verified upstream base; the check is archived with the final results. The exact public contribution tree at release is recorded in Git, rather than inferred from the historical 46-path snapshot count.
+
+The official rules were retrieved through the Kaggle API and the deadline/submission status were checked in the authenticated website on 8 November. At that observation no Writeup had been created; the published deadline was 11 November 2026, 02:59 UTC. A public repository, exact commit and submitted Writeup are required, and public code must be shared through the competition forum/notebook. This local validation package does not claim a submission, acceptance or official score.

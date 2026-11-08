@@ -1,0 +1,342 @@
+PGDM_MICRO h3 1
+[
+  {
+    "Plan": {
+      "Node Type": "Aggregate",
+      "Strategy": "Plain",
+      "Partial Mode": "Simple",
+      "Parallel Aware": false,
+      "Async Capable": false,
+      "Startup Cost": 18631.43,
+      "Total Cost": 18631.44,
+      "Plan Rows": 1,
+      "Plan Width": 8,
+      "Actual Rows": 1,
+      "Actual Loops": 1,
+      "Plans": [
+        {
+          "Node Type": "Index Scan",
+          "Parent Relationship": "Outer",
+          "Parallel Aware": false,
+          "Async Capable": false,
+          "Scan Direction": "Forward",
+          "Index Name": "raw_data_pkey",
+          "Relation Name": "raw_data",
+          "Alias": "raw_data",
+          "Startup Cost": 0.42,
+          "Total Cost": 13564.54,
+          "Plan Rows": 48256,
+          "Plan Width": 1623,
+          "Actual Rows": 50000,
+          "Actual Loops": 1,
+          "Index Cond": "((raw_id >= 1) AND (raw_id <= 50000))",
+          "Rows Removed by Index Recheck": 0
+        }
+      ]
+    },
+    "Planning Time": 4.678,
+    "Triggers": [
+    ],
+    "Execution Time": 209.409
+  }
+]
+PGDM_MICRO h4 1
+[
+  {
+    "Plan": {
+      "Node Type": "Aggregate",
+      "Strategy": "Plain",
+      "Partial Mode": "Simple",
+      "Parallel Aware": false,
+      "Async Capable": false,
+      "Startup Cost": 17907.60,
+      "Total Cost": 17907.61,
+      "Plan Rows": 1,
+      "Plan Width": 8,
+      "Actual Rows": 1,
+      "Actual Loops": 1,
+      "Plans": [
+        {
+          "Node Type": "Nested Loop",
+          "Parent Relationship": "Outer",
+          "Parallel Aware": false,
+          "Async Capable": false,
+          "Join Type": "Inner",
+          "Startup Cost": 0.44,
+          "Total Cost": 14529.68,
+          "Plan Rows": 48256,
+          "Plan Width": 448,
+          "Actual Rows": 50000,
+          "Actual Loops": 1,
+          "Inner Unique": false,
+          "Plans": [
+            {
+              "Node Type": "Index Scan",
+              "Parent Relationship": "Outer",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Scan Direction": "Forward",
+              "Index Name": "raw_data_pkey",
+              "Relation Name": "raw_data",
+              "Alias": "raw_data",
+              "Startup Cost": 0.42,
+              "Total Cost": 13564.54,
+              "Plan Rows": 48256,
+              "Plan Width": 1623,
+              "Actual Rows": 50000,
+              "Actual Loops": 1,
+              "Index Cond": "((raw_id >= 1) AND (raw_id <= 50000))",
+              "Rows Removed by Index Recheck": 0
+            },
+            {
+              "Node Type": "Function Scan",
+              "Parent Relationship": "Inner",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Function Name": "jsonb_to_record",
+              "Alias": "pgdm_values_89445ea08b_record",
+              "Startup Cost": 0.01,
+              "Total Cost": 0.02,
+              "Plan Rows": 1,
+              "Plan Width": 448,
+              "Actual Rows": 1,
+              "Actual Loops": 50000
+            }
+          ]
+        }
+      ]
+    },
+    "Planning Time": 0.303,
+    "Triggers": [
+    ],
+    "Execution Time": 209.374
+  }
+]
+PGDM_MICRO h4 2
+[
+  {
+    "Plan": {
+      "Node Type": "Aggregate",
+      "Strategy": "Plain",
+      "Partial Mode": "Simple",
+      "Parallel Aware": false,
+      "Async Capable": false,
+      "Startup Cost": 17907.60,
+      "Total Cost": 17907.61,
+      "Plan Rows": 1,
+      "Plan Width": 8,
+      "Actual Rows": 1,
+      "Actual Loops": 1,
+      "Plans": [
+        {
+          "Node Type": "Nested Loop",
+          "Parent Relationship": "Outer",
+          "Parallel Aware": false,
+          "Async Capable": false,
+          "Join Type": "Inner",
+          "Startup Cost": 0.44,
+          "Total Cost": 14529.68,
+          "Plan Rows": 48256,
+          "Plan Width": 448,
+          "Actual Rows": 50000,
+          "Actual Loops": 1,
+          "Inner Unique": false,
+          "Plans": [
+            {
+              "Node Type": "Index Scan",
+              "Parent Relationship": "Outer",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Scan Direction": "Forward",
+              "Index Name": "raw_data_pkey",
+              "Relation Name": "raw_data",
+              "Alias": "raw_data",
+              "Startup Cost": 0.42,
+              "Total Cost": 13564.54,
+              "Plan Rows": 48256,
+              "Plan Width": 1623,
+              "Actual Rows": 50000,
+              "Actual Loops": 1,
+              "Index Cond": "((raw_id >= 1) AND (raw_id <= 50000))",
+              "Rows Removed by Index Recheck": 0
+            },
+            {
+              "Node Type": "Function Scan",
+              "Parent Relationship": "Inner",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Function Name": "jsonb_to_record",
+              "Alias": "pgdm_values_89445ea08b_record",
+              "Startup Cost": 0.01,
+              "Total Cost": 0.02,
+              "Plan Rows": 1,
+              "Plan Width": 448,
+              "Actual Rows": 1,
+              "Actual Loops": 50000
+            }
+          ]
+        }
+      ]
+    },
+    "Planning Time": 0.165,
+    "Triggers": [
+    ],
+    "Execution Time": 202.563
+  }
+]
+PGDM_MICRO h3 2
+[
+  {
+    "Plan": {
+      "Node Type": "Aggregate",
+      "Strategy": "Plain",
+      "Partial Mode": "Simple",
+      "Parallel Aware": false,
+      "Async Capable": false,
+      "Startup Cost": 18631.43,
+      "Total Cost": 18631.44,
+      "Plan Rows": 1,
+      "Plan Width": 8,
+      "Actual Rows": 1,
+      "Actual Loops": 1,
+      "Plans": [
+        {
+          "Node Type": "Index Scan",
+          "Parent Relationship": "Outer",
+          "Parallel Aware": false,
+          "Async Capable": false,
+          "Scan Direction": "Forward",
+          "Index Name": "raw_data_pkey",
+          "Relation Name": "raw_data",
+          "Alias": "raw_data",
+          "Startup Cost": 0.42,
+          "Total Cost": 13564.54,
+          "Plan Rows": 48256,
+          "Plan Width": 1623,
+          "Actual Rows": 50000,
+          "Actual Loops": 1,
+          "Index Cond": "((raw_id >= 1) AND (raw_id <= 50000))",
+          "Rows Removed by Index Recheck": 0
+        }
+      ]
+    },
+    "Planning Time": 0.135,
+    "Triggers": [
+    ],
+    "Execution Time": 176.072
+  }
+]
+PGDM_MICRO h3 3
+[
+  {
+    "Plan": {
+      "Node Type": "Aggregate",
+      "Strategy": "Plain",
+      "Partial Mode": "Simple",
+      "Parallel Aware": false,
+      "Async Capable": false,
+      "Startup Cost": 18631.43,
+      "Total Cost": 18631.44,
+      "Plan Rows": 1,
+      "Plan Width": 8,
+      "Actual Rows": 1,
+      "Actual Loops": 1,
+      "Plans": [
+        {
+          "Node Type": "Index Scan",
+          "Parent Relationship": "Outer",
+          "Parallel Aware": false,
+          "Async Capable": false,
+          "Scan Direction": "Forward",
+          "Index Name": "raw_data_pkey",
+          "Relation Name": "raw_data",
+          "Alias": "raw_data",
+          "Startup Cost": 0.42,
+          "Total Cost": 13564.54,
+          "Plan Rows": 48256,
+          "Plan Width": 1623,
+          "Actual Rows": 50000,
+          "Actual Loops": 1,
+          "Index Cond": "((raw_id >= 1) AND (raw_id <= 50000))",
+          "Rows Removed by Index Recheck": 0
+        }
+      ]
+    },
+    "Planning Time": 0.125,
+    "Triggers": [
+    ],
+    "Execution Time": 178.955
+  }
+]
+PGDM_MICRO h4 3
+[
+  {
+    "Plan": {
+      "Node Type": "Aggregate",
+      "Strategy": "Plain",
+      "Partial Mode": "Simple",
+      "Parallel Aware": false,
+      "Async Capable": false,
+      "Startup Cost": 17907.60,
+      "Total Cost": 17907.61,
+      "Plan Rows": 1,
+      "Plan Width": 8,
+      "Actual Rows": 1,
+      "Actual Loops": 1,
+      "Plans": [
+        {
+          "Node Type": "Nested Loop",
+          "Parent Relationship": "Outer",
+          "Parallel Aware": false,
+          "Async Capable": false,
+          "Join Type": "Inner",
+          "Startup Cost": 0.44,
+          "Total Cost": 14529.68,
+          "Plan Rows": 48256,
+          "Plan Width": 448,
+          "Actual Rows": 50000,
+          "Actual Loops": 1,
+          "Inner Unique": false,
+          "Plans": [
+            {
+              "Node Type": "Index Scan",
+              "Parent Relationship": "Outer",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Scan Direction": "Forward",
+              "Index Name": "raw_data_pkey",
+              "Relation Name": "raw_data",
+              "Alias": "raw_data",
+              "Startup Cost": 0.42,
+              "Total Cost": 13564.54,
+              "Plan Rows": 48256,
+              "Plan Width": 1623,
+              "Actual Rows": 50000,
+              "Actual Loops": 1,
+              "Index Cond": "((raw_id >= 1) AND (raw_id <= 50000))",
+              "Rows Removed by Index Recheck": 0
+            },
+            {
+              "Node Type": "Function Scan",
+              "Parent Relationship": "Inner",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Function Name": "jsonb_to_record",
+              "Alias": "pgdm_values_89445ea08b_record",
+              "Startup Cost": 0.01,
+              "Total Cost": 0.02,
+              "Plan Rows": 1,
+              "Plan Width": 448,
+              "Actual Rows": 1,
+              "Actual Loops": 50000
+            }
+          ]
+        }
+      ]
+    },
+    "Planning Time": 0.163,
+    "Triggers": [
+    ],
+    "Execution Time": 185.001
+  }
+]
