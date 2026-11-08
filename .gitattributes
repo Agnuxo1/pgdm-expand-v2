@@ -1,0 +1,3 @@
+# Measured evidence is byte-preserved: SHA256SUMS must survive checkout/archive.
+# Keep original line endings and captured EXPLAIN whitespace on every platform.
+benchmarks/results-20261108-*/** -text -whitespace
