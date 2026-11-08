@@ -49,7 +49,7 @@ import tarfile
 import uuid
 
 ENGINE_SCHEMA = "pgdm_expansion"
-ENGINE_VERSION = 4
+ENGINE_VERSION = 5
 
 # Words that make a statement depend on rows other than the current source
 # row; such statements are executed once over the complete source.
@@ -80,6 +80,7 @@ DEFAULT_CONFIG = {
     # Kept opt-in: the 1M ablation regressed through a slower table6 plan.
     "bound_chunk_joins": False,
     "fuse_json_paths": True,
+    "unroll_lateral_values": True,
     "session_gucs": {
         "jit": "off",
         "work_mem": "64MB",
@@ -114,7 +115,7 @@ def merge_config(overrides: dict | None) -> dict:
     else:
         config["workers"] = "auto"
     config["workers_per_core"] = float(config.get("workers_per_core") or 1.0)
-    for option in ("bound_chunk_joins", "fuse_json_paths"):
+    for option in ("bound_chunk_joins", "fuse_json_paths", "unroll_lateral_values"):
         if not isinstance(config.get(option), bool):
             raise RuntimeError(f"{option} must be a JSON boolean")
     config["global_parallel"] = max(0, int(config.get("global_parallel") or 0))
@@ -413,6 +414,77 @@ def _fuse_json_paths(service_cls, template: str) -> str:
     return template
 
 
+def _unroll_lateral_values(service_cls, template: str) -> str:
+    """Expose predicates to homogeneous VALUES branches without changing rows.
+
+    Each row must be a typed constant smallint followed by plain source JSON
+    text extractions, so VALUES and UNION ALL resolve exactly the same types.
+    A complete output alias list preserves column names. Unsupported forms
+    keep the original statement. The caller establishes source raw is JSONB.
+    """
+    masked = service_cls._mask_sql_literals_and_comments(template)
+    starts = list(re.finditer(r'\bcross\s+join\s+lateral\s*\(\s*values\b', masked, flags=re.I))
+    offset = _top_level_from_end(masked)
+    if len(starts) != 1 or offset < 0:
+        return template
+    source = re.match(r'\s*'+re.escape(service_cls.CROSS_TABLE_SOURCE_PLACEHOLDER)
+                      +r'\s+(?:as\s+)?([a-z_][a-z0-9_]*)\b', masked[offset:], flags=re.I)
+    if not source:
+        return template
+    start = starts[0]
+    cursor = start.end()
+    rows = []
+    width = None
+    text_expression = (re.escape(source.group(1))+r"\.raw\s*->\s*'[a-z_][a-z0-9_]*'"
+                       +r"\s*->>\s*'[a-z_][a-z0-9_]*'")
+    while True:
+        while cursor < len(masked) and masked[cursor].isspace():
+            cursor += 1
+        if cursor >= len(masked) or masked[cursor] != '(':
+            return template
+        begin = cursor
+        depth = 0
+        while cursor < len(masked):
+            if masked[cursor] == '(':
+                depth += 1
+            elif masked[cursor] == ')':
+                depth -= 1
+                if depth == 0:
+                    break
+            cursor += 1
+        if cursor >= len(masked):
+            return template
+        body = template[begin+1:cursor]
+        expressions = _top_level_select_list(service_cls, 'SELECT '+body+' FROM q')
+        if not expressions or not re.fullmatch(r'-?\d+\s*::\s*(?:smallint|int2)', expressions[0], flags=re.I):
+            return template
+        if width is None:
+            width = len(expressions)
+        if len(expressions) != width or not 2 <= width <= 32:
+            return template
+        if not all(re.fullmatch(text_expression, value, flags=re.I) for value in expressions[1:]):
+            return template
+        rows.append(body)
+        if len(rows) > 256:
+            return template
+        cursor += 1
+        while cursor < len(masked) and masked[cursor].isspace():
+            cursor += 1
+        if cursor < len(masked) and masked[cursor] == ',':
+            cursor += 1
+            continue
+        if cursor >= len(masked) or masked[cursor] != ')':
+            return template
+        break
+    alias = re.match(r'\s+(?:as\s+)?[a-z_][a-z0-9_]*\s*\(\s*'
+                     +r'([a-z_][a-z0-9_]*(?:\s*,\s*[a-z_][a-z0-9_]*)*)\s*\)',
+                     masked[cursor+1:], flags=re.I)
+    if len(rows) < 2 or not alias or len(alias.group(1).split(',')) != width:
+        return template
+    replacement = 'CROSS JOIN LATERAL (\n'+'\nUNION ALL\n'.join('SELECT '+row for row in rows)+'\n)'
+    return template[:start.start()]+replacement+template[cursor+1:]
+
+
 def _bound_chunk_joins(service_cls, template: str, link_columns: dict) -> str:
     """Push the current raw_id interval into proven same-segment joins.
 
@@ -470,6 +542,7 @@ def spec_hash(prepared: dict, config: dict) -> str:
         "source_mode": config.get("source_mode", "plain"),
         "bound_chunk_joins": config.get("bound_chunk_joins", True),
         "fuse_json_paths": config.get("fuse_json_paths", True),
+        "unroll_lateral_values": config.get("unroll_lateral_values", True),
     }
     return hashlib.sha256(json.dumps(payload, sort_keys=True).encode("utf-8")).hexdigest()
 
@@ -886,6 +959,8 @@ COMMIT;
             link_columns = {}
             for destination in destinations:
                 for index, template in enumerate(destination["statement_templates"], start=1):
+                    if config.get("unroll_lateral_values") and dict(prepared.get("source_columns") or []).get("raw") == "jsonb":
+                        template = _unroll_lateral_values(service_cls, template)
                     if config.get("fuse_json_paths", True):
                         template = _fuse_json_paths(service_cls, template)
                     if config.get("bound_chunk_joins", True):

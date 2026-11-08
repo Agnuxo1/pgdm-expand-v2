@@ -165,6 +165,45 @@ class ExpansionV2PlanTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             engine.merge_config({"fuse_json_paths": "false"})
 
+    def test_official_lateral_values_unroll_preserves_alias(self):
+        sql=prepared_official()['destinations'][-1]['statement_templates'][0]
+        rewritten=engine._unroll_lateral_values(PostgresAdminService,sql)
+        self.assertEqual(rewritten.count('UNION ALL'),13)
+        alias='AS position_data(position_number, declared_number_text, type_text, weight_text, gap_text)'
+        self.assertIn(alias,rewritten)
+        self.assertEqual(rewritten[rewritten.index(alias):],sql[sql.index(alias):])
+        self.assertEqual(engine._unroll_lateral_values(PostgresAdminService,rewritten),rewritten)
+
+    def test_lateral_unroll_rejects_inferred_names_and_mixed_types(self):
+        sql=("SELECT p.a FROM {{source}} AS s CROSS JOIN LATERAL (VALUES "
+             "(1::smallint,s.raw -> 'values' ->> 'field'),"
+             "(2::smallint,s.raw -> 'values' ->> 'field')) AS p(a,b)")
+        self.assertIn('UNION ALL',engine._unroll_lateral_values(PostgresAdminService,sql))
+        for altered in (sql.replace('p(a,b)','p'), sql.replace('p(a,b)','p(a)'),
+                        sql.replace('2::smallint','2::integer'),
+                        sql.replace("'field'))","'field'::char(1)))"),
+                        sql.replace("'field'))","'field''suffix'))"),
+                        sql.replace('s.raw','other.raw'),
+                        sql+' CROSS JOIN LATERAL (VALUES (1),(2)) AS v(x)'):
+            self.assertEqual(engine._unroll_lateral_values(PostgresAdminService,altered),altered)
+
+    def test_lateral_unroll_option_is_in_job_identity(self):
+        prepared=prepared_official()
+        self.assertNotEqual(engine.spec_hash(prepared,engine.merge_config({'unroll_lateral_values':True})),
+                            engine.spec_hash(prepared,engine.merge_config({'unroll_lateral_values':False})))
+        with self.assertRaises(RuntimeError): engine.merge_config({'unroll_lateral_values':'false'})
+
+    def test_lateral_unroll_requires_jsonb_metadata_in_chunk_builder(self):
+        prepared=prepared_official()
+        segments=engine.classify_destinations(PostgresAdminService,prepared)
+        for datatype, expected in [('jsonb',13),('json',0)]:
+            prepared['source_columns']=[('raw_id','bigint'),('raw','jsonb' if datatype=='jsonb' else 'json')]
+            files=engine.build_job_files(PostgresAdminService,prepared,segments,
+                '00000000-0000-0000-0000-000000000001',engine.merge_config({}),
+                'kaggle_challenge','pdm','"public"."pgdm_table_row_counts"',
+                '-- registration','postgres_data_manager')
+            self.assertEqual(files['segment_2.sql'].count('UNION ALL'),expected)
+
     def test_unproven_and_other_schema_joins_are_not_rewritten(self):
         links = {("public", "table1"): {"id_column_3"}}
         head = "SELECT m.id_column_1 FROM {{source}} AS s JOIN "
