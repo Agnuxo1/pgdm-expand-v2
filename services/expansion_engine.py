@@ -49,7 +49,7 @@ import tarfile
 import uuid
 
 ENGINE_SCHEMA = "pgdm_expansion"
-ENGINE_VERSION = 3
+ENGINE_VERSION = 4
 
 # Words that make a statement depend on rows other than the current source
 # row; such statements are executed once over the complete source.
@@ -77,6 +77,8 @@ DEFAULT_CONFIG = {
     "global_parallel": 2,
     "chunk_rows": 50000,
     "source_mode": "plain",
+    "bound_chunk_joins": True,
+    "fuse_json_paths": True,
     "session_gucs": {
         "jit": "off",
         "work_mem": "64MB",
@@ -111,6 +113,9 @@ def merge_config(overrides: dict | None) -> dict:
     else:
         config["workers"] = "auto"
     config["workers_per_core"] = float(config.get("workers_per_core") or 1.0)
+    for option in ("bound_chunk_joins", "fuse_json_paths"):
+        if not isinstance(config.get(option), bool):
+            raise RuntimeError(f"{option} must be a JSON boolean")
     config["global_parallel"] = max(0, int(config.get("global_parallel") or 0))
     if config.get("source_mode") not in ("plain", "detoast"):
         raise RuntimeError(f"Unsupported source_mode: {config.get('source_mode')!r}")
@@ -255,7 +260,7 @@ def _on_clause_terms(masked: str, start: int) -> list[str]:
     term_start = -1
     end = len(masked)
     terms = []
-    for found in re.finditer(r"[();]|\b(?:on|and|join|where)\b", masked[start:], flags=re.I):
+    for found in re.finditer(r"[();]|\b(?:on|and|between|case|join|where)\b", masked[start:], flags=re.I):
         token = found.group(0).lower()
         position = start + found.start()
         if token == "(":
@@ -269,6 +274,10 @@ def _on_clause_terms(masked: str, start: int) -> list[str]:
                 term_start = start + found.end()
             elif token in {"join", "where", ";"}:
                 return []
+        elif token in {"between", "case"}:
+            # BETWEEN owns an AND, and CASE can contain its own conjunctions.
+            # A regex split cannot prove these are independent ON conjuncts.
+            return []
         elif token == "and":
             terms.append(masked[term_start:position])
             term_start = start + found.end()
@@ -366,6 +375,88 @@ def _joins_on_raw_id(service_cls, destination, relation, target_columns, placeho
     return True
 
 
+def _fuse_json_paths(service_cls, template: str) -> str:
+    """Fuse constant object-key extraction without creating a JSONB child.
+
+    Only unquoted qualified columns and nonnumeric identifier-like keys are
+    eligible. Numeric keys could be interpreted as array indexes by #>>,
+    unlike the text-key -> operator, so those are deliberately untouched.
+    The mask excludes matches inside comments and string/dollar literals.
+    """
+    pattern = re.compile(
+        r"(?<![\w.\"])(?P<root>[a-z_][a-z0-9_]*\.[a-z_][a-z0-9_]*)"
+        r"\s*->\s*'(?P<outer>[a-z_][a-z0-9_]*)'"
+        r"\s*->>\s*'(?P<inner>[a-z_][a-z0-9_]*)'(?!')", flags=re.I)
+    masked = service_cls._mask_sql_literals_and_comments(template)
+    replacements = []
+    for match in pattern.finditer(template):
+        start, end = match.span("root")
+        if masked[start:end] != template[start:end]:
+            continue
+        suffix = masked[match.end():]
+        if re.match(r"\s*(?:::|collate\b|at\b)", suffix, flags=re.I):
+            # A postfix on the key binds before ->>; moving it to the result
+            # can change the key or the expression's type/collation.
+            continue
+        next_token = re.search(r"\S", suffix)
+        gap_end = match.end() + (next_token.start() if next_token else len(suffix))
+        if "'" in template[match.end():gap_end]:
+            # Newline-separated SQL literals concatenate before extraction.
+            # A quoted comment in this gap also takes the conservative path.
+            continue
+        root = match.group("root")
+        path = f"ARRAY[{sql_literal(match.group('outer'))}, {sql_literal(match.group('inner'))}]"
+        replacements.append((match.start(), match.end(), f"({root} #>> {path})"))
+    for start, end, replacement in reversed(replacements):
+        template = template[:start] + replacement + template[end:]
+    return template
+
+
+def _bound_chunk_joins(service_cls, template: str, link_columns: dict) -> str:
+    """Push the current raw_id interval into proven same-segment joins.
+
+    If r.key = source.raw_id is an independent ON conjunct, rows of r
+    outside the source interval cannot match, for INNER and LEFT joins alike.
+    The subquery is flattened by PostgreSQL; it introduces no staging table.
+    Unsupported identifier/alias syntax is left unchanged.
+    """
+    masked = service_cls._mask_sql_literals_and_comments(template)
+    source_alias = re.search(
+        re.escape(service_cls.CROSS_TABLE_SOURCE_PLACEHOLDER)
+        + r"\s+(?:as\s+)?([a-z_][a-z0-9_]*)", masked, flags=re.I)
+    if not source_alias:
+        return template
+    replacements = []
+    for relation, columns in link_columns.items():
+        if not columns or not _joins_on_raw_id(
+                service_cls, {"statement_templates": [template]}, relation, columns,
+                service_cls.CROSS_TABLE_SOURCE_PLACEHOLDER):
+            continue
+        schema, table = relation
+        if not all(re.fullmatch(r"[a-z_][a-z0-9_]*", name) for name in (schema, table)):
+            continue
+        pattern = (r"\bjoin\s+(?P<relation>(?:" + re.escape(schema)
+                   + r"\s*\.\s*)?" + re.escape(table)
+                   + r")\s+(?:as\s+)?(?P<alias>[a-z_][a-z0-9_]*)\b")
+        for match in re.finditer(pattern, masked, flags=re.I):
+            alias = match.group("alias")
+            terms = _on_clause_terms(masked, match.end())
+            column = next((col for col in sorted(columns) if any(
+                re.fullmatch(rf"{re.escape(alias)}\.{re.escape(col)}\s*=\s*{re.escape(source_alias.group(1))}\.raw_id", term, flags=re.I)
+                or re.fullmatch(rf"{re.escape(source_alias.group(1))}\.raw_id\s*=\s*{re.escape(alias)}\.{re.escape(col)}", term, flags=re.I)
+                for term in terms)), None)
+            if column is None:
+                continue
+            bounded = (f"(SELECT * FROM {sql_ident(schema)}.{sql_ident(table)} "
+                       f"WHERE {sql_ident(column)} BETWEEN "
+                       "current_setting('pgdm.chunk_lo')::bigint AND "
+                       "current_setting('pgdm.chunk_hi')::bigint)")
+            replacements.append((match.start("relation"), match.end("relation"), bounded))
+    for start, end, replacement in sorted(replacements, reverse=True):
+        template = template[:start] + replacement + template[end:]
+    return template
+
+
 def spec_hash(prepared: dict, config: dict) -> str:
     payload = {
         "engine": ENGINE_VERSION,
@@ -376,6 +467,8 @@ def spec_hash(prepared: dict, config: dict) -> str:
         ],
         "chunk_rows": config["chunk_rows"],
         "source_mode": config.get("source_mode", "plain"),
+        "bound_chunk_joins": config.get("bound_chunk_joins", True),
+        "fuse_json_paths": config.get("fuse_json_paths", True),
     }
     return hashlib.sha256(json.dumps(payload, sort_keys=True).encode("utf-8")).hexdigest()
 
@@ -757,6 +850,8 @@ def build_job_files(service_cls, prepared: dict, segments: list[dict], job_id: s
             body = []
             for destination in destinations:
                 for template in destination["statement_templates"]:
+                    if config.get("fuse_json_paths", True):
+                        template = _fuse_json_paths(service_cls, template)
                     statement = template.replace(placeholder, full_source_sql(prepared, config.get('source_mode', 'plain')))
                     if int(config.get("global_parallel") or 0) > 0:
                         body.append(_parallel_insert(service_cls, statement, destination, len(body) + 1))
@@ -787,11 +882,18 @@ COMMIT;
 """
         else:
             body = []
+            link_columns = {}
             for destination in destinations:
                 for index, template in enumerate(destination["statement_templates"], start=1):
+                    if config.get("fuse_json_paths", True):
+                        template = _fuse_json_paths(service_cls, template)
+                    if config.get("bound_chunk_joins", True):
+                        template = _bound_chunk_joins(service_cls, template, link_columns)
                     body.append(_counted_insert(
                         template.replace(placeholder, chunk_source_sql(prepared, config.get('source_mode', 'plain'))),
                         destination["table_name"]))
+                link_columns[(destination["schema_name"], destination["pure_table_name"])] = (
+                    _raw_id_target_columns(service_cls, destination, placeholder))
             files[f"segment_{number}.sql"] = preamble + f"""
 BEGIN;
 SET LOCAL client_min_messages = warning;

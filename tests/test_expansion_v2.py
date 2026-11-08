@@ -98,6 +98,85 @@ class ExpansionV2PlanTests(unittest.TestCase):
                "FROM {{source}} AS s JOIN public.table1 AS m ON TRUE")
         self.assertEqual(self.classify_table5(sql), "global")
 
+    def test_between_in_on_clause_is_conservatively_global(self):
+        head = ("INSERT INTO public.table5 (numeric_column_1, id_column_2) SELECT 1, m.id_column_1 "
+                "FROM {{source}} AS s JOIN public.table1 AS m ON ")
+        for clause in (
+            "m.id_column_2 BETWEEN 0 AND 5 AND m.id_column_3 = s.raw_id",
+            "m.id_column_3 = s.raw_id AND m.id_column_2 BETWEEN 0 AND 5",
+        ):
+            self.assertEqual(self.classify_table5(head + clause), "global")
+
+    def test_bounded_join_preserves_alias_and_independent_on_predicates(self):
+        links = {("public", "table1"): {"id_column_3"}}
+        for join in ("JOIN", "LEFT JOIN", "INNER JOIN"):
+            sql = ("INSERT INTO public.table5 (numeric_column_1, id_column_2) "
+                   "SELECT 1, m.id_column_1 FROM {{source}} AS s " + join
+                   + " public.table1 AS m ON m.id_column_3 = s.raw_id AND m.id_column_2 > 0")
+            rewritten = engine._bound_chunk_joins(PostgresAdminService, sql, links)
+            self.assertIn('SELECT * FROM "public"."table1" WHERE "id_column_3" BETWEEN', rewritten)
+            self.assertTrue(rewritten.endswith("AS m ON m.id_column_3 = s.raw_id AND m.id_column_2 > 0"))
+            self.assertIn(join + " (SELECT", rewritten)
+
+    def test_case_branch_conjunction_is_not_an_independent_join_link(self):
+        sql = ("INSERT INTO public.table5 (numeric_column_1, id_column_2) "
+               "SELECT 1, m.id_column_1 FROM {{source}} AS s JOIN public.table1 AS m ON "
+               "CASE WHEN s.raw_id = 1 THEN FALSE AND m.id_column_3 = s.raw_id "
+               "AND FALSE ELSE TRUE END")
+        self.assertEqual(self.classify_table5(sql), "global")
+        self.assertEqual(engine._bound_chunk_joins(
+            PostgresAdminService, sql, {("public", "table1"): {"id_column_3"}}), sql)
+
+    def test_join_rewrite_option_is_in_job_identity(self):
+        prepared = prepared_official()
+        self.assertNotEqual(engine.spec_hash(prepared, engine.merge_config({"bound_chunk_joins": True})),
+                            engine.spec_hash(prepared, engine.merge_config({"bound_chunk_joins": False})))
+        with self.assertRaises(RuntimeError):
+            engine.merge_config({"bound_chunk_joins": "false"})
+
+    def test_json_paths_fuse_only_constant_object_keys(self):
+        sql = "SELECT r.raw -> 'values' ->> 'text_column_1', r.raw -> 'values' ->> 'numeric_column_2' FROM x AS r"
+        rewritten = engine._fuse_json_paths(PostgresAdminService, sql)
+        self.assertEqual(rewritten.count("#>> ARRAY["), 2)
+        self.assertIn("ARRAY['values', 'text_column_1']", rewritten)
+        self.assertNotIn(" -> ", rewritten)
+        self.assertEqual(engine._fuse_json_paths(PostgresAdminService, rewritten), rewritten)
+
+    def test_json_fusion_leaves_numeric_keys_and_literals_unchanged(self):
+        for sql in (
+            "SELECT r.raw -> 'values' ->> '0' FROM x r",
+            "SELECT r.raw -> '0' ->> 'key' FROM x r",
+            "SELECT $$ r.raw -> 'values' ->> 'key' $$ FROM x r",
+            "SELECT 1 /* r.raw -> 'values' ->> 'key' */ FROM x r",
+            'SELECT "r.raw" -> \'values\' ->> \'key\' FROM x r',
+            "SELECT r.raw -> 'values' ->> 'key''suffix' FROM x r",
+            "SELECT r.raw -> 'values' ->> 'field'::char(1) FROM x r",
+            "SELECT r.raw -> 'values' ->> 'field' /* comment */ ::char(1) FROM x r",
+            "SELECT r.raw -> 'values' ->> 'field' COLLATE \"C\" FROM x r",
+            "SELECT r.raw -> 'values' ->> 'key'\n'suffix' FROM x r",
+            "SELECT r.raw -> 'values' ->> 'key' /* comment */\n'suffix' FROM x r",
+        ):
+            self.assertEqual(engine._fuse_json_paths(PostgresAdminService, sql), sql)
+
+    def test_json_fusion_option_is_in_job_identity(self):
+        prepared = prepared_official()
+        self.assertNotEqual(engine.spec_hash(prepared, engine.merge_config({"fuse_json_paths": True})),
+                            engine.spec_hash(prepared, engine.merge_config({"fuse_json_paths": False})))
+        with self.assertRaises(RuntimeError):
+            engine.merge_config({"fuse_json_paths": "false"})
+
+    def test_unproven_and_other_schema_joins_are_not_rewritten(self):
+        links = {("public", "table1"): {"id_column_3"}}
+        head = "SELECT m.id_column_1 FROM {{source}} AS s JOIN "
+        for tail in (
+            "public.table1 AS m ON m.id_column_2 = s.raw_id",
+            "other.table1 AS m ON m.id_column_3 = s.raw_id",
+            "public.table1 AS m ON m.id_column_3 = s.raw_id OR m.id_column_2 = 1",
+            "public.table1 AS m ON m.id_column_3 = s.raw_id AND m.id_column_2 BETWEEN 0 AND 9",
+        ):
+            sql = head + tail
+            self.assertEqual(engine._bound_chunk_joins(PostgresAdminService, sql, links), sql)
+
     def test_linked_inner_and_left_joins_stay_chunked(self):
         head = "INSERT INTO public.table5 (numeric_column_1, id_column_2) SELECT 1, m.id_column_1 "
         for tail in (
