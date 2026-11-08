@@ -1,0 +1,130 @@
+{
+  "schema_version": "1.0",
+  "project": "pgdm-expand-v2",
+  "recorded_on": "2026-11-08",
+  "canonical_url": "https://github.com/Agnuxo1/pgdm-expand-v2",
+  "author": {
+    "name": "Francisco Angulo de Lafuente",
+    "orcid": "https://orcid.org/0009-0001-1634-7063",
+    "github": "https://github.com/Agnuxo1",
+    "arxiv": "https://arxiv.org/a/angulodelafuente_f_1.html",
+    "google_scholar": "https://scholar.google.com/citations?user=6nOpJ9IAAAAJ",
+    "researchgate": "https://www.researchgate.net/profile/Francisco-Angulo-Lafuente-3",
+    "figshare": "https://figshare.com/authors/Francisco_Angulo_de_Lafuente/22601234",
+    "wikipedia": "https://es.wikipedia.org/wiki/Francisco_Angulo_de_Lafuente",
+    "biography_source": "README.md#author-background",
+    "historical_patents": [
+      {
+        "id": "ES2273594B1",
+        "status": "lapsed",
+        "url": "https://patents.google.com/patent/ES2273594B1/en"
+      },
+      {
+        "id": "ES2341194B1",
+        "status": "lapsed",
+        "url": "https://patents.google.com/patent/ES2341194B1/en"
+      }
+    ]
+  },
+  "measured_core_commit": "c95d7a1e0851f31773f61c2fc2e94147d99c27c2",
+  "source_context_commit": "b071ef3f71e55fdf30486b920ea31cad7c24419f",
+  "method": "SHA-256 over exact Git blob bytes at source_context_commit. Source comment/citation attribution is non-executable. Older provenance-baseline.json remains a separate historical record.",
+  "file_hashes": [
+    {
+      "path": "services/expansion_engine.py",
+      "sha256": "71031a7fd73a958eb414882191f18b7e12c43060b96f38a0257b821edf8edd0c",
+      "bytes": 60835
+    },
+    {
+      "path": "services/expansion_v2.py",
+      "sha256": "2c1733deb0423f55eaa229ae6a3f046acabe92c179a429be2dbcfd1756cdaf7e",
+      "bytes": 29442
+    },
+    {
+      "path": "tests/test_expansion_v2.py",
+      "sha256": "17fb40af5a4a9f13dee543129522cd283a216fb47f89c26d95825d51e6dbbe1d",
+      "bytes": 19553
+    },
+    {
+      "path": "benchmarks/confirm_candidate.py",
+      "sha256": "d0b09d62fa0870cc18ae2fca940e04e6c10584d0b6e62b90436f278a4260a700",
+      "bytes": 2895
+    },
+    {
+      "path": "benchmarks/evaluate_confirmation.py",
+      "sha256": "45036f4e0d766149e60a94785b37a118c763471bac7ace52ec484c69d933ee65",
+      "bytes": 3572
+    },
+    {
+      "path": "tools/plot_final_validation.py",
+      "sha256": "89aabf5b950903d66508717290dfa3907c0b83f8246874b31e35da96724bf383",
+      "bytes": 3693
+    },
+    {
+      "path": "tools/write_validation_report.py",
+      "sha256": "0dfdd32eecb51429c4b9bf3a01c1a032f0f94a4db6427bba80d680b35e5ebd13",
+      "bytes": 10359
+    },
+    {
+      "path": "VALIDATION_20261108.md",
+      "sha256": "41825bfb71e85fd510621b47736434b23f993fa70212d1d2296ab9cda9f7db0e",
+      "bytes": 9026
+    },
+    {
+      "path": "CITATION.cff",
+      "sha256": "0dcf700b37c408d3302e4992eb221d985f0ae695ea6ef95e1e1200bcbdaa2410",
+      "bytes": 587
+    },
+    {
+      "path": "codemeta.json",
+      "sha256": "79c96413b62b681953b0a75adb66235dcaa60744d993acdc774f6f86ba2b773a",
+      "bytes": 791
+    },
+    {
+      "path": "docs/figures/validation-20261108.png",
+      "sha256": "7b1d959c112d3dc4e8fef8d72fd7ceac6c3305da436f9659fffd5986dd93c84b",
+      "bytes": 151976
+    },
+    {
+      "path": "docs/figures/validation-20261108.svg",
+      "sha256": "9870acf23b25aeab9d45ce638881f01cf56b94ffc5e25cf1779ca1a5beb7cc1c",
+      "bytes": 19570
+    },
+    {
+      "path": "docs/figures/validation-20261108.plot.json",
+      "sha256": "4329e37289bfb5672719093a32d443646f781796d7672984cf4fb25bc32f8ed3",
+      "bytes": 256
+    }
+  ],
+  "distinctive_code_fingerprints": [
+    {
+      "path": "services/expansion_engine.py",
+      "anchor": "def _fuse_json_paths(",
+      "normalization": "Unicode NFC, casefold, collapse whitespace",
+      "normalized_sha256": "e6e7fb29409cb18ca8aa7c4a5b965e3a84d94ec247ae0f6f17f7280626951fbf",
+      "scope": "Original project compiler contribution; candidate code at recorded source context."
+    },
+    {
+      "path": "services/expansion_engine.py",
+      "anchor": "def _unroll_lateral_values(",
+      "normalization": "Unicode NFC, casefold, collapse whitespace",
+      "normalized_sha256": "0e928b14278085fe8c1265ffaaf166be3ffe3870a57e75f3967f5644c906f415",
+      "scope": "Original project compiler contribution; candidate code at recorded source context."
+    }
+  ],
+  "upstream_preservation": "Igor Moreira Apache-2.0 notices retained; unchanged generator/guide/recipes are not attributed to Francisco.",
+  "scope_file": "LICENSE_SCOPE.md",
+  "evidence_manifests": [
+    "benchmarks/results-20261108-final/SHA256SUMS",
+    "benchmarks/results-20261108-recovery/SHA256SUMS",
+    "benchmarks/results-20261108-hypotheses/SHA256SUMS"
+  ],
+  "attribution_layers": [
+    "Visible author/ORCID and biography in README",
+    "Syntax-safe SPDX and Research-ORCID source headers",
+    "CITATION.cff and CodeMeta",
+    "Visible author/ORCID and metadata in the final figure",
+    "Exact-blob hashes, normalized distinctive-code fingerprints and evidence manifests"
+  ],
+  "interpretation": "Fingerprints are comparison leads, not proof of copying, authorship priority or infringement. They do not impose conditions beyond applicable licences."
+}

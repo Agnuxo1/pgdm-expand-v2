@@ -79,6 +79,8 @@ The derivative software remains under the existing Apache-2.0 terms and retains 
 - [PostgreSQL, Parallel Plans](https://www.postgresql.org/docs/current/parallel-plans.html). Recheck the plan on each major PostgreSQL version.
 - [PostgreSQL, Transaction Isolation](https://www.postgresql.org/docs/current/transaction-iso.html). Retest recovery at transaction boundaries and under competing locks.
 
+The [updated provenance record](provenance-20261108.json) preserves exact source/figure hashes, normalized fingerprints of the original compiler contributions, public researcher identifiers and the historical patent references. The [earlier baseline](provenance-baseline.json) remains a separate dated record.
+
 **Attribution.** Cite [Francisco Angulo de Lafuente](https://orcid.org/0009-0001-1634-7063) using [CITATION.cff](CITATION.cff). Preserve upstream notices and consult LICENSE_SCOPE.md before reusing files outside the explicitly attributed code. The MIT notice below applies only to tools/render_lab_figures.py.
 
 **Reuse notice for the original figure renderer file tools/render_lab_figures.py only:**

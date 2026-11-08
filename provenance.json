@@ -43,7 +43,9 @@
         "tests/test_expansion_v2.py",
         "tools/darwin_cage_tuner.py",
         "main.py (modifications only)",
-        "services/postgres_service.py (modifications only)"
+        "services/postgres_service.py (modifications only)",
+        "tools/plot_final_validation.py",
+        "tools/write_validation_report.py"
       ],
       "basis": "Existing root Apache-2.0 license and existing per-file notices; see LICENSE_SCOPE.md."
     },
@@ -96,14 +98,17 @@
     "name": "Python & PostgreSQL Data Pipeline Optimization Challenge",
     "official_page": "https://www.kaggle.com/competitions/python-postgre-sql-data-pipeline-optimization-challenge",
     "rules_page": "https://www.kaggle.com/competitions/python-postgre-sql-data-pipeline-optimization-challenge/rules",
-    "rules_access": "Direct opens of the official overview and rules pages returned zero readable lines. The official Kaggle overview search index exposes the requirements for an unchanged generator/fixed seed, a public Git repository, an exact commit before the deadline, no committed secrets, and independent reproducibility. The full rules-page text and deadline status remain unconfirmed; no eligibility, submission, or score claim is made.",
+    "rules_access": "2026-11-08: complete official rules retrieved through Kaggle API; authenticated UI confirms deadline 2026-11-11 02:59 UTC. No Writeup had been created at that observation. Code, exact commit, submitted Writeup and Kaggle public-code sharing are required.",
     "verified_requirements": [
       "Final solution must be in a public GitHub repository with an exact submission commit before the deadline.",
       "Do not commit credentials or secrets.",
       "Do not modify the official database generator or its fixed seed."
     ],
-    "repo_relation": "Repository was already public; README says no official Kaggle submission or score is claimed. Upstream comparison confirms the generator, setup guide, and six SQL recipes are Git-blob-identical to base commit 5dfde9d967425982229b92d6ffe98efcd74612e9; this audit did not modify them or change repository visibility."
+    "repo_relation": "Repository was already public; README says no official Kaggle submission or score is claimed. Upstream comparison confirms the generator, setup guide, and six SQL recipes are Git-blob-identical to base commit 5dfde9d967425982229b92d6ffe98efcd74612e9; this audit did not modify them or change repository visibility.",
+    "submission_status_at_metadata_capture": "not submitted; final publication/submission authorized by Fran on 2026-11-08"
   },
   "publication_state": "already public; no visibility change",
-  "baseline_file": "provenance-baseline.json"
+  "baseline_file": "provenance-baseline.json",
+  "updated_on": "2026-11-08",
+  "current_validation_record": "provenance-20261108.json"
 }
