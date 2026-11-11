@@ -6,6 +6,10 @@
 
 **Research author:** [Francisco Angulo de Lafuente](https://orcid.org/0009-0001-1634-7063) for the original PGDM Expand v2 contributions · [Citation](CITATION.cff).
 
+<!-- impact-note:start -->
+<sub><strong>Efficiency and practical value.</strong> Building on the credited upstream PostgreSQL engine, JSON-path fusion and a guarded Expand rewrite reduce repeated processing work. The repository reports 11.2% lower mean runtime than the approved control at both one and three million source rows on the same four-vCPU setup, with output checks preserved. This measured speed benefit does not by itself quantify electricity savings. See the <a href="VALIDATION_20261108.md">paired validation</a>.</sub>
+<!-- impact-note:end -->
+
 ## Research scope
 
 ![Separate application control from data execution. DB Manager; Linux runner; Chunk worker A; Chunk worker B; Version ledger](docs/figures/architecture.gif)
